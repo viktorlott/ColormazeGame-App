@@ -34,14 +34,14 @@ class ViewController: UIViewController {
     // etc...
     var isBoardNotLoaded = true;
     var gameMap: [[Int]] = [
-        [10, 30,  1, 30, 20, 30, 10,  40],
-        [ 1,  1,  1,  1,  1, 1,   1,  1],
-        [ 1,  1, 40,  1,  1, 1,  10,  1],
-        [10,  1,  1, 20, 40, 1,   40,  1],
-        [ 0,  0, 10,  1, 10, 1,   1,  1],
-        [ 0,  1,  1,  1,  30, 1,  0, 20],
-        [ 0,  1,  0,  1,  1, 1,  0,  1],
-        [20,  1,  0,  0,  0, 1,  1,  1]
+        [10, 30,  1, 30, 20, 30, 10, 40],
+        [ 1,  1,  1,  1,  1,  1,  1,  1],
+        [ 1,  1, 40,  1,  1,  1, 10,  1],
+        [10,  1,  1, 20, 40,  1, 40,  1],
+        [ 0,  0, 10,  1, 10,  1,  1,  1],
+        [ 0,  1,  1,  1, 30,  1,  0, 20],
+        [ 0,  1,  0,  1,  1,  1,  0,  1],
+        [20,  1,  0,  0,  0,  1,  1,  1]
         
     ]
     
@@ -49,7 +49,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        gameArea.frame = CGRect(
+        
         
         self.myGame = GameBoard(board: gameArea, map: gameMap)
         isBoardNotLoaded = false

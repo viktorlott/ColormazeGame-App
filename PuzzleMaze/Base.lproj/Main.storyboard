@@ -17,6 +17,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xFy-h1-HE7">
+                                <rect key="frame" x="27" y="285" width="320" height="320"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="320" id="Wjw-49-eT8"/>
+                                    <constraint firstAttribute="width" secondItem="xFy-h1-HE7" secondAttribute="height" multiplier="1:1" id="WqY-od-DeZ"/>
+                                    <constraint firstAttribute="width" constant="320" id="bkQ-h3-Sr4"/>
+                                </constraints>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d6j-iQ-ED4">
                                 <rect key="frame" x="146" y="66" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -24,18 +32,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xFy-h1-HE7">
-                                <rect key="frame" x="27" y="190" width="320" height="320"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Puzzle Maze" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vYF-Uj-l7N">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="320" id="Wjw-49-eT8"/>
-                                    <constraint firstAttribute="width" secondItem="xFy-h1-HE7" secondAttribute="height" multiplier="1:1" id="WqY-od-DeZ"/>
-                                    <constraint firstAttribute="width" constant="320" id="bkQ-h3-Sr4"/>
+                                    <constraint firstAttribute="height" constant="200" id="gDB-ad-FBU"/>
                                 </constraints>
-                            </view>
+                                <fontDescription key="fontDescription" name="Damascus" family="Damascus" pointSize="55"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="xFy-h1-HE7" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="FBL-jn-6No"/>
+                            <constraint firstItem="xFy-h1-HE7" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="100" id="FBL-jn-6No"/>
+                            <constraint firstItem="vYF-Uj-l7N" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="aUV-w3-w2G"/>
+                            <constraint firstItem="vYF-Uj-l7N" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ihA-tM-4cS"/>
+                            <constraint firstItem="vYF-Uj-l7N" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="jO7-0i-m7a"/>
                             <constraint firstItem="xFy-h1-HE7" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="m7v-Zs-Dbz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

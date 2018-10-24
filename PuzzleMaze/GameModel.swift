@@ -31,7 +31,7 @@ class GameBoard<T: Piece>: GameRules {
     var boardSize: BoardSize!
     var pieceSize: PieceSize!
     
-    private var defaultSpacing:Float = 8
+    private var defaultSpacing:Float = 0
     
     var selectedPiece: Piece!
     var position: Int!
