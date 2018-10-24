@@ -149,7 +149,7 @@ class GameBoard<T: Piece>: GameRules {
                     selectedPiece.isConnected = true
                     selectedPiece.connectedWith = piece.id
                     
-                    if checkIfBoardIsFilled() && checkIfPiecesIsConnected() {print("Board is filled", " All pieces is connected")}
+                    if checkIfBoardIsFilled() && checkIfPiecesIsConnected() {selectedPiece = nil;print("Board is filled", " All pieces is connected")}
                 } else {
                     print("Connected wrong")
                     clearColoredPath()
