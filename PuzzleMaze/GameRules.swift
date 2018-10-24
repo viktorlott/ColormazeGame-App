@@ -11,7 +11,7 @@ import UIKit
 
 protocol GameRules {
     var selectedPiece: Piece! {get set}
-    var mapSize: MapSize! {get set}
+    var mapShape: MapShape! {get set}
     var pieceSize: PieceSize! {get set}
     var position: Int! {get set}
     var gameRenderMap: [Int] {get set}
@@ -63,7 +63,7 @@ extension GameRules {
         return false
     }
     func cannotMoveToPiece(_ p: Int) -> Bool{
-        if  p != Block.empty_block && p == self.position - 1 || p == self.position + 1 || p == self.position + self.mapSize.column || p == self.position - self.mapSize.column {
+        if  p != Block.empty_block && p == self.position - 1 || p == self.position + 1 || p == self.position + self.mapShape.column || p == self.position - self.mapShape.column {
             return false
         } else {
             return true
@@ -84,7 +84,7 @@ extension GameRules {
         return true
     }
     func isNeighborSameColor(p: Int) -> Bool {
-        if p == position + 1 || p == position - 1 || p == position + self.mapSize.column || p == position - self.mapSize.column {
+        if p == position + 1 || p == position - 1 || p == position + self.mapShape.column || p == position - self.mapShape.column {
             return true
         } else {
             return false

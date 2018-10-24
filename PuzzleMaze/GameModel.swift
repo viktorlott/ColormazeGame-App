@@ -9,15 +9,25 @@
 import Foundation
 import UIKit
 
+
+struct MapShape {
+    let row: Int
+    let column: Int
+}
 struct BoardSize {
     let width: Int
     let height: Int
+}
+struct PieceSize {
+    let width: Float
+    let height: Float
+    let spacing: Float
 }
 
 class GameBoard<T: Piece>: GameRules {
     
     private var gameArea: UIView!
-    var mapSize: MapSize!
+    var mapShape: MapShape!
     var boardSize: BoardSize!
     var pieceSize: PieceSize!
     
@@ -35,11 +45,15 @@ class GameBoard<T: Piece>: GameRules {
         self.gameArea = board
         self.gameMap = map
         
-        mapSize = getRowsAndColumns(for: map)
+        mapShape = getRowsAndColumns(for: map)
         boardSize = getSize(for: board)
-        pieceSize = getPieceSize(with: mapSize, and: boardSize)
+        pieceSize = getPieceSize(with: mapShape, and: boardSize)
         gameRenderMap = render(map)
         renderGameBoard()
+        print("Settings:")
+        print("  ", mapShape!)
+        print("  ", boardSize!)
+        print("  ", mapShape!)
     }
     func onTouch(_ x: CGFloat, _ y: CGFloat) {
         if let piece = getPieceFromCoord(x: x, y: y) {
@@ -96,7 +110,6 @@ class GameBoard<T: Piece>: GameRules {
         } else {
             clearColoredPath()
         }
-        
         canMove = true
     }
     private func clearColoredPath() {
@@ -141,27 +154,25 @@ class GameBoard<T: Piece>: GameRules {
             gameArea.addSubview(piece.label)
             gamePieces.append(piece as! T)
             X += pieceSize.width + pieceSize.spacing
-            if(((i + 1) % mapSize.column) == 0) {
+            if(((i + 1) % mapShape.column) == 0) {
                 Y += pieceSize.height + pieceSize.spacing
                 X = 0
             }
         }
     }
-    private func getRowsAndColumns(for map: [[Int]]) -> MapSize {
+    private func getRowsAndColumns(for map: [[Int]]) -> MapShape {
         let row = map.count
         let column = map[0].count
-        let size = MapSize(row: row, column: column)
-        print(size)
+        let size = MapShape(row: row, column: column)
         return size
     }
     private func getSize(for board: UIView) -> BoardSize {
         return BoardSize(width: Int(board.frame.width), height: Int(board.frame.height))
     }
-    private func getPieceSize(with map: MapSize, and board: BoardSize) -> PieceSize? {
+    private func getPieceSize(with map: MapShape, and board: BoardSize) -> PieceSize {
         let pS = Float(board.width) / Float(map.column)
         let space = Float(pS - (Float(Int(pS / 10) * 10)))
         let spacing = (space < self.defaultSpacing ? self.defaultSpacing : space)
-        print(Float(pS - (Float(Int(pS / 10) * 10))))
         return PieceSize(width: pS - spacing, height: pS - spacing, spacing: spacing)
     }
 }

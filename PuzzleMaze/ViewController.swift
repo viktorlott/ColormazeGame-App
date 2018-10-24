@@ -8,19 +8,10 @@
 
 import UIKit
 
-struct MapSize {
-    let row: Int
-    let column: Int
-}
 
-struct PieceSize {
-    let width: Float
-    let height: Float
-    let spacing: Float
-}
 
 struct Settings {
-    let mapSize: MapSize
+    let mapSize: MapShape
     let pieceSize: PieceSize
 }
 
@@ -58,6 +49,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        gameArea.frame = CGRect(
+        
         self.myGame = GameBoard(board: gameArea, map: gameMap)
         isBoardNotLoaded = false
     }
