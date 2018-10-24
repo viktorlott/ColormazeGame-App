@@ -41,7 +41,7 @@ class ViewController: UIViewController {
     // 10: Color X Start Block, 11: Color X Filled Block
     // 20: Color Y Start Block, 21: Color Y Filled Block
     // etc...
-    
+    var isBoardNotLoaded = true;
     var gameMap: [[Int]] = [
         [10, 30,  1, 30, 20, 30, 10,  40],
         [ 1,  1,  1,  1,  1, 1,   1,  1],
@@ -59,27 +59,33 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.myGame = GameBoard(board: gameArea, map: gameMap)
+        isBoardNotLoaded = false
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if isBoardNotLoaded {return}
         let touch = touches.first!
         let location = touch.location(in: self.gameArea)
         myGame!.onTouch(location.x, location.y)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if isBoardNotLoaded {return}
         let touch = touches.first!
         let location = touch.location(in: self.gameArea)
         myGame!.onTouchMove(location.x, location.y)
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        if isBoardNotLoaded {return}
         let touch = touches.first!
         let location = touch.location(in: self.gameArea)
         myGame!.onTouchEnd(location.x, location.y)
     }
 //    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-//
+//        if isBoardNotLoaded {return}
+//        let touch = touches.first!
+//        let location = touch.location(in: self.gameArea)
+//        myGame!.onTouchEnd(location.x, location.y)
 //    }
 
 

@@ -91,4 +91,10 @@ extension GameRules {
         }
         
     }
+    func noPieceSelected() -> Bool {
+        if selectedPiece == nil {
+            return true
+        }
+        return false
+    }
 }

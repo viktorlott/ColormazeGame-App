@@ -28,9 +28,7 @@ class GameBoard<T: Piece>: GameRules {
     private var canMove = true
 
     private var gameMap: [[Int]]
-    
-    var gameRenderMap: [Int] = []
-    
+    var gameRenderMap: [Int] = [Int]()
     var gamePieces: [Piece] = [Piece]()
 
     init(board: UIView, map: [[Int]]) {
@@ -53,6 +51,7 @@ class GameBoard<T: Piece>: GameRules {
         }
     }
     func onTouchMove(_ x: CGFloat, _ y: CGFloat) {
+        if noPieceSelected() {return}
         if let piece = getPieceFromCoord(x: x, y: y) {
             if piece.type == selectedPiece.type {
                 if piece.id == position {canMove = true}
@@ -75,6 +74,7 @@ class GameBoard<T: Piece>: GameRules {
         }
     }
     func onTouchEnd(_ x: CGFloat, _ y: CGFloat) {
+        if noPieceSelected() {return}
         if let piece = getPieceFromCoord(x: x, y: y) {
             if piece.type == gameRenderMap[selectedPiece.id] {
                 print("End ","Selected Piece:",selectedPiece.id, "Position:",position, "End Piece:", piece.id)
@@ -100,6 +100,7 @@ class GameBoard<T: Piece>: GameRules {
         canMove = true
     }
     private func clearColoredPath() {
+        if noPieceSelected() {return}
         for piece in gamePieces {
             if piece.type == gameRenderMap[selectedPiece.id] + 1 {
                 piece.updatePiece(type: Block.empty_block)
@@ -109,6 +110,7 @@ class GameBoard<T: Piece>: GameRules {
                 piece.isConnected = false
             }
         }
+        
     }
     
     private func getPieceFromCoord(x:CGFloat, y: CGFloat) -> Piece? {
