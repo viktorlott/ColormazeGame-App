@@ -8,6 +8,27 @@
 
 import UIKit
 
+struct MapSize {
+    let row: Int
+    let column: Int
+}
+
+struct PieceSize {
+    let width: Float
+    let height: Float
+    let spacing: Float
+}
+
+struct Settings {
+    let mapSize: MapSize
+    let pieceSize: PieceSize
+}
+
+struct Map {
+    let map: [[Int]]
+    let settings: Settings
+    
+}
 
 
 class ViewController: UIViewController {

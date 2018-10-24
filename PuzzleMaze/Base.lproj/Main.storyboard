@@ -18,11 +18,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xFy-h1-HE7">
-                                <rect key="frame" x="0.0" y="292" width="375" height="375"/>
+                                <rect key="frame" x="0.0" y="292" width="320" height="320"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="375" id="Wjw-49-eT8"/>
+                                    <constraint firstAttribute="height" constant="320" id="Wjw-49-eT8"/>
                                     <constraint firstAttribute="width" secondItem="xFy-h1-HE7" secondAttribute="height" multiplier="1:1" id="WqY-od-DeZ"/>
-                                    <constraint firstAttribute="width" constant="375" id="bkQ-h3-Sr4"/>
+                                    <constraint firstAttribute="width" constant="320" id="bkQ-h3-Sr4"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d6j-iQ-ED4">

@@ -11,10 +11,12 @@ import UIKit
 
 protocol GameRules {
     var selectedPiece: Piece! {get set}
-    var position: Int {get set}
+    var mapSize: MapSize! {get set}
+    var pieceSize: PieceSize! {get set}
+    var position: Int! {get set}
     var gameRenderMap: [Int] {get set}
     var gamePieces: [Piece] {get set}
-    var xPieces: Int {get set}
+    
     func touchCollideWithPiece(_ x: CGFloat, _ y: CGFloat, _ p: Piece) -> Bool
     func isColoredBlock(_ type: Int) -> Bool
     func isWall(_ type: Int) -> Bool
@@ -61,10 +63,10 @@ extension GameRules {
         return false
     }
     func cannotMoveToPiece(_ p: Int) -> Bool{
-        if  p != Block.empty_block && p == self.position - 1 || p == self.position + 1 || p == self.position + self.xPieces || p == self.position - self.xPieces {
-            return true
-        } else {
+        if  p != Block.empty_block && p == self.position - 1 || p == self.position + 1 || p == self.position + self.mapSize.column || p == self.position - self.mapSize.column {
             return false
+        } else {
+            return true
         }
     }
     func checkIfBoardIsFilled() -> Bool {
@@ -82,7 +84,7 @@ extension GameRules {
         return true
     }
     func isNeighborSameColor(p: Int) -> Bool {
-        if p == position + 1 || p == position - 1 || p == position + self.xPieces || p == position - self.xPieces{
+        if p == position + 1 || p == position - 1 || p == position + self.mapSize.column || p == position - self.mapSize.column {
             return true
         } else {
             return false

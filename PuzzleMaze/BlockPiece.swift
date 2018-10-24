@@ -38,20 +38,27 @@ struct Block {
     static let red_block    = 41
 }
 
-
+struct Size {
+    let width: Int
+    let height: Int
+}
+struct Position {
+    let x: CGColor
+    let y: CGColor
+}
 
 class Piece {
     let id: Int
     let x: CGFloat
     let y: CGFloat
-    let width: Int
-    let height: Int
+    let width: Float
+    let height: Float
     let label: UILabel
     var type: Int
     var connectedWith: Int?
     var isConnected: Bool = false
     
-    init(id: Int, X: CGFloat, Y: CGFloat, width: Int, height: Int, type: Int, connectedWith: Int?) {
+    init(id: Int, X: CGFloat, Y: CGFloat, width: Float, height: Float, type: Int) {
         self.id = id
         self.x = X
         self.y = Y
@@ -59,10 +66,9 @@ class Piece {
         self.height = height
         self.label = Piece.createPiece(x: X, y: Y, width: width, height: height, type: type)
         self.type = type
-        self.connectedWith = connectedWith
     }
-    private static func createPiece(x: CGFloat, y: CGFloat, width: Int, height: Int, type: Int) -> UILabel {
-        let label = UILabel(frame: CGRect(x: Int(x), y: Int(y), width: width, height: height))
+    private static func createPiece(x: CGFloat, y: CGFloat, width: Float, height: Float, type: Int) -> UILabel {
+        let label = UILabel(frame: CGRect(x: x, y: y, width: CGFloat(width), height: CGFloat(height)))
         label.isUserInteractionEnabled = true
         
         label.layer.backgroundColor = applyColor(for: type)

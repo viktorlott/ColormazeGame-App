@@ -9,53 +9,40 @@
 import Foundation
 import UIKit
 
+struct BoardSize {
+    let width: Int
+    let height: Int
+}
 
 class GameBoard<T: Piece>: GameRules {
-
     
-    
-    
-
     private var gameArea: UIView!
-    var xPieces = 8
-    private var yPieces = 8
-    private var pieceWidth = 40
-    private var pieceHeight = 40
-    private let spacing = 8
-    var selectedPiece: Piece!
-    var position: Int = 0
-    private var canMove = true
+    var mapSize: MapSize!
+    var boardSize: BoardSize!
+    var pieceSize: PieceSize!
     
-    // 0: No Block
-    // 1: Empty Block
-    // 10: Color X Start Block, 11: Color X Filled Block
-    // 20: Color Y Start Block, 21: Color Y Filled Block
-    // etc...
-    private var gameMap: [[Int]] = [
-        [10, 30,  1, 30, 20, 30, 10,  40],
-        [ 1,  1,  1,  1,  1, 1,   1,  1],
-        [ 1,  1, 40,  1,  1, 1,  10,  1],
-        [10,  1,  1, 20, 40, 1,   40,  1],
-        [ 0,  0, 10,  1, 10, 1,   1,  1],
-        [ 0,  1,  1,  1,  30, 1,  0, 20],
-        [ 0,  1,  0,  1,  1, 1,  0,  1],
-        [20,  1,  0,  0,  0, 1,  1,  1]
-        
-    ]
+    private var defaultSpacing:Float = 5
+    
+    var selectedPiece: Piece!
+    var position: Int!
+    private var canMove = true
+
+    private var gameMap: [[Int]]
+    
     var gameRenderMap: [Int] = []
     
-    var gamePieces: [Piece] = [Piece]();
+    var gamePieces: [Piece] = [Piece]()
 
     init(board: UIView, map: [[Int]]) {
         self.gameArea = board
         self.gameMap = map
         
-        print()
-        
+        mapSize = getRowsAndColumns(for: map)
+        boardSize = getSize(for: board)
+        pieceSize = getPieceSize(with: mapSize, and: boardSize)
         gameRenderMap = render(map)
         renderGameBoard()
     }
-    
     func onTouch(_ x: CGFloat, _ y: CGFloat) {
         if let piece = getPieceFromCoord(x: x, y: y) {
             if isColoredBlock(piece.type) {
@@ -142,23 +129,39 @@ class GameBoard<T: Piece>: GameRules {
         return temp
     }
     private func renderGameBoard() {
-        var Y = 0;
-        var X = 0;
+        var Y: Float = 0;
+        var X: Float = 0;
         for (i, blockType) in gameRenderMap.enumerated() {
-            let piece = Piece(id: i, X: CGFloat(X), Y: CGFloat(Y), width: pieceWidth, height: pieceHeight, type: blockType, connectedWith: 10)
+            let piece = Piece(id: i, X: CGFloat(X), Y: CGFloat(Y), width: pieceSize.width, height: pieceSize.height, type: blockType)
             
             piece.updatePiece(type: blockType)
             
             gameArea.addSubview(piece.label)
             gamePieces.append(piece as! T)
-            X += pieceWidth + spacing
-            if(((i + 1) % xPieces) == 0) {
-                Y += pieceHeight + spacing
+            X += pieceSize.width + pieceSize.spacing
+            if(((i + 1) % mapSize.column) == 0) {
+                Y += pieceSize.height + pieceSize.spacing
                 X = 0
             }
         }
     }
-
+    private func getRowsAndColumns(for map: [[Int]]) -> MapSize {
+        let row = map.count
+        let column = map[0].count
+        let size = MapSize(row: row, column: column)
+        print(size)
+        return size
+    }
+    private func getSize(for board: UIView) -> BoardSize {
+        return BoardSize(width: Int(board.frame.width), height: Int(board.frame.height))
+    }
+    private func getPieceSize(with map: MapSize, and board: BoardSize) -> PieceSize? {
+        let pS = Float(board.width) / Float(map.column)
+        let space = Float(pS - (Float(Int(pS / 10) * 10)))
+        let spacing = (space == 0.0 ? self.defaultSpacing : space)
+        print(Float(pS - (Float(Int(pS / 10) * 10))))
+        return PieceSize(width: pS - spacing, height: pS - spacing, spacing: spacing)
+    }
 }
 
 
