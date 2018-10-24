@@ -104,6 +104,27 @@ class GameBoard<T: Piece>: GameRules {
         print("  ", boardSize!)
         print("  ", mapShape!)
     }
+    private func removeAllElements() {
+        for piece in gamePieces {
+            piece.label.removeFromSuperview()
+        }
+        gameMap       = [[Int]]()
+        gameRenderMap = [Int]()
+        gamePieces    = [Piece]()
+        
+    }
+    func createNewGame(map: [[Int]]) {
+        removeAllElements()
+        mapShape = getRowsAndColumns(for: map)
+        boardSize = getSize(for: gameArea)
+        pieceSize = getPieceSize(with: mapShape, and: boardSize)
+        gameRenderMap = render(map)
+        renderGameBoard()
+        print("Settings:")
+        print("  ", mapShape!)
+        print("  ", boardSize!)
+        print("  ", mapShape!)
+    }
     func onTouch(_ x: CGFloat, _ y: CGFloat) {
         if let piece = getPieceFromCoord(x: x, y: y) {
             if isColoredBlock(piece.type) {
@@ -226,6 +247,7 @@ class GameBoard<T: Piece>: GameRules {
         let spacing = (space < self.defaultSpacing ? self.defaultSpacing : space)
         return PieceSize(width: pS - spacing, height: pS - spacing, spacing: spacing)
     }
+
 }
 
 

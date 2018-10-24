@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 struct Settings {
     let mapSize: MapShape
     let pieceSize: PieceSize
@@ -49,38 +47,40 @@ class GameController: UIViewController {
 //    [30,  1,  1, 20,  1,  1, 30]
 //    ]
     
-//    [
-//    [10, 30,  1, 30, 20],
-//    [ 1,  1,  1,  1,  1],
-//    [ 1,  1, 40,  1,  1],
-//    [10,  1,  1, 20, 40],
-//    [ 1,  1,  1,  1, 10],
-//    [ 1,  1,  1,  1, 30],
-//    [10,  1,  0,  1,  1],
-//    [0,   0,  0,  0,  0],
-//    [30,  1,  1,  1, 30],
-//    [20,  1,  1,  1, 20]
-//    ]
+   var game2 = [
+    [10, 30,  1, 30, 20],
+    [ 1,  1,  1,  1,  1],
+    [ 1,  1, 40,  1,  1],
+    [10,  1,  1, 20, 40],
+    [ 1,  1,  1,  1, 10],
+    [ 1,  1,  1,  1, 30],
+    [10,  1,  0,  1,  1],
+    [0,   0,  0,  0,  0],
+    [30,  1,  1,  1, 30],
+    [20,  1,  1,  1, 20]
+    ]
     
-//    [
-//    [10, 30,  1, 30, 20, 30, 10, 40],
-//    [ 1,  1,  1,  1,  1,  1,  1,  1],
-//    [ 1,  1, 40,  1,  1,  1, 10,  1],
-//    [10,  1,  1, 20, 40,  1, 40,  1],
-//    [ 0,  0, 10,  1, 10,  1,  1,  1],
-//    [ 0,  1,  1,  1, 30,  1,  0, 20],
-//    [ 0,  1,  0,  1,  1,  1,  0,  1],
-//    [20,  1,  0,  0,  0,  1,  1,  1]
-//    ]
+   var game3 = [
+    [10, 30,  1, 30, 20, 30, 10, 40],
+    [ 1,  1,  1,  1,  1,  1,  1,  1],
+    [ 1,  1, 40,  1,  1,  1, 10,  1],
+    [10,  1,  1, 20, 40,  1, 40,  1],
+    [ 0,  0, 10,  1, 10,  1,  1,  1],
+    [ 0,  1,  1,  1, 30,  1,  0, 20],
+    [ 0,  1,  0,  1,  1,  1,  0,  1],
+    [20,  1,  0,  0,  0,  1,  1,  1]
+    ]
     
     var myGame: GameBoard<Piece>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         
         self.myGame = GameBoard(board: gameArea, map: gameMap)
         isBoardNotLoaded = false
+        
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -90,6 +90,15 @@ class GameController: UIViewController {
         myGame!.onTouch(location.x, location.y)
     }
     
+    @IBAction func startgame1(_ sender: Any) {
+        self.myGame?.createNewGame(map: gameMap)
+    }
+    @IBAction func startgame2(_ sender: Any) {
+        self.myGame?.createNewGame(map: game2)
+    }
+    @IBAction func startgame3(_ sender: Any) {
+        self.myGame?.createNewGame(map: game3)
+    }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isBoardNotLoaded {return}
         let touch = touches.first!
