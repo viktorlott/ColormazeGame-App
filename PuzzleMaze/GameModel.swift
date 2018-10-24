@@ -79,7 +79,7 @@ class GameBoard<T: Piece>: GameRules {
     var boardSize: BoardSize!
     var pieceSize: PieceSize!
     
-    var defaultSpacing:Float = 4
+    var defaultSpacing:Float = 10 // cant be zero
     var touchArea: CGFloat = 10
     
     var selectedPiece: Piece!
@@ -195,7 +195,7 @@ class GameBoard<T: Piece>: GameRules {
     }
     private func renderGameBoard() {
         var Y: Float = 0;
-        var X: Float = 0;
+        var X: Float = 0 + pieceSize.spacing / 2;
         for (i, blockType) in gameRenderMap.enumerated() {
             let piece = Piece(id: i, X: CGFloat(X), Y: CGFloat(Y), width: pieceSize.width, height: pieceSize.height, type: blockType)
             
@@ -206,7 +206,7 @@ class GameBoard<T: Piece>: GameRules {
             X += pieceSize.width + pieceSize.spacing
             if(((i + 1) % mapShape.column) == 0) {
                 Y += pieceSize.height + pieceSize.spacing
-                X = 0
+                X = 0 + pieceSize.spacing / 2
             }
         }
     }
