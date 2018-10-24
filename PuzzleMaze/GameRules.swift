@@ -16,7 +16,7 @@ protocol GameRules {
     var position: Int! {get set}
     var gameRenderMap: [Int] {get set}
     var gamePieces: [Piece] {get set}
-    
+    var touchArea: CGFloat {get set}
     func touchCollideWithPiece(_ x: CGFloat, _ y: CGFloat, _ p: Piece) -> Bool
     func isColoredBlock(_ type: Int) -> Bool
     func isWall(_ type: Int) -> Bool
@@ -29,7 +29,7 @@ protocol GameRules {
 
 extension GameRules {
     func touchCollideWithPiece(_ x: CGFloat, _ y: CGFloat, _ p: Piece) -> Bool {
-        if x >= p.x && x <= p.x + CGFloat(p.width) && y >= p.y && y <= p.y + CGFloat(p.height) {
+        if x >= p.x - touchArea && x <= p.x + touchArea + CGFloat(p.width) && y >= p.y - touchArea && y <= p.y + touchArea + CGFloat(p.height) {
             return true
         } else {
             return false
