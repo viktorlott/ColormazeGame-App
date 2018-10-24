@@ -22,7 +22,7 @@ struct Map {
 }
 
 
-class ViewController: UIViewController {
+class GameController: UIViewController {
     
     @IBOutlet weak var testLabel: UILabel!
     @IBOutlet weak var gameArea: UIView!
@@ -34,16 +34,27 @@ class ViewController: UIViewController {
     // etc...
     var isBoardNotLoaded = true;
     var gameMap: [[Int]] = [
-        [10, 30,  1, 30, 20, 30, 10, 40],
-        [ 1,  1,  1,  1,  1,  1,  1,  1],
-        [ 1,  1, 40,  1,  1,  1, 10,  1],
-        [10,  1,  1, 20, 40,  1, 40,  1],
-        [ 0,  0, 10,  1, 10,  1,  1,  1],
-        [ 0,  1,  1,  1, 30,  1,  0, 20],
-        [ 0,  1,  0,  1,  1,  1,  0,  1],
-        [20,  1,  0,  0,  0,  1,  1,  1]
-        
+        [10, 30,  1, 30, 20],
+        [ 1,  1,  1,  1,  1],
+        [ 1,  1, 40,  1,  1],
+        [10,  1,  1, 20, 40],
+        [ 0,  0, 10,  1, 10],
+        [ 0,  1,  1,  1, 30],
+        [ 0,  1,  0,  1,  1],
+        [20,  1,  0,  20,  30]
     ]
+    
+    
+//    [
+//    [10, 30,  1, 30, 20, 30, 10, 40],
+//    [ 1,  1,  1,  1,  1,  1,  1,  1],
+//    [ 1,  1, 40,  1,  1,  1, 10,  1],
+//    [10,  1,  1, 20, 40,  1, 40,  1],
+//    [ 0,  0, 10,  1, 10,  1,  1,  1],
+//    [ 0,  1,  1,  1, 30,  1,  0, 20],
+//    [ 0,  1,  0,  1,  1,  1,  0,  1],
+//    [20,  1,  0,  0,  0,  1,  1,  1]
+//    ]
     
     var myGame: GameBoard<Piece>?
     

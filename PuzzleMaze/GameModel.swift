@@ -123,9 +123,7 @@ class GameBoard<T: Piece>: GameRules {
                     return
                 }
             }
-            if cannotMoveToPiece(piece.id) || isWall(piece.type) || isNotEmpty(piece.type){
-                return
-            }
+            if cannotMoveToPiece(piece.id) || isWall(piece.type) || isNotEmpty(piece.type){return}
             if canMove {
                 Vibration.selection.vibrate()
                 position = piece.id
@@ -165,7 +163,7 @@ class GameBoard<T: Piece>: GameRules {
     private func clearColoredPath() {
         if noPieceSelected() {return}
         for piece in gamePieces {
-            if piece.type == gameRenderMap[selectedPiece.id] + 1 {
+            if piece.type == selectedPiece.type + 1 {
                 piece.updatePiece(type: Block.empty_block)
                 gameRenderMap[piece.id] = Block.empty_block
             }
@@ -194,8 +192,10 @@ class GameBoard<T: Piece>: GameRules {
         return temp
     }
     private func renderGameBoard() {
+        let offsetX: Float = (Float(gameArea.frame.width) - (pieceSize.width + pieceSize.spacing) * Float(mapShape.column)) / 2
         var Y: Float = 0;
-        var X: Float = 0 + pieceSize.spacing / 2;
+        var X: Float = 0 + offsetX + pieceSize.spacing / 2;
+
         for (i, blockType) in gameRenderMap.enumerated() {
             let piece = Piece(id: i, X: CGFloat(X), Y: CGFloat(Y), width: pieceSize.width, height: pieceSize.height, type: blockType)
             
@@ -206,7 +206,7 @@ class GameBoard<T: Piece>: GameRules {
             X += pieceSize.width + pieceSize.spacing
             if(((i + 1) % mapShape.column) == 0) {
                 Y += pieceSize.height + pieceSize.spacing
-                X = 0 + pieceSize.spacing / 2
+                X = 0 + offsetX + pieceSize.spacing / 2
             }
         }
     }
@@ -220,7 +220,8 @@ class GameBoard<T: Piece>: GameRules {
         return BoardSize(width: Int(board.frame.width), height: Int(board.frame.height))
     }
     private func getPieceSize(with map: MapShape, and board: BoardSize) -> PieceSize {
-        let pS = Float(board.width) / Float(map.column)
+        let biggest = (map.column > map.row ? map.column : map.row)
+        let pS = Float(board.width) / Float(biggest)
         let space = Float(pS - (Float(Int(pS / 10) * 10)))
         let spacing = (space < self.defaultSpacing ? self.defaultSpacing : space)
         return PieceSize(width: pS - spacing, height: pS - spacing, spacing: spacing)
