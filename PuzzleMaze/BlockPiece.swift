@@ -77,9 +77,9 @@ class Piece {
     }
     static func applyColor(for type: Int) -> CGColor {
         switch type {
+        case Block.empty_block: return rgb(255, 255, 255, 0.05)
         case Block.wall:        return rgb(255, 255, 255, 0.2)
-        case Block.empty_block: return rgb(255, 255, 255, 0.1)
-            
+        
         case Block.green_start: return rgb(0, 255, 0, 0.8)
         case Block.green_block: return rgb(0, 255, 0, 1)
             

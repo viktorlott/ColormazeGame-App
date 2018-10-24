@@ -21,7 +21,7 @@ class GameBoard<T: Piece>: GameRules {
     var boardSize: BoardSize!
     var pieceSize: PieceSize!
     
-    private var defaultSpacing:Float = 5
+    private var defaultSpacing:Float = 8
     
     var selectedPiece: Piece!
     var position: Int!
@@ -158,7 +158,7 @@ class GameBoard<T: Piece>: GameRules {
     private func getPieceSize(with map: MapSize, and board: BoardSize) -> PieceSize? {
         let pS = Float(board.width) / Float(map.column)
         let space = Float(pS - (Float(Int(pS / 10) * 10)))
-        let spacing = (space == 0.0 ? self.defaultSpacing : space)
+        let spacing = (space < self.defaultSpacing ? self.defaultSpacing : space)
         print(Float(pS - (Float(Int(pS / 10) * 10))))
         return PieceSize(width: pS - spacing, height: pS - spacing, spacing: spacing)
     }
