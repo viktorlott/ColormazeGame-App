@@ -12,6 +12,9 @@
 		B41617BA21539A4A00BA8F7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B41617B821539A4A00BA8F7B /* Main.storyboard */; };
 		B41617BC21539A4C00BA8F7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B41617BB21539A4C00BA8F7B /* Assets.xcassets */; };
 		B41617BF21539A4C00BA8F7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B41617BD21539A4C00BA8F7B /* LaunchScreen.storyboard */; };
+		B41B686E2171FA9500184EFD /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41B686D2171FA9500184EFD /* GameModel.swift */; };
+		B41B68702171FBD100184EFD /* BlockPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41B686F2171FBD100184EFD /* BlockPiece.swift */; };
+		B46EFD3F217F2030008F01A6 /* GameRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46EFD3E217F2030008F01A6 /* GameRules.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		B41617BB21539A4C00BA8F7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B41617BE21539A4C00BA8F7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B41617C021539A4C00BA8F7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B41B686D2171FA9500184EFD /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		B41B686F2171FBD100184EFD /* BlockPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockPiece.swift; sourceTree = "<group>"; };
+		B46EFD3E217F2030008F01A6 /* GameRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRules.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +60,9 @@
 		B41617B321539A4A00BA8F7B /* PuzzleMaze */ = {
 			isa = PBXGroup;
 			children = (
+				B41B686D2171FA9500184EFD /* GameModel.swift */,
+				B46EFD3E217F2030008F01A6 /* GameRules.swift */,
+				B41B686F2171FBD100184EFD /* BlockPiece.swift */,
 				B41617B421539A4A00BA8F7B /* AppDelegate.swift */,
 				B41617B621539A4A00BA8F7B /* ViewController.swift */,
 				B41617B821539A4A00BA8F7B /* Main.storyboard */,
@@ -135,8 +144,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B41B68702171FBD100184EFD /* BlockPiece.swift in Sources */,
 				B41617B721539A4A00BA8F7B /* ViewController.swift in Sources */,
 				B41617B521539A4A00BA8F7B /* AppDelegate.swift in Sources */,
+				B41B686E2171FA9500184EFD /* GameModel.swift in Sources */,
+				B46EFD3F217F2030008F01A6 /* GameRules.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
