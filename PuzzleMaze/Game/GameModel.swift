@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import AudioToolbox
+
 
 struct MapShape {
     let row: Int
@@ -24,54 +24,7 @@ struct PieceSize {
     let spacing: Float
 }
 
-enum Vibration {
-    case error
-    case success
-    case warning
-    case light
-    case medium
-    case heavy
-    case selection
-    case oldSchool
-    
-    func vibrate() {
-        
-        switch self {
-        case .error:
-            let generator = UINotificationFeedbackGenerator()
-            generator.notificationOccurred(.error)
-            
-        case .success:
-            let generator = UINotificationFeedbackGenerator()
-            generator.notificationOccurred(.success)
-            
-        case .warning:
-            let generator = UINotificationFeedbackGenerator()
-            generator.notificationOccurred(.warning)
-            
-        case .light:
-            let generator = UIImpactFeedbackGenerator(style: .light)
-            generator.impactOccurred()
-            
-        case .medium:
-            let generator = UIImpactFeedbackGenerator(style: .medium)
-            generator.impactOccurred()
-            
-        case .heavy:
-            let generator = UIImpactFeedbackGenerator(style: .heavy)
-            generator.impactOccurred()
-            
-        case .selection:
-            let generator = UISelectionFeedbackGenerator()
-            generator.selectionChanged()
-            
-        case .oldSchool:
-            AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-        }
-        
-    }
-    
-}
+
 class GameBoard<T: Piece>: GameRules {
     
     private var gameArea: UIView!
@@ -80,15 +33,15 @@ class GameBoard<T: Piece>: GameRules {
     var pieceSize: PieceSize!
     
     var defaultSpacing:Float = 10 // cant be zero
-    var touchArea: CGFloat = 10
+    var touchArea: CGFloat   = 10
     
     var selectedPiece: Piece!
     var position: Int!
     private var canMove = true
 
-    private var gameMap: [[Int]]
-    var gameRenderMap: [Int] = [Int]()
-    var gamePieces: [Piece] = [Piece]()
+    private var gameMap = [[Int]]()
+    var gameRenderMap   = [Int]()
+    var gamePieces      = [Piece]()
 
     init(board: UIView, map: [[Int]]) {
         self.gameArea = board
@@ -98,16 +51,12 @@ class GameBoard<T: Piece>: GameRules {
         boardSize = getSize(for: board)
         pieceSize = getPieceSize(with: mapShape, and: boardSize)
         gameRenderMap = render(map)
+        
         renderGameBoard()
-        print("Settings:")
-        print("  ", mapShape!)
-        print("  ", boardSize!)
-        print("  ", mapShape!)
+        printSettings()
     }
     private func removeAllElements() {
-        for piece in gamePieces {
-            piece.label.removeFromSuperview()
-        }
+        for piece in gamePieces { piece.label.removeFromSuperview() }
         gameMap       = [[Int]]()
         gameRenderMap = [Int]()
         gamePieces    = [Piece]()
@@ -120,6 +69,10 @@ class GameBoard<T: Piece>: GameRules {
         pieceSize = getPieceSize(with: mapShape, and: boardSize)
         gameRenderMap = render(map)
         renderGameBoard()
+        printSettings()
+
+    }
+    func printSettings() {
         print("Settings:")
         print("  ", mapShape!)
         print("  ", boardSize!)
@@ -146,10 +99,10 @@ class GameBoard<T: Piece>: GameRules {
             }
             if cannotMoveToPiece(piece.id) || isWall(piece.type) || isNotEmpty(piece.type){return}
             if canMove {
-                Vibration.selection.vibrate()
+                
                 position = piece.id
-                let colorType = gameRenderMap[selectedPiece.id]
-                piece.updatePiece(type: colorType + 1)
+                let colorType = selectedPiece.type
+                piece.updatePiece(block: selectedPiece.block.upp())
                 gameRenderMap[position] = colorType + 1
                 print("Moving ","Selected Piece:",selectedPiece.id, "Position:",position)
             }
@@ -159,7 +112,7 @@ class GameBoard<T: Piece>: GameRules {
     func onTouchEnd(_ x: CGFloat, _ y: CGFloat) {
         if noPieceSelected() {return}
         if let piece = getPieceFromCoord(x: x, y: y) {
-            if piece.type == gameRenderMap[selectedPiece.id] {
+            if piece.type == selectedPiece.block.type {
                 print("End ","Selected Piece:",selectedPiece.id, "Position:",position, "End Piece:", piece.id)
                 if piece.id != selectedPiece.id && isNeighborSameColor(p: piece.id) && piece.isConnected == false {
                     
@@ -185,8 +138,8 @@ class GameBoard<T: Piece>: GameRules {
         if noPieceSelected() {return}
         for piece in gamePieces {
             if piece.type == selectedPiece.type + 1 {
-                piece.updatePiece(type: Block.empty_block)
-                gameRenderMap[piece.id] = Block.empty_block
+                piece.updatePiece(block: Block.empty)
+                gameRenderMap[piece.id] = Block.empty.type
             }
             if piece.type == selectedPiece.type {
                 piece.isConnected = false
@@ -218,9 +171,10 @@ class GameBoard<T: Piece>: GameRules {
         var X: Float = 0 + offsetX + pieceSize.spacing / 2;
 
         for (i, blockType) in gameRenderMap.enumerated() {
-            let piece = Piece(id: i, X: CGFloat(X), Y: CGFloat(Y), width: pieceSize.width, height: pieceSize.height, type: blockType)
+            let block = getBlockFrom(type: blockType)
+            let piece = Piece(id: i, X: CGFloat(X), Y: CGFloat(Y), width: pieceSize.width, height: pieceSize.height, type: blockType, block: block)
             
-            piece.updatePiece(type: blockType)
+            piece.updatePiece(block: block)
             
             gameArea.addSubview(piece.label)
             gamePieces.append(piece as! T)
@@ -230,6 +184,14 @@ class GameBoard<T: Piece>: GameRules {
                 X = 0 + offsetX + pieceSize.spacing / 2
             }
         }
+    }
+    private func getBlockFrom(type: Int) -> Block {
+        for block in Block.allCases {
+            if type == block.type {
+                return block
+            }
+        }
+        return Block.empty
     }
     private func getRowsAndColumns(for map: [[Int]]) -> MapShape {
         let row = map.count

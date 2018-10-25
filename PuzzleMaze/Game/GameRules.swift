@@ -36,21 +36,21 @@ extension GameRules {
         }
     }
     func isColoredBlock(_ type: Int) -> Bool {
-        if type % 10 == 0 && type != Block.wall {
+        if type % 10 == 0 && type != Block.wall.type {
             return true
         } else {
             return false
         }
     }
     func isWall(_ type: Int) -> Bool {
-        if type == Block.wall {
+        if type == Block.wall.type {
             return true
         } else {
             return false
         }
     }
     func isNotEmpty(_ type: Int) -> Bool {
-        if type == Block.empty_block {
+        if type == Block.empty.type {
             return false
         } else {
             return true
@@ -63,15 +63,15 @@ extension GameRules {
         return false
     }
     func cannotMoveToPiece(_ p: Int) -> Bool{
-        if  p != Block.empty_block && p == self.position - 1 || p == self.position + 1 || p == self.position + self.mapShape.column || p == self.position - self.mapShape.column {
+        if  p != Block.empty.type && p == self.position - 1 || p == self.position + 1 || p == self.position + self.mapShape.column || p == self.position - self.mapShape.column {
             return false
         } else {
             return true
         }
     }
     func checkIfBoardIsFilled() -> Bool {
-        for blockType in gameRenderMap {
-            if blockType == Block.empty_block {
+        for piece in gamePieces {
+            if piece.type == Block.empty.type {
                 return false
             }
         }
