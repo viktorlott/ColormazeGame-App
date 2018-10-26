@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+import AudioToolbox
 
 struct MapShape {
     let row: Int
@@ -83,7 +83,7 @@ class GameBoard<T: Piece>: GameRules {
                 selectedPiece = piece as! T
                 selectedPiece.isLit = true
                 selectedPiece.litBlock()
-                
+                Vibration.dotSound.vibrate()
                 position = piece.id
                 print("Begin ", "Selected Piece:",selectedPiece.id)
             }
@@ -104,13 +104,13 @@ class GameBoard<T: Piece>: GameRules {
             }
             if cannotMoveToPiece(piece.id) || isWall(piece.block.type) || isNotEmpty(piece.block.type){return}
             if canMove  {
-                
+                Vibration.dotSound.vibrate()
                 position = piece.id
                 piece.updatePiece(block: selectedPiece.block.upp())
                 gameRenderMap[position] = selectedPiece.block.upp().type
                 piece.litBlock()
                 print("Moving ","Selected Piece:",selectedPiece.id, "Position:",position)
-                print(gameRenderMap)
+                
             }
             
         }
@@ -121,7 +121,7 @@ class GameBoard<T: Piece>: GameRules {
             if piece.block.type == selectedPiece.block.type  {
                 print("End ","Selected Piece:",selectedPiece.id, "Position:",position, "End Piece:", piece.id)
                 if piece.id != selectedPiece.id && isNeighborSameColor(p: piece.id) && piece.isConnected == false {
-                    
+                    Vibration.dotSound.vibrate()
                     print("connected")
                     piece.isConnected = true
                     piece.litBlock()

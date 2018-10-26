@@ -19,6 +19,7 @@ enum Vibration {
     case heavy
     case selection
     case oldSchool
+    case dotSound
     
     func vibrate() {
         
@@ -53,7 +54,10 @@ enum Vibration {
             
         case .oldSchool:
             AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+        case .dotSound:
+            AudioServicesPlaySystemSound(SystemSoundID(1104))
         }
+        
         
     }
     
