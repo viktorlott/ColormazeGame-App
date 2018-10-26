@@ -110,6 +110,7 @@ class GameBoard<T: Piece>: GameRules {
                 gameRenderMap[position] = selectedPiece.block.upp().type
                 piece.litBlock()
                 print("Moving ","Selected Piece:",selectedPiece.id, "Position:",position)
+                print(gameRenderMap)
             }
             
         }

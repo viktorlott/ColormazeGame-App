@@ -57,7 +57,6 @@ enum Block: CaseIterable {
             case .wall: return rgb(255, 255, 255, 0.2)
             case .empty: return rgb(255, 255, 255, 0.05)
                 
-                
             case .green_start: return rgb(0, 255, 0, 0.5)
             case .green: return rgb(0, 255, 0, 1)
                 

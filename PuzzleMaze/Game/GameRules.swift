@@ -71,7 +71,8 @@ extension GameRules {
         return false
     }
     func cannotMoveToPiece(_ p: Int) -> Bool{
-        if  p != Block.empty.type && p == self.position - 1 || p == self.position + 1 || p == self.position + self.mapShape.column || p == self.position - self.mapShape.column {
+        //p != Block.empty.type && Bugg
+        if p == self.position - 1 || p == self.position + 1 || p == self.position + self.mapShape.column || p == self.position - self.mapShape.column {
             return false
         } else {
             return true
