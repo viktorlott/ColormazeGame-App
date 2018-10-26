@@ -92,16 +92,18 @@ class GameBoard<T: Piece>: GameRules {
     func onTouchMove(_ x: CGFloat, _ y: CGFloat) {
         if noPieceSelected() {return}
         if let piece = getPieceFromCoord(x: x, y: y) {
+            if !canMove { return}
+
             if piece.block.type == selectedPiece.block.type {
                 if piece.id == position {canMove = true}
-                if piece.id != selectedPiece.id || (isPieceConnected(piece) && isColoredBlock(piece.block.type)){
+                if piece.id != selectedPiece.id && !cannotMoveToPiece(piece.id) || (isPieceConnected(piece) && isColoredBlock(piece.block.type)){
                     piece.litBlock()
                     canMove = false
                     return
                 }
             }
             if cannotMoveToPiece(piece.id) || isWall(piece.block.type) || isNotEmpty(piece.block.type){return}
-            if canMove {
+            if canMove  {
                 
                 position = piece.id
                 piece.updatePiece(block: selectedPiece.block.upp())
