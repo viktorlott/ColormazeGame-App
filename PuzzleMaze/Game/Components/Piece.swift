@@ -18,7 +18,9 @@ struct Position {
     let x: CGColor
     let y: CGColor
 }
-
+class Box: UILabel {
+    
+}
 class Piece {
     let id: Int
     let x: CGFloat
@@ -68,21 +70,33 @@ class Piece {
     }
     func litBlock() {
         isLit = true
+
         label.layer.shadowColor = block.upp().color
         label.layer.shadowRadius = 10.0
         label.layer.shadowOpacity = 0.0
         label.layer.shadowRadius = 0
         label.layer.shadowOffset = CGSize(width: 0, height: 0)
         if block.isStartBlock(type: self.block.type) {
-            label.layer.frame = mutateShape(val: mutatingSizeValue, with: .grow)
+            animate {
+                self.label.layer.frame = self.mutateShape(val: self.mutatingSizeValue, with: .grow)
+
+            }
             self.label.layer.backgroundColor = self.block.getBlockFrom(val: self.block.type).upp().color
+
+
         } else {
-            self.label.layer.backgroundColor = self.block.color
-            label.layer.frame = mutateShape(val: mutatingSizeValue, with: .grow)
+            animate {
+                self.label.layer.backgroundColor = self.block.color
+                self.label.layer.frame = self.mutateShape(val: self.mutatingSizeValue, with: .grow)
+            }
+
         }
         
 
         
+    }
+    private func animate(callback: @escaping () -> ()) {
+        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 100, initialSpringVelocity: 200, options: .allowAnimatedContent, animations: {callback()}) {(_) in}
     }
     private func mutateShape(val: CGFloat, with shape: Shape) -> CGRect {
         switch shape {
@@ -93,8 +107,10 @@ class Piece {
     }
     func dimBlock() {
         isLit = false
+        animate {
+            self.label.layer.frame = self.mutateShape(val: self.mutatingSizeValue, with: .normal)
+        }
         
-        label.layer.frame = mutateShape(val: mutatingSizeValue, with: .normal)
         label.layer.shadowOpacity = 0
 
         self.label.layer.backgroundColor = self.block.color
