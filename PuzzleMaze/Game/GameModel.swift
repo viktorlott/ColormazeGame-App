@@ -135,6 +135,7 @@ class GameBoard<T: Piece>: GameRules {
                     piece.isLit = true
                     selectedPiece.isConnected = true
                     selectedPiece.connectedWith = piece.id
+                    selectedPiece = nil
                     
                     
                     if checkIfBoardIsFilled() && checkIfPiecesIsConnected() {selectedPiece = nil;print("Board is filled", " All pieces is connected")}
