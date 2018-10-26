@@ -25,11 +25,7 @@ class GameController: UIViewController {
     @IBOutlet weak var testLabel: UILabel!
     @IBOutlet weak var gameArea: UIView!
 
-    // 0: No Block
-    // 1: Empty Block
-    // 10: Color X Start Block, 11: Color X Filled Block
-    // 20: Color Y Start Block, 21: Color Y Filled Block
-    // etc...
+    
     var isBoardNotLoaded = true;
     
     
@@ -38,7 +34,7 @@ class GameController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.myGame = GameBoard(board: gameArea, map: Maps.flag.render())
+        self.myGame = GameBoard(board: gameArea, map: Maps.maze.render())
         isBoardNotLoaded = false
     }
     
@@ -50,13 +46,13 @@ class GameController: UIViewController {
     }
     
     @IBAction func startgame1(_ sender: Any) {
-        self.myGame?.createNewGame(map: Maps.flag.render())
+        self.myGame?.createNewGame(map: Maps.maze.render())
     }
     @IBAction func startgame2(_ sender: Any) {
         self.myGame?.createNewGame(map: Maps.smallmaze.render())
     }
     @IBAction func startgame3(_ sender: Any) {
-        self.myGame?.createNewGame(map: Maps.maze.render())
+        self.myGame?.createNewGame(map: Maps.flag.render() )
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isBoardNotLoaded {return}
@@ -70,37 +66,9 @@ class GameController: UIViewController {
         let location = touch.location(in: self.gameArea)
         myGame!.onTouchEnd(location.x, location.y)
     }
-//    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        if isBoardNotLoaded {return}
-//        let touch = touches.first!
-//        let location = touch.location(in: self.gameArea)
-//        myGame!.onTouchEnd(location.x, location.y)
-//    }
-
 
 }
 
 
 
-//                if isColoredBlock(piece.type) {
-//                    selectedColor = piece.id
-//                }
-//
-//                if isColoredBlock(piece.type) {
-//                    currentColor = applyColor(for: piece.type)
-//                    print(piece.id)
-//                    selectedColor = piece.id
-//                }
-//
-//
-//                if !canMoveToPiece(piece.id) {return}
-//                if isWall(piece.type) {return}
-//
-//
-//                if
-//                gameRenderMap[piece.id] = piece.type
-//
-//                piece.label.layer.backgroundColor = currentColor
-//                selectedColor = piece.id
-//                if gameRenderMap[selectedColor] == piece.type {return}
 

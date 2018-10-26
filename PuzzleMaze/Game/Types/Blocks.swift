@@ -57,22 +57,36 @@ enum Block: CaseIterable {
             case .wall: return rgb(255, 255, 255, 0.2)
             case .empty: return rgb(255, 255, 255, 0.05)
                 
-            case .green_start: return rgb(0, 255, 0, 0.8)
+                
+            case .green_start: return rgb(0, 255, 0, 0.5)
             case .green: return rgb(0, 255, 0, 1)
                 
-            case .yellow_start: return rgb(255, 255, 0, 0.8)
+            case .yellow_start: return rgb(255, 255, 0, 0.5)
             case .yellow: return rgb(255, 255, 0, 1)
                 
-            case .blue_start: return rgb(0, 102, 255, 0.8)
+            case .blue_start: return rgb(0, 102, 255, 0.5)
             case .blue: return rgb(0, 102, 255, 1)
                 
-            case .red_start: return rgb(255, 51, 0, 0.8)
+            case .red_start: return rgb(255, 51, 0, 0.5)
             case .red: return rgb(255, 51, 0, 1)
             }
         }
     }
+    func isStartBlock(type: Int) -> Bool {
+        if type % 10 == 0 && type != Block.wall.type {
+            return true
+        }
+        return false
+    }
     func upp() -> Block {
+        
         return getBlockFrom(val: self.type + 1)
+    }
+    func down() -> Block {
+//        if self.type % 10 == 0 && type != Block.wall.type {
+//            return nil
+//        }
+        return getBlockFrom(val: self.type - 1)
     }
     func rgb(_ r: Float, _ g: Float, _ b: Float, _ a: Float) -> CGColor {
         return UIColor(red: CGFloat(r/255), green: CGFloat(g/255), blue: CGFloat(b/255), alpha: CGFloat(a)).cgColor

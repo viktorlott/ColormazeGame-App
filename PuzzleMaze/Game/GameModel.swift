@@ -32,7 +32,7 @@ class GameBoard<T: Piece>: GameRules {
     var boardSize: BoardSize!
     var pieceSize: PieceSize!
     
-    var defaultSpacing:Float = 10 // cant be zero
+    var defaultSpacing: Float = 5 // cant be zero
     var touchArea: CGFloat   = 10
     
     var selectedPiece: Piece!
@@ -76,12 +76,15 @@ class GameBoard<T: Piece>: GameRules {
         print("Settings:")
         print("  ", mapShape!)
         print("  ", boardSize!)
-        print("  ", mapShape!)
+        print("  ", pieceSize!)
     }
     func onTouch(_ x: CGFloat, _ y: CGFloat) {
         if let piece = getPieceFromCoord(x: x, y: y) {
-            if isColoredBlock(piece.type) {
+            if isColoredBlock(piece.block.type) {
                 selectedPiece = piece as! T
+                selectedPiece.isLit = true
+                selectedPiece.litBlock()
+                
                 position = piece.id
                 print("Begin ", "Selected Piece:",selectedPiece.id)
             }
@@ -90,20 +93,21 @@ class GameBoard<T: Piece>: GameRules {
     func onTouchMove(_ x: CGFloat, _ y: CGFloat) {
         if noPieceSelected() {return}
         if let piece = getPieceFromCoord(x: x, y: y) {
-            if piece.type == selectedPiece.type {
+            if piece.block.type == selectedPiece.block.type {
                 if piece.id == position {canMove = true}
-                if piece.id != selectedPiece.id || (isPieceConnected(piece) && isColoredBlock(piece.type)){
+                if piece.id != selectedPiece.id || (isPieceConnected(piece) && isColoredBlock(piece.block.type)){
+                    piece.litBlock()
                     canMove = false
                     return
                 }
             }
-            if cannotMoveToPiece(piece.id) || isWall(piece.type) || isNotEmpty(piece.type){return}
+            if cannotMoveToPiece(piece.id) || isWall(piece.block.type) || isNotEmpty(piece.block.type){return}
             if canMove {
                 
                 position = piece.id
-                let colorType = selectedPiece.type
                 piece.updatePiece(block: selectedPiece.block.upp())
-                gameRenderMap[position] = colorType + 1
+                gameRenderMap[position] = selectedPiece.block.upp().type
+                piece.litBlock()
                 print("Moving ","Selected Piece:",selectedPiece.id, "Position:",position)
             }
             
@@ -112,14 +116,17 @@ class GameBoard<T: Piece>: GameRules {
     func onTouchEnd(_ x: CGFloat, _ y: CGFloat) {
         if noPieceSelected() {return}
         if let piece = getPieceFromCoord(x: x, y: y) {
-            if piece.type == selectedPiece.block.type {
+            if piece.block.type == selectedPiece.block.type  {
                 print("End ","Selected Piece:",selectedPiece.id, "Position:",position, "End Piece:", piece.id)
                 if piece.id != selectedPiece.id && isNeighborSameColor(p: piece.id) && piece.isConnected == false {
                     
                     print("connected")
                     piece.isConnected = true
+                    piece.litBlock()
+                    piece.isLit = true
                     selectedPiece.isConnected = true
                     selectedPiece.connectedWith = piece.id
+                    
                     
                     if checkIfBoardIsFilled() && checkIfPiecesIsConnected() {selectedPiece = nil;print("Board is filled", " All pieces is connected")}
                 } else {
@@ -137,17 +144,37 @@ class GameBoard<T: Piece>: GameRules {
     private func clearColoredPath() {
         if noPieceSelected() {return}
         for piece in gamePieces {
-            if piece.type == selectedPiece.type + 1 {
+            if piece.block.type == selectedPiece.block.upp().type {
                 piece.updatePiece(block: Block.empty)
+                piece.dimBlock()
+                
                 gameRenderMap[piece.id] = Block.empty.type
             }
-            if piece.type == selectedPiece.type {
+            if piece.block.type == selectedPiece.block.type {
                 piece.isConnected = false
             }
+
         }
+        selectedPiece.dimBlock()
+        dimAllColoredBlock()
         position = selectedPiece.id
     }
-    
+    func dimAllColoredBlock() {
+        for piece in gamePieces {
+            if piece.block.type == selectedPiece.block.type && piece.isLit == true {
+                piece.dimBlock()
+            }
+        }
+    }
+    func getAllStartingPositons(type: Int) -> [Int] {
+        var pos = [Int]()
+        for (i, Btype) in gameRenderMap.enumerated() {
+            if Btype == type {
+                pos.append(i)
+            }
+        }
+        return pos
+    }
     private func getPieceFromCoord(x:CGFloat, y: CGFloat) -> Piece? {
         for piece in gamePieces {
             if touchCollideWithPiece(x, y, piece) {
@@ -172,7 +199,7 @@ class GameBoard<T: Piece>: GameRules {
 
         for (i, blockType) in gameRenderMap.enumerated() {
             let block = getBlockFrom(type: blockType)
-            let piece = Piece(id: i, X: CGFloat(X), Y: CGFloat(Y), width: pieceSize.width, height: pieceSize.height, type: blockType, block: block)
+            let piece = Piece(id: i, X: CGFloat(X), Y: CGFloat(Y), width: pieceSize.width, height: pieceSize.height, block: block)
             
             piece.updatePiece(block: block)
             

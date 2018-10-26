@@ -29,12 +29,20 @@ protocol GameRules {
 
 extension GameRules {
     func touchCollideWithPiece(_ x: CGFloat, _ y: CGFloat, _ p: Piece) -> Bool {
+        if isColoredBlock(p.block.type) {
+            if x >= p.x - touchArea - 5 && x <= p.x + touchArea + 5 + CGFloat(p.width) && y >= p.y - touchArea - 5 && y <= p.y + touchArea + 5 + CGFloat(p.height) {
+                return true
+            }
+        } else {
         if x >= p.x - touchArea && x <= p.x + touchArea + CGFloat(p.width) && y >= p.y - touchArea && y <= p.y + touchArea + CGFloat(p.height) {
             return true
         } else {
             return false
         }
     }
+        return false
+    }
+    
     func isColoredBlock(_ type: Int) -> Bool {
         if type % 10 == 0 && type != Block.wall.type {
             return true
@@ -71,14 +79,14 @@ extension GameRules {
     }
     func checkIfBoardIsFilled() -> Bool {
         for piece in gamePieces {
-            if piece.type == Block.empty.type {
+            if piece.block.type == Block.empty.type {
                 return false
             }
         }
         return true
     }
     func checkIfPiecesIsConnected() -> Bool{
-        for p in gamePieces where p.isConnected == false && isColoredBlock(p.type){
+        for piece in gamePieces where piece.isConnected == false && isColoredBlock(piece.block.type){
             return false
         }
         return true
