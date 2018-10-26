@@ -99,5 +99,13 @@ enum Block: CaseIterable {
         }
         return Block.empty
     }
+    static func getBlockFrom(val: Int) -> Block {
+        for block in Block.allCases {
+            if val == block.type {
+                return block as Block
+            }
+        }
+        return Block.empty
+    }
 }
 

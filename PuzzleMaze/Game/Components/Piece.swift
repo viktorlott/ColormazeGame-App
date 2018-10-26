@@ -30,7 +30,7 @@ class Piece {
     var isLit: Bool = false
     var connectedWith: Int?
     var isConnected: Bool = false
-    var shrink: CGFloat = 10
+    var mutatingSizeValue: CGFloat = 5
     private enum Shape {
         case grow, shrink, normal
     }
@@ -54,27 +54,34 @@ class Piece {
     }
     func updatePiece(block: Block) {
         self.block = block
-
+//        if block.isStartBlock(type: self.block.type) {
+//            self.label.layer.backgroundColor = self.block.getBlockFrom(val: self.block.type).upp().color
+//            return
+//        }
         self.label.layer.backgroundColor = self.block.color
     }
-    
+    func ifWallUpdateSize() {
+        if self.block.type == Block.wall.type {
+             label.layer.frame = mutateShape(val: mutatingSizeValue, with: .grow)
+        }
+    }
     func litBlock() {
         isLit = true
         label.layer.shadowColor = block.upp().color
         label.layer.shadowRadius = 10.0
-        label.layer.shadowOpacity = 1.0
+        label.layer.shadowOpacity = 0.0
         label.layer.shadowRadius = 0
         label.layer.shadowOffset = CGSize(width: 0, height: 0)
         if block.isStartBlock(type: self.block.type) {
-            label.layer.frame = mutateShape(val: shrink, with: .shrink)
-            
+            label.layer.frame = mutateShape(val: mutatingSizeValue, with: .grow)
+            self.label.layer.backgroundColor = self.block.getBlockFrom(val: self.block.type).upp().color
         } else {
-            label.layer.frame = mutateShape(val: shrink, with: .shrink)
+            self.label.layer.backgroundColor = self.block.color
+            label.layer.frame = mutateShape(val: mutatingSizeValue, with: .grow)
         }
         
-//        self.label.layer.borderColor = rgb(42,42,42, 1)
-//        self.label.layer.borderWidth = 2
-        self.label.layer.backgroundColor = self.block.color
+
+        
     }
     private func mutateShape(val: CGFloat, with shape: Shape) -> CGRect {
         switch shape {
@@ -85,8 +92,8 @@ class Piece {
     }
     func dimBlock() {
         isLit = false
-
-        label.layer.frame = mutateShape(val: shrink, with: .normal)
+        
+        label.layer.frame = mutateShape(val: mutatingSizeValue, with: .normal)
         label.layer.shadowOpacity = 0
 
         self.label.layer.backgroundColor = self.block.color

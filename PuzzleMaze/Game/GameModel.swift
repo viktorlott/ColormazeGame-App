@@ -32,7 +32,7 @@ class GameBoard<T: Piece>: GameRules {
     var boardSize: BoardSize!
     var pieceSize: PieceSize!
     
-    var defaultSpacing: Float = 5 // cant be zero
+    var defaultSpacing: Float = 10 // cant be zero
     var touchArea: CGFloat   = 10
     
     var selectedPiece: Piece!
@@ -47,13 +47,21 @@ class GameBoard<T: Piece>: GameRules {
         self.gameArea = board
         self.gameMap = map
         
-        mapShape = getRowsAndColumns(for: map)
-        boardSize = getSize(for: board)
-        pieceSize = getPieceSize(with: mapShape, and: boardSize)
-        gameRenderMap = render(map)
+        createNewGame(map: map)
+//        mapShape = getRowsAndColumns(for: map)
+//        boardSize = getSize(for: board)
+//        pieceSize = getPieceSize(with: mapShape, and: boardSize)
+//        gameRenderMap = render(map)
+//
+//        renderGameBoard()
         
-        renderGameBoard()
-        printSettings()
+        
+//        printSettings()
+    }
+    private func updateWallSize() {
+        for p in gamePieces {
+            p.ifWallUpdateSize()
+        }
     }
     private func removeAllElements() {
         for piece in gamePieces { piece.label.removeFromSuperview() }
@@ -69,6 +77,7 @@ class GameBoard<T: Piece>: GameRules {
         pieceSize = getPieceSize(with: mapShape, and: boardSize)
         gameRenderMap = render(map)
         renderGameBoard()
+        updateWallSize()
         printSettings()
 
     }
