@@ -95,8 +95,8 @@ class Piece {
 
         
     }
-    private func animate(callback: @escaping () -> ()) {
-        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 100, initialSpringVelocity: 200, options: .allowAnimatedContent, animations: {callback()}) {(_) in}
+    private func animate(animations: @escaping () -> ()) {
+        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 500, initialSpringVelocity: 500, options: .allowAnimatedContent, animations: {animations()}) {(_) in}
     }
     private func mutateShape(val: CGFloat, with shape: Shape) -> CGRect {
         switch shape {
