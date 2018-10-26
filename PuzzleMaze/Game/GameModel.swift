@@ -46,17 +46,7 @@ class GameBoard<T: Piece>: GameRules {
     init(board: UIView, map: [[Int]]) {
         self.gameArea = board
         self.gameMap = map
-        
         createNewGame(map: map)
-//        mapShape = getRowsAndColumns(for: map)
-//        boardSize = getSize(for: board)
-//        pieceSize = getPieceSize(with: mapShape, and: boardSize)
-//        gameRenderMap = render(map)
-//
-//        renderGameBoard()
-        
-        
-//        printSettings()
     }
     private func updateWallSize() {
         for p in gamePieces {
@@ -167,7 +157,8 @@ class GameBoard<T: Piece>: GameRules {
         }
         selectedPiece.dimBlock()
         dimAllColoredBlock()
-        position = selectedPiece.id
+        position = nil
+        selectedPiece = nil
     }
     func dimAllColoredBlock() {
         for piece in gamePieces {
