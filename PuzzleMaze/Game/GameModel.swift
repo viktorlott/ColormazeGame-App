@@ -97,6 +97,7 @@ class GameBoard<T: Piece>: GameRules {
             if piece.block.type == selectedPiece.block.type {
                 if piece.id == position {canMove = true}
                 if piece.id != selectedPiece.id && !cannotMoveToPiece(piece.id) || (isPieceConnected(piece) && isColoredBlock(piece.block.type)){
+                    Vibration.dotSound.vibrate()
                     piece.litBlock()
                     canMove = false
                     return
@@ -121,7 +122,7 @@ class GameBoard<T: Piece>: GameRules {
             if piece.block.type == selectedPiece.block.type  {
                 print("End ","Selected Piece:",selectedPiece.id, "Position:",position, "End Piece:", piece.id)
                 if piece.id != selectedPiece.id && isNeighborSameColor(p: piece.id) && piece.isConnected == false {
-                    Vibration.dotSound.vibrate()
+                    
                     print("connected")
                     piece.isConnected = true
                     piece.litBlock()

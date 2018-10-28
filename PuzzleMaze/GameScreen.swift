@@ -20,7 +20,7 @@ struct Map {
 }
 
 
-class GameController: UIViewController {
+class GameScreen: UIViewController {
     
     @IBOutlet weak var testLabel: UILabel!
     @IBOutlet weak var gameArea: UIView!
@@ -28,16 +28,23 @@ class GameController: UIViewController {
     
     var isBoardNotLoaded = true;
     
-    
+    var callOnce = true
     var myGame: GameBoard<Piece>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.myGame = GameBoard(board: gameArea, map: Maps.maze.render())
-        isBoardNotLoaded = false
+
     }
-    
+
+    override func viewDidLayoutSubviews() {
+        if callOnce {
+            print(gameArea.bounds)
+            self.myGame = GameBoard(board: gameArea, map: Maps.maze.render())
+            isBoardNotLoaded = false
+            callOnce = false
+        }
+ 
+    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isBoardNotLoaded {return}
         let touch = touches.first!

@@ -32,6 +32,8 @@ enum Block: CaseIterable {
     case red
     case orange_start
     case orange
+    case purple_start
+    case purple
     var type: Int {
         get{
             switch self {
@@ -52,6 +54,9 @@ enum Block: CaseIterable {
                 
             case .orange_start: return 50
             case .orange: return 51
+                
+            case .purple_start: return 60
+            case .purple: return 61
             }
         }
     }
@@ -75,6 +80,9 @@ enum Block: CaseIterable {
                 
             case .orange_start: return rgb(255, 147, 0, 0.5)
             case .orange: return rgb(255, 147, 0, 1)
+                
+            case .purple_start: return rgb(148, 33, 146, 0.5)
+            case .purple: return rgb(148, 33, 146, 1)
             }
         }
     }
