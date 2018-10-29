@@ -61,11 +61,14 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wwq-hV-JIk">
-                                <rect key="frame" x="290" y="42" width="69" height="36"/>
+                                <rect key="frame" x="305" y="60" width="50" height="36"/>
                                 <color key="backgroundColor" red="1" green="0.2834198839" blue="0.20825339479999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="Eu2-qo-0Qz"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <inset key="titleEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                                <state key="normal" title="Game 3">
+                                <state key="normal" title="&gt;">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -78,11 +81,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tvl-6N-pJG">
-                                <rect key="frame" x="16" y="42" width="69" height="36"/>
+                                <rect key="frame" x="20" y="60" width="50" height="36"/>
                                 <color key="backgroundColor" red="1" green="0.2834198839" blue="0.20825339479999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <inset key="titleEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                                <state key="normal" title="...">
+                                <state key="normal" title="&lt;">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -94,50 +97,33 @@
                                     <action selector="startgame1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="avE-gg-uMs"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wuL-VI-L8L">
-                                <rect key="frame" x="153" y="42" width="69" height="36"/>
-                                <color key="backgroundColor" red="1" green="0.2834198839" blue="0.20825339479999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="69" id="6t5-yq-yCt"/>
-                                    <constraint firstAttribute="height" constant="36" id="n3F-DN-iOD"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                <inset key="titleEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                                <state key="normal" title="Game 2">
-                                    <color key="titleColor" red="0.58039215686274503" green="0.1280144453" blue="0.57268613580000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="startgame2:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xTr-TB-0j1"/>
-                                </connections>
-                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Win: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7v-wR-DgS">
+                                <rect key="frame" x="151" y="64" width="73" height="32"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.16337012914302784" green="0.16337012914302784" blue="0.16337012914302784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="wuL-VI-L8L" firstAttribute="height" secondItem="Tvl-6N-pJG" secondAttribute="height" id="8Ca-nM-aL4"/>
-                            <constraint firstItem="wuL-VI-L8L" firstAttribute="width" secondItem="Tvl-6N-pJG" secondAttribute="width" id="9Qa-8Q-4vI"/>
+                            <constraint firstItem="U7v-wR-DgS" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="3nx-Yq-48W"/>
                             <constraint firstItem="xFy-h1-HE7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="BPw-C6-yks"/>
-                            <constraint firstItem="xFy-h1-HE7" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="50" id="FBL-jn-6No"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wwq-hV-JIk" secondAttribute="trailing" constant="16" id="MuR-VI-ksC"/>
-                            <constraint firstItem="Tvl-6N-pJG" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="22" id="UCw-EC-3ac"/>
-                            <constraint firstItem="Tvl-6N-pJG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="VNy-de-MCM"/>
-                            <constraint firstItem="wuL-VI-L8L" firstAttribute="height" secondItem="wwq-hV-JIk" secondAttribute="height" id="dY1-tl-OfJ"/>
+                            <constraint firstItem="xFy-h1-HE7" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="80" id="FBL-jn-6No"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wwq-hV-JIk" secondAttribute="trailing" constant="20" id="MuR-VI-ksC"/>
+                            <constraint firstItem="Tvl-6N-pJG" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="UCw-EC-3ac"/>
+                            <constraint firstItem="Tvl-6N-pJG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="VNy-de-MCM"/>
+                            <constraint firstItem="U7v-wR-DgS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="44" id="ahQ-ai-UsM"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xFy-h1-HE7" secondAttribute="trailing" id="feB-xV-deE"/>
-                            <constraint firstItem="wuL-VI-L8L" firstAttribute="width" secondItem="wwq-hV-JIk" secondAttribute="width" id="h67-Ze-7JY"/>
+                            <constraint firstItem="Tvl-6N-pJG" firstAttribute="width" secondItem="wwq-hV-JIk" secondAttribute="width" id="hNw-cD-JaO"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="xFy-h1-HE7" secondAttribute="bottom" id="jkh-so-tpv"/>
-                            <constraint firstItem="wuL-VI-L8L" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="22" id="k1k-b1-jzx"/>
-                            <constraint firstItem="wwq-hV-JIk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="22" id="kY2-Xf-i4I"/>
-                            <constraint firstItem="wuL-VI-L8L" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="lJX-lk-oHy"/>
+                            <constraint firstItem="wwq-hV-JIk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="kY2-Xf-i4I"/>
                             <constraint firstItem="xFy-h1-HE7" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="m7v-Zs-Dbz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="gameArea" destination="xFy-h1-HE7" id="Pu9-v1-TKQ"/>
+                        <outlet property="winCounter" destination="U7v-wR-DgS" id="S4J-rm-S47"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

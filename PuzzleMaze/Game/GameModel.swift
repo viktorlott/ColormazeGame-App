@@ -116,7 +116,7 @@ class GameBoard<T: Piece>: GameRules {
             
         }
     }
-    func onTouchEnd(_ x: CGFloat, _ y: CGFloat) {
+    func onTouchEnd(_ x: CGFloat, _ y: CGFloat, _ callback: () -> ()) {
         if noPieceSelected() {return}
         if let piece = getPieceFromCoord(x: x, y: y) {
             if piece.block.type == selectedPiece.block.type  {
@@ -132,7 +132,10 @@ class GameBoard<T: Piece>: GameRules {
                     selectedPiece = nil
                     
                     
-                    if checkIfBoardIsFilled() && checkIfPiecesIsConnected() {selectedPiece = nil;print("Board is filled", " All pieces is connected")}
+                    if checkIfBoardIsFilled() && checkIfPiecesIsConnected() {
+                        selectedPiece = nil;print("Board is filled", " All pieces is connected")
+                        callback()
+                    }
                 } else {
                     print("Connected wrong")
                     clearColoredPath()

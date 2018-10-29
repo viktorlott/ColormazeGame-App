@@ -51,7 +51,7 @@ class Piece {
         label.isUserInteractionEnabled = true
         
         label.layer.backgroundColor = block.color
-        label.layer.cornerRadius = label.layer.frame.height / 4
+        label.layer.cornerRadius = (label.layer.frame.height) / 4
         return label
     }
     func updatePiece(block: Block) {
@@ -65,7 +65,7 @@ class Piece {
     func ifWallUpdateSize() {
         if self.block.type == Block.wall.type {
              label.layer.frame = mutateShape(val: mutatingSizeValue, with: .grow)
-            label.layer.cornerRadius = label.layer.frame.height / 4
+            label.layer.cornerRadius = (label.layer.frame.height) / 4
         }
     }
     func litBlock() {

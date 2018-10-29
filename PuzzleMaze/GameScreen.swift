@@ -24,10 +24,11 @@ class GameScreen: UIViewController {
     
     @IBOutlet weak var testLabel: UILabel!
     @IBOutlet weak var gameArea: UIView!
-
+    var currentMap = 0
     
     var isBoardNotLoaded = true;
-    
+    var wins = 0
+    @IBOutlet weak var winCounter: UILabel!
     var callOnce = true
     var myGame: GameBoard<Piece>?
     
@@ -39,7 +40,7 @@ class GameScreen: UIViewController {
     override func viewDidLayoutSubviews() {
         if callOnce {
             print(gameArea.bounds)
-            self.myGame = GameBoard(board: gameArea, map: Maps.maze.render())
+            self.myGame = GameBoard(board: gameArea, map: map[currentMap])
             isBoardNotLoaded = false
             callOnce = false
         }
@@ -53,13 +54,17 @@ class GameScreen: UIViewController {
     }
     
     @IBAction func startgame1(_ sender: Any) {
-        self.myGame?.createNewGame(map: Maps.maze.render())
+        if currentMap == 0 {return}
+        currentMap -= 1
+        self.myGame?.createNewGame(map: map[currentMap])
     }
     @IBAction func startgame2(_ sender: Any) {
         self.myGame?.createNewGame(map: Maps.smallmaze.render())
     }
     @IBAction func startgame3(_ sender: Any) {
-        self.myGame?.createNewGame(map: Maps.flag.render() )
+        if currentMap == map.count - 1 {return}
+        currentMap += 1
+        self.myGame?.createNewGame(map: map[currentMap] )
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -72,7 +77,12 @@ class GameScreen: UIViewController {
         if isBoardNotLoaded {return}
         let touch = touches.first!
         let location = touch.location(in: self.gameArea)
-        myGame!.onTouchEnd(location.x, location.y)
+        myGame!.onTouchEnd(location.x, location.y) {
+            self.wins += 1
+            self.currentMap += 1
+            self.myGame?.createNewGame(map: map[self.currentMap ] )
+            winCounter.text = "Wins: " + String(wins)
+        }
     }
 
 }

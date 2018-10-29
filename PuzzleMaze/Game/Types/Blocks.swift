@@ -20,6 +20,7 @@ enum Block: CaseIterable {
     //      21: Color Y Filled Block
     
     // etc...
+    case invisible
     case wall
     case empty
     case green_start
@@ -37,6 +38,7 @@ enum Block: CaseIterable {
     var type: Int {
         get{
             switch self {
+            case .invisible: return -1
             case .wall: return 0
             case .empty: return 1
                 
@@ -63,6 +65,7 @@ enum Block: CaseIterable {
     var color: CGColor {
         get {
             switch self {
+            case .invisible: return rgb(1, 1, 1, 0)
             case .wall: return rgb(255, 255, 255, 0.2)
             case .empty: return rgb(255, 255, 255, 0.05)
                 
