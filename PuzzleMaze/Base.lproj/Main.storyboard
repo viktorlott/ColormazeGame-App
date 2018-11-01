@@ -103,6 +103,12 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Generating Maps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dDX-9o-CLo">
+                                <rect key="frame" x="91" y="538" width="192" height="32"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.16337012914302784" green="0.16337012914302784" blue="0.16337012914302784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -115,7 +121,9 @@
                             <constraint firstItem="Tvl-6N-pJG" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="UCw-EC-3ac"/>
                             <constraint firstItem="Tvl-6N-pJG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="VNy-de-MCM"/>
                             <constraint firstItem="U7v-wR-DgS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="44" id="ahQ-ai-UsM"/>
+                            <constraint firstItem="dDX-9o-CLo" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="fpT-6t-NgL"/>
                             <constraint firstItem="Tvl-6N-pJG" firstAttribute="width" secondItem="wwq-hV-JIk" secondAttribute="width" id="hNw-cD-JaO"/>
+                            <constraint firstItem="dDX-9o-CLo" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="jLY-vs-gdX"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="xFy-h1-HE7" secondAttribute="bottom" id="jkh-so-tpv"/>
                             <constraint firstItem="wwq-hV-JIk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="kY2-Xf-i4I"/>
                             <constraint firstItem="xFy-h1-HE7" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="m7v-Zs-Dbz"/>
@@ -123,6 +131,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="LoadingTitle" destination="dDX-9o-CLo" id="CJz-kp-zNb"/>
                         <outlet property="gameArea" destination="xFy-h1-HE7" id="Pu9-v1-TKQ"/>
                         <outlet property="winCounter" destination="U7v-wR-DgS" id="S4J-rm-S47"/>
                     </connections>

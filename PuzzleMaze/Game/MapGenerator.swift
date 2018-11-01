@@ -18,29 +18,31 @@ func LCG(seed: Double) -> () -> Double {
         return z / m
     }
 }
-
+struct Limit {
+    var min: Double = 0
+    var max: Double = 10
+    var unique: Int = 2
+}
 class MapGenerator {
     var random = LCG(seed: 10)
     var map = [[Int]]()
     private let directions = [[-1, 0], [1, 0],[0, -1],[0, 1]]
     private var dimensions = Int()
     private var seed = Double()
+    private var limit = Limit()
     
     struct ColorItem {
         let color: Block!
         let limits: Limit!
     }
-    struct Limit {
-        var min: Double = 0
-        var max: Double = 10
-        var unique: Int = 2
-    }
+
     
-    init(dimensions: Int, seed: Double) {
+    init(dimensions: Int, seed: Double, limit: Limit) {
         self.map = self.createEmptyMap(dimensions: dimensions)
         self.dimensions = dimensions
         self.random = LCG(seed: seed)
         self.seed = seed
+        self.limit = limit
 
         
     }
@@ -80,7 +82,7 @@ class MapGenerator {
     }
     func createColoredPath(color: Block, limit: Limit) {
         var trials = 0
-        var randomLength = self.random(min: Int(limit.min), max: Int(limit.max))
+        let randomLength = self.random(min: Int(limit.min), max: Int(limit.max))
         var storedDir = [[Int]]()
         var mMap = self.clone(map: self.map)
         var startingPositions = self.randomStartingPositionFor(map: self.map)
@@ -154,12 +156,12 @@ class MapGenerator {
 
 extension MapGenerator {
     func checkMapForColorUniques(_ color: Block, unique: Int) -> Bool {
-        var unique = 0
+        var un = 0
         for r in 0..<self.map.count {
             for c in 0..<self.map[r].count {
                 if self.map[r][c] == color.type {
-                    unique += 1
-                    if unique >= (unique * 2){
+                    un = un + 1
+                    if un >= (unique * 2){
                         return true
                     }
                 }
@@ -176,23 +178,40 @@ extension MapGenerator {
         }
         return randomVariables
     }
-    func generate(size: Int, limit: Limit) -> [[Int]]{
+    private func generate(tries: Int, limit: Limit) -> [[Int]]{
         self.seed += 3
         self.random = LCG(seed: self.seed)
-        var colorList = self.generateRandomVariables(loops: size, limit: limit)
-        for i in 0..<colorList.count {
-            
+        var colorList = self.generateRandomVariables(loops: tries, limit: limit)
+        var listNotEmpty = true
+        var i = 0
+        
+        while listNotEmpty {
+            if i >= colorList.count {
+                listNotEmpty = false
+                break;
+            }
             self.createColoredPath(color: colorList[i].color, limit: colorList[i].limits)
             
             if limit.unique > 0 {
                 if self.checkMapForColorUniques(colorList[i].color, unique: limit.unique) {
                     colorList = colorList.filter({$0.color.type != colorList[i].color.type})
                     
+                    
                 }
             }
+            i += 1
         }
+
+
         let newMap = self.clone(map: self.map)
         self.map = self.createEmptyMap(dimensions: self.dimensions)
         return newMap
+    }
+    func buildMaps(size: Int, tries: Int) -> [[[Int]]]{
+        var maps = [[[Int]]]()
+        for _ in 0..<size {
+            maps.append(self.generate(tries: tries, limit: self.limit))
+        }
+        return maps
     }
 }

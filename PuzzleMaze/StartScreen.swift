@@ -17,9 +17,9 @@ class StartScreen: UIViewController {
         startButton.layer.cornerRadius = startButton.layer.bounds.height / 2
         
         
-        let m = MapGenerator(dimensions: 10, seed: 23)
         
-        print(m.generate(size: 300, limit:   MapGenerator.Limit(min: 0, max: 8, unique: 2)))
+        
+        
         // Do any additional setup after loading the view.
     }
     func setupView() {
@@ -32,6 +32,7 @@ class StartScreen: UIViewController {
     @IBAction func startGame(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "GameScreen") as! GameScreen
         self.present(vc, animated: true, completion: nil)
+        startButton.titleLabel?.text = "Generating Maps..."
        
     }
     

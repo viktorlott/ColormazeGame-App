@@ -22,6 +22,7 @@ struct Map {
 
 class GameScreen: UIViewController {
     
+    @IBOutlet weak var LoadingTitle: UILabel!
     @IBOutlet weak var testLabel: UILabel!
     @IBOutlet weak var gameArea: UIView!
     var currentMap = 0
@@ -31,7 +32,7 @@ class GameScreen: UIViewController {
     @IBOutlet weak var winCounter: UILabel!
     var callOnce = true
     var myGame: GameBoard<Piece>?
-    
+    var map5x5 = [[[Int]]]()
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -40,9 +41,12 @@ class GameScreen: UIViewController {
     override func viewDidLayoutSubviews() {
         if callOnce {
             print(gameArea.bounds)
-            self.myGame = GameBoard(board: gameArea, map: map[currentMap])
+            self.map5x5 = MapGenerator(dimensions: 8, seed: 200, limit: Limit(min: 0, max: 5, unique: 8)).buildMaps(size: 100, tries: 1000)
+            self.myGame = GameBoard(board: gameArea, map: map5x5[currentMap])
+            self.LoadingTitle.isHidden = true
             isBoardNotLoaded = false
             callOnce = false
+            
         }
  
     }
@@ -62,9 +66,9 @@ class GameScreen: UIViewController {
         self.myGame?.createNewGame(map: Maps.smallmaze.render())
     }
     @IBAction func startgame3(_ sender: Any) {
-        if currentMap == map.count - 1 {return}
+        if currentMap == self.map5x5.count - 1 {return}
         currentMap += 1
-        self.myGame?.createNewGame(map: map[currentMap] )
+        self.myGame?.createNewGame(map: self.map5x5[currentMap] )
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
