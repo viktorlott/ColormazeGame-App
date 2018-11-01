@@ -10,9 +10,16 @@ import UIKit
 
 class StartScreen: UIViewController {
 
+    @IBOutlet weak var startButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        startButton.layer.cornerRadius = startButton.layer.bounds.height / 2
+        
+        
+        let m = MapGenerator(dimensions: 10, seed: 23)
+        
+        print(m.generate(size: 300, limit:   MapGenerator.Limit(min: 0, max: 8, unique: 2)))
         // Do any additional setup after loading the view.
     }
     func setupView() {

@@ -124,5 +124,14 @@ enum Block: CaseIterable {
         }
         return Block.empty
     }
+    static func allColors() -> [Block] {
+        var colors = [Block]()
+        for block in Block.allCases {
+            if( block.type != 0 && (Double(block.type).truncatingRemainder(dividingBy: 10) == 0)) {
+                colors.append(block)
+            }
+        }
+        return colors
+    }
 }
 

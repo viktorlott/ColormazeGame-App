@@ -19,6 +19,7 @@
 		B46EFD432181AC13008F01A6 /* Maps.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46EFD422181AC13008F01A6 /* Maps.swift */; };
 		B46EFD452181D1E1008F01A6 /* Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46EFD442181D1E1008F01A6 /* Blocks.swift */; };
 		B46EFD4D2185C3BE008F01A6 /* StartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46EFD4C2185C3BE008F01A6 /* StartScreen.swift */; };
+		B46EFD4F218B062F008F01A6 /* MapGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46EFD4E218B062F008F01A6 /* MapGenerator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		B46EFD422181AC13008F01A6 /* Maps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maps.swift; sourceTree = "<group>"; };
 		B46EFD442181D1E1008F01A6 /* Blocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blocks.swift; sourceTree = "<group>"; };
 		B46EFD4C2185C3BE008F01A6 /* StartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreen.swift; sourceTree = "<group>"; };
+		B46EFD4E218B062F008F01A6 /* MapGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapGenerator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				B46EFD482181D284008F01A6 /* Types */,
 				B46EFD472181D24E008F01A6 /* Components */,
 				B41B686D2171FA9500184EFD /* GameModel.swift */,
+				B46EFD4E218B062F008F01A6 /* MapGenerator.swift */,
 				B46EFD3E217F2030008F01A6 /* GameRules.swift */,
 			);
 			path = Game;
@@ -194,6 +197,7 @@
 				B46EFD432181AC13008F01A6 /* Maps.swift in Sources */,
 				B41617B521539A4A00BA8F7B /* AppDelegate.swift in Sources */,
 				B41B686E2171FA9500184EFD /* GameModel.swift in Sources */,
+				B46EFD4F218B062F008F01A6 /* MapGenerator.swift in Sources */,
 				B46EFD452181D1E1008F01A6 /* Blocks.swift in Sources */,
 				B46EFD3F217F2030008F01A6 /* GameRules.swift in Sources */,
 				B46EFD412181A747008F01A6 /* VibrationKit.swift in Sources */,
