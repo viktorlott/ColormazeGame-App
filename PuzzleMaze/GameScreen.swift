@@ -41,8 +41,8 @@ class GameScreen: UIViewController {
     override func viewDidLayoutSubviews() {
         if callOnce {
             print(gameArea.bounds)
-            self.map5x5 = MapGenerator(dimensions: 8, seed: 200, limit: Limit(min: 0, max: 5, unique: 8)).buildMaps(size: 100, tries: 1000)
-            self.myGame = GameBoard(board: gameArea, map: map5x5[currentMap])
+//            self.map5x5 = MapGenerator(dimensions: 8, seed: 200, limit: Limit(min: 0, max: 5, unique: 8)).buildMaps(size: 100, tries: 1000)
+            self.myGame = GameBoard(board: gameArea, map: map[currentMap])
             self.LoadingTitle.isHidden = true
             isBoardNotLoaded = false
             callOnce = false
@@ -68,7 +68,7 @@ class GameScreen: UIViewController {
     @IBAction func startgame3(_ sender: Any) {
         if currentMap == self.map5x5.count - 1 {return}
         currentMap += 1
-        self.myGame?.createNewGame(map: self.map5x5[currentMap] )
+        self.myGame?.createNewGame(map: map[currentMap] )
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {

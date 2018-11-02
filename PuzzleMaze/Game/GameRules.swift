@@ -43,6 +43,15 @@ extension GameRules {
         return false
     }
     
+    func isNearSelectedBlock(_ x: CGFloat, _ y: CGFloat, _ p: Piece) -> Bool {
+
+        if x >= p.x - touchArea - CGFloat(p.width) && x <= p.x + touchArea + CGFloat(p.width) + CGFloat(p.width) && y >= p.y - touchArea - CGFloat(p.width) && y <= p.y + touchArea + CGFloat(p.width) + CGFloat(p.height) {
+                return true
+        } else {
+            return false
+        }
+    }
+    
     func isColoredBlock(_ type: Int) -> Bool {
         if type % 10 == 0 && type != Block.wall.type {
             return true

@@ -195,8 +195,6 @@ extension MapGenerator {
             if limit.unique > 0 {
                 if self.checkMapForColorUniques(colorList[i].color, unique: limit.unique) {
                     colorList = colorList.filter({$0.color.type != colorList[i].color.type})
-                    
-                    
                 }
             }
             i += 1

@@ -36,6 +36,7 @@ class GameBoard<T: Piece>: GameRules {
     var touchArea: CGFloat   = 10
     
     var selectedPiece: Piece!
+    var selectedPieceEnd: Piece! = nil
     var position: Int!
     private var canMove = true
 
@@ -92,13 +93,18 @@ class GameBoard<T: Piece>: GameRules {
     func onTouchMove(_ x: CGFloat, _ y: CGFloat) {
         if noPieceSelected() {return}
         if let piece = getPieceFromCoord(x: x, y: y) {
-            if !canMove { return}
+            if !canMove {
+                
+                return
+                
+            }
 
             if piece.block.type == selectedPiece.block.type {
                 if piece.id == position {canMove = true}
                 if piece.id != selectedPiece.id && !cannotMoveToPiece(piece.id) || (isPieceConnected(piece) && isColoredBlock(piece.block.type)){
                     Vibration.dotSound.vibrate()
                     piece.litBlock()
+                    selectedPieceEnd = piece
                     canMove = false
                     return
                 }
@@ -119,17 +125,23 @@ class GameBoard<T: Piece>: GameRules {
     func onTouchEnd(_ x: CGFloat, _ y: CGFloat, _ callback: () -> ()) {
         if noPieceSelected() {return}
         if let piece = getPieceFromCoord(x: x, y: y) {
-            if piece.block.type == selectedPiece.block.type  {
-                print("End ","Selected Piece:",selectedPiece.id, "Position:",position, "End Piece:", piece.id)
-                if piece.id != selectedPiece.id && isNeighborSameColor(p: piece.id) && piece.isConnected == false {
+            guard let m = selectedPieceEnd else {
+                clearColoredPath()
+                selectedPieceEnd = nil
+                return
+            }
+            if piece.block.type == selectedPiece.block.type || isNearSelectedBlock(x, y, selectedPieceEnd) && selectedPieceEnd.block.type == selectedPiece.block.type {
+                print("End ","Selected Piece:",selectedPiece.id, "Position:",position, "End Piece:", selectedPieceEnd.id)
+                if (piece.id != selectedPiece.id || isNearSelectedBlock(x, y, selectedPieceEnd)) && (isNeighborSameColor(p: piece.id) || isNeighborSameColor(p: selectedPieceEnd.id)) && (piece.isConnected == false || selectedPieceEnd.isConnected == false) {
                     
                     print("connected")
-                    piece.isConnected = true
-                    piece.litBlock()
-                    piece.isLit = true
+                    selectedPieceEnd.isConnected = true
+                    selectedPieceEnd.litBlock()
+                    selectedPieceEnd.isLit = true
                     selectedPiece.isConnected = true
                     selectedPiece.connectedWith = piece.id
                     selectedPiece = nil
+                    selectedPieceEnd = nil
                     
                     
                     if checkIfBoardIsFilled() && checkIfPiecesIsConnected() {
@@ -166,6 +178,7 @@ class GameBoard<T: Piece>: GameRules {
         dimAllColoredBlock()
         position = nil
         selectedPiece = nil
+        selectedPieceEnd = nil
     }
     func dimAllColoredBlock() {
         for piece in gamePieces {
@@ -191,6 +204,7 @@ class GameBoard<T: Piece>: GameRules {
         }
         return nil
     }
+    
     private func render(_ arr: [[Int]]) -> [Int] {
         var temp = [Int]()
         for row in arr {
