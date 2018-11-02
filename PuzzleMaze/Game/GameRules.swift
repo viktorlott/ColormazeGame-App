@@ -79,9 +79,23 @@ extension GameRules {
         }
         return false
     }
+    func cannotMoveLeftOverCorner(_ p: Int) -> Bool {
+        if p == mapShape.column - 1 && self.position == mapShape.column {
+            return false
+        }
+        return true
+    }
+    func cannotMoveRightOverCorner(_ p: Int) -> Bool {
+        if p == mapShape.column && self.position == mapShape.column - 1 {
+            return false
+        }
+        return true
+    }
     func cannotMoveToPiece(_ p: Int) -> Bool{
         //p != Block.empty.type && Bugg
-        if p == self.position - 1 || p == self.position + 1 || p == self.position + self.mapShape.column || p == self.position - self.mapShape.column {
+        if !cannotMoveRightOverCorner(p) || !cannotMoveLeftOverCorner(p){ return true }
+        
+        if  p == self.position - 1 || p == self.position + 1 || p == self.position + self.mapShape.column || p == self.position - self.mapShape.column {
             return false
         } else {
             return true
