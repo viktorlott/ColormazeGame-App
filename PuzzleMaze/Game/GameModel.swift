@@ -122,11 +122,12 @@ class GameBoard<T: Piece>: GameRules {
             
         }
     }
-    func onTouchEnd(_ x: CGFloat, _ y: CGFloat, _ callback: () -> ()) {
+    func onTouchEnd(_ x: CGFloat, _ y: CGFloat, _ win: () -> (), _ lose: () -> ()) {
         if noPieceSelected() {return}
         if let piece = getPieceFromCoord(x: x, y: y) {
-            guard let m = selectedPieceEnd else {
+            guard selectedPieceEnd != nil else {
                 clearColoredPath()
+                lose()
                 selectedPieceEnd = nil
                 return
             }
@@ -146,17 +147,20 @@ class GameBoard<T: Piece>: GameRules {
                     
                     if checkIfBoardIsFilled() && checkIfPiecesIsConnected() {
                         selectedPiece = nil;print("Board is filled", " All pieces is connected")
-                        callback()
+                        win()
                     }
                 } else {
                     print("Connected wrong")
                     clearColoredPath()
+                    lose()
                 }
             } else {
                 clearColoredPath()
+                lose()
             }
         } else {
             clearColoredPath()
+            lose()
         }
         canMove = true
     }
