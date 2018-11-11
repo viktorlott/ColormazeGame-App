@@ -88,6 +88,13 @@ class GameScreen: UIViewController {
                 self.time += -1
                 self.updateTimeLable()
                 Vibration.sound(1467).vibrate()
+//                if self.time == 49 {
+//                    print("wr")
+//                    self.myGame?.spinAll()
+//                }
+//                if self.time == 48 {
+//                    self.myGame?.resetspinAll()
+//                }
 
             }
         })
@@ -132,25 +139,34 @@ class GameScreen: UIViewController {
         }
     }
     private func didWin(){
+        timer.invalidate()
         self.wins += 1
         self.currentMap += 1
         self.time += winValue
-        self.myGame?.createNewGame(map: map[self.currentMap ] )
-        animate {
+        self.myGame?.spinAll()
+        self.sound.win()
+        self.animate {
             self.winCounter.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         }
-        self.winCounter.text = String(wins)
+        self.winCounter.text = String(self.wins)
         self.failVal.textColor = .green
-        self.failVal.text = "+" + String(winValue)
+        self.failVal.text = "+" + String(self.winValue)
         self.failVal.transform = CGAffineTransform(scaleX: 1, y: 1)
-        quickAnimate(animations: {
+        self.quickAnimate(animations: {
             self.failVal.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
         }) {
             self.failVal.transform = CGAffineTransform(scaleX: 0, y: 0)
         }
         self.updateTimeLable()
-//        self.playSound()
-        sound.win()
+        //        self.playSound()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.myGame?.createNewGame(map: map[self.currentMap ] )
+            self.setupTimer()
+            self.updateTimeLable()
+//            self.sound.miss()
+        }
+        
 //        Vibration.sound(1100).vibrate()
         //1100 1533
     }
@@ -168,7 +184,7 @@ class GameScreen: UIViewController {
         }
         print("did lose")
 //        missSound.play()
-        sound.miss()
+        sound.selectSound.play(atTime: 0.0001)
 //        Vibration.sound(1055).vibrate()
     }
     func updateTimeLable() {

@@ -32,7 +32,7 @@ class GameBoard<T: Piece>: GameRules {
     var boardSize: BoardSize!
     var pieceSize: PieceSize!
     var sound = Sounds()
-    var defaultSpacing: Float = 20// cant be zero
+    var defaultSpacing: Float = 1// cant be zero
     var touchArea: CGFloat   = 10
     
     var selectedPiece: Piece!
@@ -241,6 +241,7 @@ class GameBoard<T: Piece>: GameRules {
             let piece = Piece(id: i, X: CGFloat(X), Y: CGFloat(Y), width: pieceSize.width, height: pieceSize.height, block: block)
             
             piece.updatePiece(block: block)
+            piece.fadeIn()
             
             gameArea.addSubview(piece.label)
             gamePieces.append(piece as! T)
@@ -249,6 +250,16 @@ class GameBoard<T: Piece>: GameRules {
                 Y += pieceSize.height + pieceSize.spacing
                 X = 0 + offsetX + pieceSize.spacing / 2
             }
+        }
+    }
+    func spinAll() {
+        for p in gamePieces {
+            p.spin()
+        }
+    }
+    func resetspinAll() {
+        for p in gamePieces {
+            p.resetSpin()
         }
     }
     private func getBlockFrom(type: Int) -> Block {
@@ -272,7 +283,8 @@ class GameBoard<T: Piece>: GameRules {
         let biggest = (map.column > map.row ? map.column : map.row)
         let pS = Float(board.width) / Float(biggest)
         let space = Float(pS - (Float(Int(pS / 10) * 10)))
-        let spacing = (space < self.defaultSpacing ? self.defaultSpacing : space)
+        let spacing = self.defaultSpacing
+//            (space < self.defaultSpacing ? self.defaultSpacing : space)
         return PieceSize(width: pS - spacing, height: pS - spacing, spacing: spacing)
     }
 

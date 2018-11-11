@@ -39,7 +39,7 @@ class Piece {
     
     init(id: Int, X: CGFloat, Y: CGFloat, width: Float, height: Float, block: Block) {
         self.id = id
-        self.x = X
+        self.x = X 
         self.y = Y
         self.width = width
         self.height = height
@@ -51,7 +51,9 @@ class Piece {
         label.isUserInteractionEnabled = true
     
         label.layer.backgroundColor = block.color
-        label.layer.cornerRadius = (label.layer.frame.height) / 2
+        label.layer.cornerRadius = (label.layer.frame.height)
+        
+   
         return label
     }
     func updatePiece(block: Block) {
@@ -68,6 +70,27 @@ class Piece {
 //            label.layer.cornerRadius = (label.layer.frame.height) / 5
         }
     }
+    func fadeIn() {
+          self.label.transform = CGAffineTransform(rotationAngle: 45 * CGFloat.pi / 180)
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 10, initialSpringVelocity: 10, options: .allowUserInteraction, animations: {
+            self.label.transform = CGAffineTransform.identity
+        }) {(_) in}
+    }
+    func spin() {
+        
+        animateWith(1) {
+            
+            self.label.transform = CGAffineTransform(rotationAngle: 45 * CGFloat.pi / 180)
+            
+        }
+    
+        
+    }
+    func resetSpin() {
+        animateWith(1) {
+            self.label.transform = CGAffineTransform.identity
+        }
+    }
     func litBlock() {
         isLit = true
 
@@ -79,6 +102,7 @@ class Piece {
         if block.isStartBlock(type: self.block.type) {
             animate {
                 self.label.layer.frame = self.mutateShape(val: 5 + self.mutatingSizeValue, with: .grow)
+                self.label.layer.cornerRadius = (self.label.layer.frame.height)
                 
 
             }
@@ -86,11 +110,11 @@ class Piece {
 
 
         } else {
-            animateWith(1) {
+            animateWith(1.3) {
                 self.label.layer.backgroundColor = self.block.color
-                self.label.layer.frame = self.mutateShape(val: self.mutatingSizeValue + 10, with: .shrink)
-                self.label.layer.cornerRadius = (self.label.layer.frame.height) / 2
-//                self.label.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 4)
+                self.label.layer.frame = self.mutateShape(val: self.mutatingSizeValue + 4, with: .shrink)
+                self.label.layer.cornerRadius = (self.label.layer.frame.height)
+                self.label.transform = CGAffineTransform(rotationAngle: 45 * CGFloat.pi / 180)
             }
 
         }
@@ -113,17 +137,19 @@ class Piece {
         }
     }
     private func animated(animations: @escaping () -> ()) {
-        UIView.animate(withDuration: 0.1, delay: 0, usingSpringWithDamping: 300, initialSpringVelocity: 20, options: .allowAnimatedContent, animations: {animations()}) {(_) in}
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 300, initialSpringVelocity: 20, options: .allowUserInteraction, animations: {animations()}) {(_) in}
     }
     func dimBlock() {
         isLit = false
         if !block.isStartBlock(type: self.block.type) {
+            animated {
             self.label.transform = CGAffineTransform.identity
+            }
         }
         animated {
             
             self.label.layer.frame = self.mutateShape(val: self.mutatingSizeValue, with: .normal)
-            self.label.layer.cornerRadius = (self.label.layer.frame.height) / 2
+            self.label.layer.cornerRadius = (self.label.layer.frame.height)
         }
         
         label.layer.shadowOpacity = 0
