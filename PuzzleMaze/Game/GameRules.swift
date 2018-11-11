@@ -30,7 +30,7 @@ protocol GameRules {
 extension GameRules {
     func touchCollideWithPiece(_ x: CGFloat, _ y: CGFloat, _ p: Piece) -> Bool {
         if isColoredBlock(p.block.type) {
-            if x >= p.x - touchArea - 5 && x <= p.x + touchArea + 5 + CGFloat(p.width) && y >= p.y - touchArea - 5 && y <= p.y + touchArea + 5 + CGFloat(p.height) {
+            if x >= p.x - touchArea - 5  && x <= p.x + touchArea + 5 + CGFloat(p.width) && y >= p.y - touchArea - 5 && y <= p.y + touchArea + 5 + CGFloat(p.height) {
                 return true
             }
         } else {

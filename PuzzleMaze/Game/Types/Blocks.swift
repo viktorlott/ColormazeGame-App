@@ -69,22 +69,22 @@ enum Block: CaseIterable {
             case .wall: return rgb(255, 255, 255, 0.2)
             case .empty: return rgb(255, 255, 255, 0.05)
                 
-            case .green_start: return rgb(0, 255, 0, 0.5)
+            case .green_start: return rgb(0, 255, 0, 0.3)
             case .green: return rgb(0, 255, 0, 1)
                 
-            case .yellow_start: return rgb(255, 255, 0, 0.5)
+            case .yellow_start: return rgb(255, 255, 0, 0.3)
             case .yellow: return rgb(255, 255, 0, 1)
                 
-            case .blue_start: return rgb(0, 102, 255, 0.5)
+            case .blue_start: return rgb(0, 102, 255, 0.3)
             case .blue: return rgb(0, 102, 255, 1)
                 
-            case .red_start: return rgb(255, 51, 0, 0.5)
+            case .red_start: return rgb(255, 51, 0, 0.3)
             case .red: return rgb(255, 51, 0, 1)
                 
-            case .orange_start: return rgb(255, 147, 0, 0.5)
+            case .orange_start: return rgb(255, 147, 0, 0.3)
             case .orange: return rgb(255, 147, 0, 1)
                 
-            case .purple_start: return rgb(148, 33, 146, 0.5)
+            case .purple_start: return rgb(148, 33, 146, 0.3)
             case .purple: return rgb(148, 33, 146, 1)
             }
         }

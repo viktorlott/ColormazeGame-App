@@ -31,8 +31,8 @@ class GameBoard<T: Piece>: GameRules {
     var mapShape: MapShape!
     var boardSize: BoardSize!
     var pieceSize: PieceSize!
-    
-    var defaultSpacing: Float = 10 // cant be zero
+    var sound = Sounds()
+    var defaultSpacing: Float = 20// cant be zero
     var touchArea: CGFloat   = 10
     
     var selectedPiece: Piece!
@@ -78,13 +78,24 @@ class GameBoard<T: Piece>: GameRules {
         print("  ", boardSize!)
         print("  ", pieceSize!)
     }
+    func stopBoard() {
+        self.canMove = false
+        self.clearColoredPath()
+    }
+    func startBoard() {
+        self.canMove = true
+        
+    }
     func onTouch(_ x: CGFloat, _ y: CGFloat) {
+        if canMove == false { return}
         if let piece = getPieceFromCoord(x: x, y: y) {
             if isColoredBlock(piece.block.type) {
                 selectedPiece = piece as! T
                 selectedPiece.isLit = true
                 selectedPiece.litBlock()
-                Vibration.dotSound.vibrate()
+//                sound.selectSound.play()
+                Vibration.sound(1130).vibrate()
+//                sound.play()
                 position = piece.id
                 print("Begin ", "Selected Piece:",selectedPiece.id)
             }
@@ -102,7 +113,8 @@ class GameBoard<T: Piece>: GameRules {
             if piece.block.type == selectedPiece.block.type {
                 if piece.id == position {canMove = true}
                 if piece.id != selectedPiece.id && !cannotMoveToPiece(piece.id) || (isPieceConnected(piece) && isColoredBlock(piece.block.type)){
-                    Vibration.dotSound.vibrate()
+//                    sound.play()
+                    Vibration.sound(1130).vibrate()
                     piece.litBlock()
                     selectedPieceEnd = piece
                     canMove = false
@@ -111,7 +123,8 @@ class GameBoard<T: Piece>: GameRules {
             }
             if cannotMoveToPiece(piece.id) || isWall(piece.block.type) || isNotEmpty(piece.block.type){return}
             if canMove  {
-                Vibration.dotSound.vibrate()
+//                sound.play()
+                Vibration.sound(1397).vibrate()
                 position = piece.id
                 piece.updatePiece(block: selectedPiece.block.upp())
                 gameRenderMap[position] = selectedPiece.block.upp().type

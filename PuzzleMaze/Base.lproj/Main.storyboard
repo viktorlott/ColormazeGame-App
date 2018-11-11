@@ -78,7 +78,7 @@
                                             <constraint firstAttribute="width" constant="70" id="cgn-ha-dkq"/>
                                         </constraints>
                                         <inset key="titleEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                                        <state key="normal" image="angle-arrow-pointing-to-right">
+                                        <state key="normal" title="&gt;">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -108,16 +108,15 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3G-4p-zdE">
-                                        <rect key="frame" x="91.5" y="58" width="52.5" height="36.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3G-4p-zdE">
+                                        <rect key="frame" x="102.5" y="58" width="30.5" height="36.5"/>
                                         <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="28"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="-2s" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HkP-xq-h7U">
-                                        <rect key="frame" x="152" y="67" width="29" height="25"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="19"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-2" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HkP-xq-h7U">
+                                        <rect key="frame" x="160" y="67" width="15.5" height="21"/>
+                                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="16"/>
                                         <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -125,6 +124,7 @@
                                 <constraints>
                                     <constraint firstItem="m4U-Rt-F0k" firstAttribute="top" secondItem="2lE-M4-nxc" secondAttribute="top" constant="30" id="6eT-Sa-2ev"/>
                                     <constraint firstAttribute="trailing" secondItem="wwq-hV-JIk" secondAttribute="trailing" id="BLG-qS-kGH"/>
+                                    <constraint firstItem="HkP-xq-h7U" firstAttribute="top" secondItem="2lE-M4-nxc" secondAttribute="top" constant="67" id="Bfl-kr-LJq"/>
                                     <constraint firstItem="H3G-4p-zdE" firstAttribute="top" secondItem="m4U-Rt-F0k" secondAttribute="bottom" constant="3" id="HZF-ZA-Npc"/>
                                     <constraint firstItem="tIJ-xC-hXX" firstAttribute="top" secondItem="2lE-M4-nxc" secondAttribute="top" constant="30" id="JyT-ar-O6i"/>
                                     <constraint firstItem="H3G-4p-zdE" firstAttribute="centerX" secondItem="2lE-M4-nxc" secondAttribute="centerX" constant="-70" id="Szb-9y-sou"/>
@@ -133,6 +133,7 @@
                                     <constraint firstItem="U7v-wR-DgS" firstAttribute="centerX" secondItem="2lE-M4-nxc" secondAttribute="centerX" constant="70" id="enQ-HG-vEB"/>
                                     <constraint firstItem="tIJ-xC-hXX" firstAttribute="centerX" secondItem="2lE-M4-nxc" secondAttribute="centerX" constant="70" id="jp5-SC-ZZF"/>
                                     <constraint firstItem="wwq-hV-JIk" firstAttribute="top" secondItem="2lE-M4-nxc" secondAttribute="top" id="nCl-ml-mBF"/>
+                                    <constraint firstItem="HkP-xq-h7U" firstAttribute="centerX" secondItem="2lE-M4-nxc" secondAttribute="centerX" constant="-20" id="o0i-y4-QlX"/>
                                     <constraint firstItem="U7v-wR-DgS" firstAttribute="top" secondItem="tIJ-xC-hXX" secondAttribute="bottom" constant="10" id="pDC-N9-lBo"/>
                                     <constraint firstAttribute="height" constant="100" id="sSQ-HV-Apb"/>
                                     <constraint firstItem="U7v-wR-DgS" firstAttribute="top" secondItem="tIJ-xC-hXX" secondAttribute="bottom" constant="5" id="tw8-Jl-bKM"/>
@@ -165,8 +166,20 @@
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
+        <!--Map Select View Controller-->
+        <scene sceneID="MCe-Eg-kJj">
+            <objects>
+                <viewController storyboardIdentifier="MapSelectViewController" id="TAz-If-Uj6" customClass="MapSelectViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Hrv-69-AX2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="bbf-d4-Z7h"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6aO-H5-hUW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="964" y="134"/>
+        </scene>
     </scenes>
-    <resources>
-        <image name="angle-arrow-pointing-to-right" width="24" height="24"/>
-    </resources>
 </document>

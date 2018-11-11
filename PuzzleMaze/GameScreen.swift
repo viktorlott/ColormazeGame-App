@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import AVFoundation
+import AudioToolbox
+
 
 struct Settings {
     let mapSize: MapShape
@@ -19,13 +22,17 @@ struct Map {
     
 }
 
+protocol GameDelegate {
+    func myDelegateFunc(value: Any?) -> ()
+}
+
 
 class GameScreen: UIViewController {
-    
+    var myVal: Any?
     @IBOutlet weak var LoadingTitle: UILabel!
     @IBOutlet weak var gameArea: UIView!
     var currentMap = 0
-    
+    var sound = Sounds()
     @IBOutlet weak var failVal: UILabel!
     @IBOutlet weak var timeCounterLbl: UILabel!
     var isBoardNotLoaded = true;
@@ -37,27 +44,29 @@ class GameScreen: UIViewController {
     
     var timer: Timer!
     
-    var time = 25
+    var time = 50
     
-    var loseValue = -2
-    var winValue = 1
+    var loseValue = -1
+    var winValue = 2
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.timeCounterLbl.text = String(self.time) + "s"
 
     }
 
     override func viewDidLayoutSubviews() {
         if callOnce {
             print(gameArea.bounds)
-            self.map5x5 = MapGenerator(dimensions: 15, seed: 10, limit: Limit(min: 10, max: 12, unique: 8)).buildMaps(size: 4, tries: 2000)
+//            self.map5x5 = MapGenerator(dimensions: 15, seed: 10, limit: Limit(min: 10, max: 12, unique: 8)).buildMaps(size: 4, tries: 2000)
             self.myGame = GameBoard(board: gameArea, map: map[currentMap])
             self.LoadingTitle.isHidden = true
             isBoardNotLoaded = false
             callOnce = false
             self.setupTimer()
             
+            Vibration.win.vibrate()
             
         }
  
@@ -65,12 +74,21 @@ class GameScreen: UIViewController {
     func setupTimer() {
         self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
             if self.time <= 0 {
+                self.time = 0
                 self.timer.invalidate()
                 self.timer = nil
                 self.updateTimeLable()
+                self.myGame!.stopBoard()
+                
+                
+                
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "GameScreen") as! GameScreen
+                self.present(vc, animated: true, completion: nil)
             } else {
                 self.time += -1
                 self.updateTimeLable()
+                Vibration.sound(1467).vibrate()
+
             }
         })
         self.failVal.transform = CGAffineTransform(scaleX: 0, y: 0)
@@ -102,6 +120,7 @@ class GameScreen: UIViewController {
         let touch = touches.first!
         let location = touch.location(in: self.gameArea)
         myGame!.onTouchMove(location.x, location.y)
+
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isBoardNotLoaded {return}
@@ -112,7 +131,6 @@ class GameScreen: UIViewController {
             self.winCounter.transform = CGAffineTransform(scaleX: 1, y: 1)
         }
     }
-    
     private func didWin(){
         self.wins += 1
         self.currentMap += 1
@@ -123,39 +141,61 @@ class GameScreen: UIViewController {
         }
         self.winCounter.text = String(wins)
         self.failVal.textColor = .green
-        self.failVal.text = "+" + String(winValue) + "s"
-        self.failVal.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        self.failVal.text = "+" + String(winValue)
+        self.failVal.transform = CGAffineTransform(scaleX: 1, y: 1)
         quickAnimate(animations: {
             self.failVal.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
         }) {
             self.failVal.transform = CGAffineTransform(scaleX: 0, y: 0)
         }
         self.updateTimeLable()
+//        self.playSound()
+        sound.win()
+//        Vibration.sound(1100).vibrate()
+        //1100 1533
     }
     func didLose() {
-        self.time -= loseValue
+        if self.time <= 0 {return}
+        self.time += loseValue
         self.failVal.textColor = .red
-        self.failVal.text = String(loseValue) + "s"
+        self.failVal.text = String(loseValue)
         self.updateTimeLable()
-        self.failVal.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        self.failVal.transform = CGAffineTransform(scaleX: 1, y: 1)
         quickAnimate(animations: {
-            self.failVal.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+            self.failVal.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         }) {
             self.failVal.transform = CGAffineTransform(scaleX: 0, y: 0)
         }
         print("did lose")
+//        missSound.play()
+        sound.miss()
+//        Vibration.sound(1055).vibrate()
     }
     func updateTimeLable() {
         self.timeCounterLbl.text = String(self.time) + "s"
+        self.animate {
+            self.timeCounterLbl.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        }
+        self.animate {
+            self.timeCounterLbl.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }
     }
     private func animate(animations: @escaping () -> ()) {
-        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 500, initialSpringVelocity: 1000, options: .allowAnimatedContent, animations: {animations()}) {(_) in}
+        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 500, initialSpringVelocity: 600, options: .allowAnimatedContent, animations: {animations()}) {(_) in}
     }
     private func quickAnimate(animations: @escaping () -> (), endAnimation: @escaping () -> ()) {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 500, initialSpringVelocity: 500, options: .allowAnimatedContent, animations: {animations()}) {(_) in
             endAnimation()
         }
     }
+}
+
+extension GameScreen {
+   
+    func myDelegateFunc(value: Any?) {
+        print(value as! String)
+    }
+
 }
 
 

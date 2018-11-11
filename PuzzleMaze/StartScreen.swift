@@ -31,6 +31,8 @@ class StartScreen: UIViewController {
     
     @IBAction func startGame(_ sender: Any) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "GameScreen") as! GameScreen
+        
+        vc.myVal = self
         self.present(vc, animated: true, completion: nil)
         startButton.titleLabel?.text = "Generating Maps..."
        
