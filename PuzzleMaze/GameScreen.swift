@@ -28,11 +28,17 @@ protocol GameDelegate {
 
 
 class GameScreen: UIViewController {
+    @IBOutlet var myView: UIView!
+    @IBOutlet weak var staticTimeLabel: UILabel!
+    @IBOutlet weak var backgroundFIlter: UIView!
+    @IBOutlet weak var backgroundImage: UIImageView!
+    @IBOutlet weak var staticScoreLabel: UILabel!
+    @IBOutlet weak var restartButton: UIButton!
     var myVal: Any?
     @IBOutlet weak var LoadingTitle: UILabel!
     @IBOutlet weak var gameArea: UIView!
     var currentMap = 0
-    var sound = Sounds()
+    var sound: Sounds! = Sounds()
     @IBOutlet weak var failVal: UILabel!
     @IBOutlet weak var timeCounterLbl: UILabel!
     var isBoardNotLoaded = true;
@@ -40,50 +46,132 @@ class GameScreen: UIViewController {
     @IBOutlet weak var winCounter: UILabel!
     var callOnce = true
     var myGame: GameBoard<Piece>?
-    var map5x5 = [[[Int]]]()
-    
+    var mapDefault: progMap?
+    var myMapGenerator: MapGenerator!
+    var useNoTime = false
     var timer: Timer!
-    
+    var selectedMap = "3x3"
     var time = 50
+    var customSeed: Double = 0
     
     var loseValue = -1
     var winValue = 2
     
-    
+    @IBOutlet weak var backButton: UIButton!
+    deinit {
+        
+        print("gameScreen denit")
+    }
+    override func viewWillLayoutSubviews() {
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let im = UIImage.gif(name: "bg", ext: "gif")
+        self.backgroundImage.image = im
         self.timeCounterLbl.text = String(self.time) + "s"
+        
+        
+        if self.useNoTime {
+            self.failVal.isHidden = true
+            self.timeCounterLbl.isHidden = true
+            self.staticTimeLabel.isHidden = true
+        } else {
+            switch self.selectedMap {
+            case "Map": do {
+                self.winValue = 3
+                self.loseValue = -5
+                }
+            case "3x3": do {
+                self.winValue = 1
+                self.loseValue = -10
+                }
+            default: do {
+                self.winValue = 1
+                self.loseValue = -5
+                }
+                
+            }
+        }
+        
+        
 
     }
 
     override func viewDidLayoutSubviews() {
         if callOnce {
-            print(gameArea.bounds)
-//            self.map5x5 = MapGenerator(dimensions: 15, seed: 10, limit: Limit(min: 10, max: 12, unique: 8)).buildMaps(size: 4, tries: 2000)
-            self.myGame = GameBoard(board: gameArea, map: map[currentMap])
-            self.LoadingTitle.isHidden = true
-            isBoardNotLoaded = false
-            callOnce = false
-            self.setupTimer()
-            
-            Vibration.win.vibrate()
-            
+            backgroundImage.layer.zPosition = -2
+            backgroundFIlter.layer.zPosition = -1
         }
  
     }
+    func startGameWithTypeMap(){
+        if self.selectedMap == "Map" {
+            self.myGame?.createNewGame(map: (self.mapDefault?.generate())! )
+        } else {
+            self.myGame?.createNewGame(map: self.myMapGenerator.generate(tries: 2000) )
+        }
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        if self.selectedMap == "Map" {
+            self.mapDefault = progMap()
+            self.myGame = GameBoard(board: gameArea, map: (self.mapDefault?.generate())!)
+            
+        } else {
+            self.myMapGenerator = self.getMapGeneratorBy(self.selectedMap)
+            self.myGame = GameBoard(board: gameArea, map: self.myMapGenerator.generate(tries: 2000))
+        }
+        
+        
+        self.LoadingTitle.isHidden = true
+        isBoardNotLoaded = false
+        callOnce = false
+        self.setupTimer()
+        Vibration.win.vibrate()
+        self.backButton.layer.cornerRadius = self.backButton.layer.bounds.height / 5
+        
+        self.restartButton.layer.cornerRadius = self.restartButton.layer.bounds.height / 5
+        self.backButton.layer.zPosition = 3
+    }
+
+    func getMapGeneratorBy(_ type: String) -> MapGenerator {
+        print("awdawdaw----awdawdawd---awdawdaw", self.customSeed)
+        switch type {
+        case "3x3":
+            return MapGenerator(dimensions: 3, seed: 54 + self.customSeed, limit: Limit(min: 0, max: 2, unique: 1))
+        case "4x4":
+            return MapGenerator(dimensions: 4, seed: 150 + self.customSeed, limit: Limit(min: 0, max: 3, unique: 1))
+        case "5x5":
+            return MapGenerator(dimensions: 5, seed: 706 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
+        case "6x6":
+            return MapGenerator(dimensions: 6, seed: 1233 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
+        case "7x7":
+            return MapGenerator(dimensions: 7, seed: 2443 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
+        case "8x8":
+            return MapGenerator(dimensions: 8, seed: 4003 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
+        case "9x9":
+            return MapGenerator(dimensions: 9, seed: 5032 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
+        case "10x10":
+            return MapGenerator(dimensions: 10, seed: 6443 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
+        case "11x11":
+            return MapGenerator(dimensions: 11, seed: 7443 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
+        default:
+            return MapGenerator(dimensions: 3, seed: 54 + self.customSeed, limit: Limit(min: 0, max: 1, unique: 1))
+        }
+    }
+    @IBAction func onClickBack(_ sender: Any) {
+        self.presentStartScreen()
+    }
     func setupTimer() {
+        if self.useNoTime {
+            
+            
+            return
+        }
         self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
             if self.time <= 0 {
-                self.time = 0
-                self.timer.invalidate()
-                self.timer = nil
-                self.updateTimeLable()
-                self.myGame!.stopBoard()
-                
-                
-                
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "GameScreen") as! GameScreen
-                self.present(vc, animated: true, completion: nil)
+                self.presentStartScreen()
             } else {
                 self.time += -1
                 self.updateTimeLable()
@@ -100,7 +188,30 @@ class GameScreen: UIViewController {
         })
         self.failVal.transform = CGAffineTransform(scaleX: 0, y: 0)
     }
+    func presentStartScreen() {
+        
+        self.time = 0
+        if !self.useNoTime {
+            self.timer.invalidate()
+        }
+        self.timer = nil
+        self.updateTimeLable()
+        if let g = self.myGame {
+            g.stopBoard()
+        }
+        
+        self.sound = nil
+        self.myGame = nil
+        
+        
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "StartScreen") as! StartScreen
+        
+        self.dismiss(animated: true) {
+            print("GameScreen Dismissed")
+        }
 
+//        self.present(vc, animated: true, completion: nil)
+    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isBoardNotLoaded {return}
         let touch = touches.first!
@@ -108,19 +219,7 @@ class GameScreen: UIViewController {
         myGame!.onTouch(location.x, location.y)
     }
     
-    @IBAction func startgame1(_ sender: Any) {
-        if currentMap == 0 {return}
-        currentMap -= 1
-        self.myGame?.createNewGame(map: map[currentMap])
-    }
-    @IBAction func startgame2(_ sender: Any) {
-        self.myGame?.createNewGame(map: Maps.smallmaze.render())
-    }
-    @IBAction func startgame3(_ sender: Any) {
-        if currentMap == map.count - 1 {return}
-        currentMap += 1
-        self.myGame?.createNewGame(map: map[currentMap] )
-    }
+
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isBoardNotLoaded {return}
@@ -139,7 +238,9 @@ class GameScreen: UIViewController {
         }
     }
     private func didWin(){
-        timer.invalidate()
+        if timer != nil {
+            timer.invalidate()
+        }
         self.wins += 1
         self.currentMap += 1
         self.time += winValue
@@ -160,11 +261,11 @@ class GameScreen: UIViewController {
         self.updateTimeLable()
         //        self.playSound()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.myGame?.createNewGame(map: map[self.currentMap ] )
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.startGameWithTypeMap()
             self.setupTimer()
-            self.updateTimeLable()
-//            self.sound.miss()
+            
+            self.sound.miss()
         }
         
 //        Vibration.sound(1100).vibrate()
@@ -214,6 +315,27 @@ extension GameScreen {
 
 }
 
-
+class GradientView: UIView {
+    override open class var layerClass: AnyClass {
+        return CAGradientLayer.classForCoder()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+//        let gradientLayer = layer as! CAGradientLayer
+//        gradientLayer.colors = [self.rgb(35, 35, 35, 1), self.rgb(35, 35, 35, 0)]
+//
+        
+        
+        let gradientLayer:CAGradientLayer = CAGradientLayer()
+        gradientLayer.frame.size = self.frame.size
+        gradientLayer.colors = [self.rgb(35, 35, 35, 1), self.rgb(35, 35, 35, 0)]
+        
+        self.layer.addSublayer(gradientLayer)
+    }
+    func rgb(_ r: Float, _ g: Float, _ b: Float, _ a: Float) -> CGColor {
+        return UIColor(red: CGFloat(r/255), green: CGFloat(g/255), blue: CGFloat(b/255), alpha: CGFloat(a)).cgColor
+    }
+}
 
 

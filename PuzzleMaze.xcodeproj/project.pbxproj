@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0A55F78AAB6C3766655BDCE /* Pods_PuzzleMaze.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593BA86B150A42535B1D0532 /* Pods_PuzzleMaze.framework */; };
 		B41617B521539A4A00BA8F7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41617B421539A4A00BA8F7B /* AppDelegate.swift */; };
 		B41617B721539A4A00BA8F7B /* GameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41617B621539A4A00BA8F7B /* GameScreen.swift */; };
 		B41617BA21539A4A00BA8F7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B41617B821539A4A00BA8F7B /* Main.storyboard */; };
@@ -21,6 +22,11 @@
 		B445AF7F2198A2C2000A68D1 /* bubbleHighSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = B445AF7A2198A2C2000A68D1 /* bubbleHighSound.wav */; };
 		B445AF802198A2C2000A68D1 /* bubbleSelectSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = B445AF7B2198A2C2000A68D1 /* bubbleSelectSound.wav */; };
 		B445AF812198A2C2000A68D1 /* bubbleMove.wav in Resources */ = {isa = PBXBuildFile; fileRef = B445AF7C2198A2C2000A68D1 /* bubbleMove.wav */; };
+		B445AF84219AF29D000A68D1 /* GIFLib.swift in Sources */ = {isa = PBXBuildFile; fileRef = B445AF83219AF29D000A68D1 /* GIFLib.swift */; };
+		B445AF86219C3795000A68D1 /* Dear.gif in Resources */ = {isa = PBXBuildFile; fileRef = B445AF85219C3794000A68D1 /* Dear.gif */; };
+		B445AF88219D8E4D000A68D1 /* pexelbg.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B445AF87219D8E4B000A68D1 /* pexelbg.mp4 */; };
+		B445AF8A219D9088000A68D1 /* bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = B445AF89219D9088000A68D1 /* bg.gif */; };
+		B445AF8C219D96DE000A68D1 /* bgsepian.gif in Resources */ = {isa = PBXBuildFile; fileRef = B445AF8B219D96DE000A68D1 /* bgsepian.gif */; };
 		B46EFD3F217F2030008F01A6 /* GameRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46EFD3E217F2030008F01A6 /* GameRules.swift */; };
 		B46EFD412181A747008F01A6 /* VibrationKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46EFD402181A747008F01A6 /* VibrationKit.swift */; };
 		B46EFD432181AC13008F01A6 /* Maps.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46EFD422181AC13008F01A6 /* Maps.swift */; };
@@ -28,9 +34,13 @@
 		B46EFD4D2185C3BE008F01A6 /* StartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46EFD4C2185C3BE008F01A6 /* StartScreen.swift */; };
 		B46EFD4F218B062F008F01A6 /* MapGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46EFD4E218B062F008F01A6 /* MapGenerator.swift */; };
 		B46EFD532192FF0B008F01A6 /* MapSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46EFD522192FF0B008F01A6 /* MapSelectViewController.swift */; };
+		B4948697219ECC5A0087511B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4948696219ECC5A0087511B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F676347FC3E747C6366BEE9 /* Pods-PuzzleMaze.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PuzzleMaze.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PuzzleMaze/Pods-PuzzleMaze.debug.xcconfig"; sourceTree = "<group>"; };
+		593BA86B150A42535B1D0532 /* Pods_PuzzleMaze.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PuzzleMaze.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		898111D8C5330F06321ECEF6 /* Pods-PuzzleMaze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PuzzleMaze.release.xcconfig"; path = "Pods/Target Support Files/Pods-PuzzleMaze/Pods-PuzzleMaze.release.xcconfig"; sourceTree = "<group>"; };
 		B41617B121539A4A00BA8F7B /* PuzzleMaze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PuzzleMaze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B41617B421539A4A00BA8F7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B41617B621539A4A00BA8F7B /* GameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScreen.swift; sourceTree = "<group>"; };
@@ -47,6 +57,11 @@
 		B445AF7A2198A2C2000A68D1 /* bubbleHighSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bubbleHighSound.wav; sourceTree = "<group>"; };
 		B445AF7B2198A2C2000A68D1 /* bubbleSelectSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bubbleSelectSound.wav; sourceTree = "<group>"; };
 		B445AF7C2198A2C2000A68D1 /* bubbleMove.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bubbleMove.wav; sourceTree = "<group>"; };
+		B445AF83219AF29D000A68D1 /* GIFLib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFLib.swift; sourceTree = "<group>"; };
+		B445AF85219C3794000A68D1 /* Dear.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Dear.gif; sourceTree = "<group>"; };
+		B445AF87219D8E4B000A68D1 /* pexelbg.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = pexelbg.mp4; sourceTree = "<group>"; };
+		B445AF89219D9088000A68D1 /* bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = bg.gif; sourceTree = "<group>"; };
+		B445AF8B219D96DE000A68D1 /* bgsepian.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = bgsepian.gif; sourceTree = "<group>"; };
 		B46EFD3E217F2030008F01A6 /* GameRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRules.swift; sourceTree = "<group>"; };
 		B46EFD402181A747008F01A6 /* VibrationKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VibrationKit.swift; sourceTree = "<group>"; };
 		B46EFD422181AC13008F01A6 /* Maps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maps.swift; sourceTree = "<group>"; };
@@ -54,6 +69,7 @@
 		B46EFD4C2185C3BE008F01A6 /* StartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreen.swift; sourceTree = "<group>"; };
 		B46EFD4E218B062F008F01A6 /* MapGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapGenerator.swift; sourceTree = "<group>"; };
 		B46EFD522192FF0B008F01A6 /* MapSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSelectViewController.swift; sourceTree = "<group>"; };
+		B4948696219ECC5A0087511B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0A55F78AAB6C3766655BDCE /* Pods_PuzzleMaze.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,8 +87,13 @@
 		B41617A821539A4A00BA8F7B = {
 			isa = PBXGroup;
 			children = (
+				B445AF8B219D96DE000A68D1 /* bgsepian.gif */,
+				B445AF89219D9088000A68D1 /* bg.gif */,
+				B445AF87219D8E4B000A68D1 /* pexelbg.mp4 */,
 				B41617B321539A4A00BA8F7B /* PuzzleMaze */,
 				B41617B221539A4A00BA8F7B /* Products */,
+				FBFD4E3928FC68C0D7931C09 /* Pods */,
+				ED4788B06CD6CE358B373AB5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,7 +112,10 @@
 				B46EFD462181D22B008F01A6 /* Game */,
 				B41617B421539A4A00BA8F7B /* AppDelegate.swift */,
 				B41617B621539A4A00BA8F7B /* GameScreen.swift */,
+				B4948696219ECC5A0087511B /* GoogleService-Info.plist */,
 				B46EFD4C2185C3BE008F01A6 /* StartScreen.swift */,
+				B445AF85219C3794000A68D1 /* Dear.gif */,
+				B445AF83219AF29D000A68D1 /* GIFLib.swift */,
 				B46EFD522192FF0B008F01A6 /* MapSelectViewController.swift */,
 				B41617B821539A4A00BA8F7B /* Main.storyboard */,
 				B445AF7221989B3C000A68D1 /* Assets.xcassets */,
@@ -152,6 +177,23 @@
 			path = Maps;
 			sourceTree = "<group>";
 		};
+		ED4788B06CD6CE358B373AB5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				593BA86B150A42535B1D0532 /* Pods_PuzzleMaze.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FBFD4E3928FC68C0D7931C09 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4F676347FC3E747C6366BEE9 /* Pods-PuzzleMaze.debug.xcconfig */,
+				898111D8C5330F06321ECEF6 /* Pods-PuzzleMaze.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -159,9 +201,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B41617C321539A4C00BA8F7B /* Build configuration list for PBXNativeTarget "PuzzleMaze" */;
 			buildPhases = (
+				BFBC45D35DC77BCF15788FD4 /* [CP] Check Pods Manifest.lock */,
 				B41617AD21539A4A00BA8F7B /* Sources */,
 				B41617AE21539A4A00BA8F7B /* Frameworks */,
 				B41617AF21539A4A00BA8F7B /* Resources */,
+				9A59CFC2A4DF261E57B654C0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -210,8 +254,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B445AF8A219D9088000A68D1 /* bg.gif in Resources */,
 				B445AF7D2198A2C2000A68D1 /* bubbleMissSound.wav in Resources */,
+				B4948697219ECC5A0087511B /* GoogleService-Info.plist in Resources */,
 				B445AF812198A2C2000A68D1 /* bubbleMove.wav in Resources */,
+				B445AF8C219D96DE000A68D1 /* bgsepian.gif in Resources */,
+				B445AF86219C3795000A68D1 /* Dear.gif in Resources */,
+				B445AF88219D8E4D000A68D1 /* pexelbg.mp4 in Resources */,
 				B445AF802198A2C2000A68D1 /* bubbleSelectSound.wav in Resources */,
 				B445AF7521989C8E000A68D1 /* test.wav in Resources */,
 				B41617BF21539A4C00BA8F7B /* LaunchScreen.storyboard in Resources */,
@@ -225,6 +274,57 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9A59CFC2A4DF261E57B654C0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PuzzleMaze/Pods-PuzzleMaze-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PuzzleMaze/Pods-PuzzleMaze-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BFBC45D35DC77BCF15788FD4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PuzzleMaze-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B41617AD21539A4A00BA8F7B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -234,6 +334,7 @@
 				B41617B721539A4A00BA8F7B /* GameScreen.swift in Sources */,
 				B46EFD4D2185C3BE008F01A6 /* StartScreen.swift in Sources */,
 				B46EFD432181AC13008F01A6 /* Maps.swift in Sources */,
+				B445AF84219AF29D000A68D1 /* GIFLib.swift in Sources */,
 				B41617B521539A4A00BA8F7B /* AppDelegate.swift in Sources */,
 				B41B686E2171FA9500184EFD /* GameModel.swift in Sources */,
 				B46EFD4F218B062F008F01A6 /* MapGenerator.swift in Sources */,
@@ -384,6 +485,7 @@
 		};
 		B41617C421539A4C00BA8F7B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F676347FC3E747C6366BEE9 /* Pods-PuzzleMaze.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -403,6 +505,7 @@
 		};
 		B41617C521539A4C00BA8F7B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 898111D8C5330F06321ECEF6 /* Pods-PuzzleMaze.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

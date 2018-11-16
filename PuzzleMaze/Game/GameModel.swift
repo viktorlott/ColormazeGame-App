@@ -49,6 +49,9 @@ class GameBoard<T: Piece>: GameRules {
         self.gameMap = map
         createNewGame(map: map)
     }
+    deinit {
+        print("GameModel deinited")
+    }
     private func updateWallSize() {
         for p in gamePieces {
             p.ifWallUpdateSize()

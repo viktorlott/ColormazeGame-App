@@ -33,6 +33,7 @@ class Piece {
     var connectedWith: Int?
     var isConnected: Bool = false
     var mutatingSizeValue: CGFloat = 1
+    var spining = false
     private enum Shape {
         case large, grow, shrink, normal
     }
@@ -67,6 +68,7 @@ class Piece {
     func ifWallUpdateSize() {
         if self.block.type == Block.wall.type {
              label.layer.frame = mutateShape(val: mutatingSizeValue, with: .grow)
+             self.label.transform = CGAffineTransform(rotationAngle: 45 * CGFloat.pi / 180)
 //            label.layer.cornerRadius = (label.layer.frame.height) / 5
         }
     }
@@ -103,6 +105,9 @@ class Piece {
             animate {
                 self.label.layer.frame = self.mutateShape(val: 5 + self.mutatingSizeValue, with: .grow)
                 self.label.layer.cornerRadius = (self.label.layer.frame.height)
+//                self.spining = true
+
+                
                 
 
             }
@@ -112,7 +117,7 @@ class Piece {
         } else {
             animateWith(1.3) {
                 self.label.layer.backgroundColor = self.block.color
-                self.label.layer.frame = self.mutateShape(val: self.mutatingSizeValue + 4, with: .shrink)
+                self.label.layer.frame = self.mutateShape(val: self.mutatingSizeValue + 5, with: .shrink)
                 self.label.layer.cornerRadius = (self.label.layer.frame.height)
                 self.label.transform = CGAffineTransform(rotationAngle: 45 * CGFloat.pi / 180)
             }
@@ -121,6 +126,17 @@ class Piece {
         
 
         
+    }
+    func checkSpinVal() -> UIView.AnimationOptions {
+        if self.spining == true {
+            return .repeat
+        } else {
+            return .allowAnimatedContent
+        }
+    }
+    private func setSpin(animations: @escaping () -> ()) {
+        
+        UIView.animate(withDuration: 20, delay: 0, usingSpringWithDamping: 50, initialSpringVelocity: 50, options: [self.checkSpinVal(), .allowUserInteraction], animations: {animations()}) {(_) in}
     }
     private func animate(animations: @escaping () -> ()) {
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 50, initialSpringVelocity: 300, options: .allowAnimatedContent, animations: {animations()}) {(_) in}
@@ -141,6 +157,7 @@ class Piece {
     }
     func dimBlock() {
         isLit = false
+        self.spining = false
         if !block.isStartBlock(type: self.block.type) {
             animated {
             self.label.transform = CGAffineTransform.identity

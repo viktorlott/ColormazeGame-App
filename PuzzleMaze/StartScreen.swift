@@ -7,34 +7,98 @@
 //
 
 import UIKit
+//import Firebase
+//
+//
+//class MyDataBase {
+//    var ref: DatabaseReference!
+//    
+//    init() {
+//        self.ref = Database.database().reference()
+//        
+//    }
+//}
 
 class StartScreen: UIViewController {
-
+    
+    
+    
+    
+    @IBOutlet weak var bgGif: UIImageView!
+    var settings: [[String]] = [["Map", "3x3", "4x4","5x5", "6x6", "7x7","8x8","9x9","10x10","11x11"],["Timer","Yes", "No"], ["Seed", "Crap", "Diamond", "Viktor", "Random"]]
+    
+    var selectedMap = 0
+    var useTimer = 0
+  
+    @IBOutlet weak var picker: UIPickerView!
     @IBOutlet weak var startButton: UIButton!
+    
+    var useNoTimer = false
     override func viewDidLoad() {
+        if let name = UserDefaults.standard.object(forKey: "UserName") as? String {
+            print("Device name:", name)
+            
+        } else {
+            UserDefaults.standard.set(UIDevice.current.name, forKey: "UserName")
+            print("set device name")
+        }
+       
         super.viewDidLoad()
         setupView()
-        startButton.layer.cornerRadius = startButton.layer.bounds.height / 2
+        startButton.layer.cornerRadius = startButton.layer.bounds.height / 3
+        
+        self.picker.dataSource = self
+        self.picker.delegate = self
+        
+        self.fetchGif()
+        startButton.titleLabel?.text = "Start Game"
         
         
+    }
+    
+    func fetchGif() {
         
         
-        
-        // Do any additional setup after loading the view.
+        let im = UIImage.gif(name: "Dear")
+//        self.bgGif.transform = self.bgGif.transform.rotated(by: 90 * CGFloat.pi / 180)
+        self.bgGif.image = im
     }
     func setupView() {
         view.backgroundColor = rgb(42, 42, 42, 1)
     }
+
     func rgb(_ r: Float, _ g: Float, _ b: Float, _ a: Float) -> UIColor {
         return UIColor(red: CGFloat(r/255), green: CGFloat(g/255), blue: CGFloat(b/255), alpha: CGFloat(a))
     }
     
     @IBAction func startGame(_ sender: Any) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "GameScreen") as! GameScreen
-        
-        vc.myVal = self
-        self.present(vc, animated: true, completion: nil)
-        startButton.titleLabel?.text = "Generating Maps..."
+        self.startButton.titleLabel?.text = "Constructing..."
+         let vc = self.storyboard?.instantiateViewController(withIdentifier: "GameScreen") as! GameScreen
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+           
+            
+            vc.selectedMap = self.settings[0][self.picker.selectedRow(inComponent: 0)]
+            vc.useNoTime = { () -> Bool in
+                switch self.picker.selectedRow(inComponent: 1){
+                case 0: return false
+                case 1: return false
+                case 2: return true
+                default: return false
+                }
+            }()
+            vc.customSeed = { () -> Double in
+                switch self.picker.selectedRow(inComponent: 2){
+                case 0: return 0
+                case 1: return 204
+                case 2: return 340
+                case 3: return 545
+                case 4: return Double.random(in: 7000..<9000)
+                default: return 0
+                }
+            }()
+            
+            self.present(vc, animated: true, completion: nil)
+        }
        
     }
     
@@ -49,3 +113,39 @@ class StartScreen: UIViewController {
     */
 
 }
+
+extension StartScreen: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 3
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.settings[component].count
+    }
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let titleData = self.settings[component][row]
+        return NSAttributedString(string: titleData, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        if component == 0 {
+            self.selectedMap = row
+        }
+        if component == 1 {
+            print(row)
+            self.useTimer = row
+        }
+        
+        
+    }
+    
+}
+
+
+
+
+
+
+
+

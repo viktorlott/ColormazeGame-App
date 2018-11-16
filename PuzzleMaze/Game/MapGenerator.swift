@@ -170,7 +170,7 @@ extension MapGenerator {
         return false
     }
     
-    func generateRandomVariables(loops: Int, limit: Limit) -> [ColorItem] {
+    private func generateRandomVariables(loops: Int, limit: Limit) -> [ColorItem] {
         var colors = Block.allColors()
         var randomVariables = [ColorItem]()
         for _ in 0..<loops {
@@ -178,10 +178,10 @@ extension MapGenerator {
         }
         return randomVariables
     }
-    private func generate(tries: Int, limit: Limit) -> [[Int]]{
+    func generate(tries: Int) -> [[Int]]{
         self.seed += 3
         self.random = LCG(seed: self.seed)
-        var colorList = self.generateRandomVariables(loops: tries, limit: limit)
+        var colorList = self.generateRandomVariables(loops: tries, limit: self.limit)
         var listNotEmpty = true
         var i = 0
         
@@ -192,8 +192,8 @@ extension MapGenerator {
             }
             self.createColoredPath(color: colorList[i].color, limit: colorList[i].limits)
             
-            if limit.unique > 0 {
-                if self.checkMapForColorUniques(colorList[i].color, unique: limit.unique) {
+            if self.limit.unique > 0 {
+                if self.checkMapForColorUniques(colorList[i].color, unique: self.limit.unique) {
                     colorList = colorList.filter({$0.color.type != colorList[i].color.type})
                 }
             }
@@ -208,7 +208,7 @@ extension MapGenerator {
     func buildMaps(size: Int, tries: Int) -> [[[Int]]]{
         var maps = [[[Int]]]()
         for _ in 0..<size {
-            maps.append(self.generate(tries: tries, limit: self.limit))
+            maps.append(self.generate(tries: tries))
         }
         return maps
     }
