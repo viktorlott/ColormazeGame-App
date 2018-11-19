@@ -67,7 +67,7 @@ class GameScreen: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.modalTransitionStyle = .crossDissolve
         let im = UIImage.gif(name: "bg", ext: "gif")
         self.backgroundImage.image = im
         self.timeCounterLbl.text = String(self.time) + "s"
@@ -107,14 +107,14 @@ class GameScreen: UIViewController {
  
     }
     func startGameWithTypeMap(){
-        if self.selectedMap == "Map" {
+        if self.selectedMap == "Easy" {
             self.myGame?.createNewGame(map: (self.mapDefault?.generate())! )
         } else {
             self.myGame?.createNewGame(map: self.myMapGenerator.generate(tries: 2000) )
         }
     }
     override func viewDidAppear(_ animated: Bool) {
-        if self.selectedMap == "Map" {
+        if self.selectedMap == "Easy" {
             self.mapDefault = progMap()
             self.myGame = GameBoard(board: gameArea, map: (self.mapDefault?.generate())!)
             
@@ -129,9 +129,8 @@ class GameScreen: UIViewController {
         callOnce = false
         self.setupTimer()
         Vibration.win.vibrate()
-        self.backButton.layer.cornerRadius = self.backButton.layer.bounds.height / 5
-        
-        self.restartButton.layer.cornerRadius = self.restartButton.layer.bounds.height / 5
+        self.backButton.layer.cornerRadius = self.backButton.layer.bounds.height / 6
+   
         self.backButton.layer.zPosition = 3
     }
 
@@ -161,7 +160,21 @@ class GameScreen: UIViewController {
         }
     }
     @IBAction func onClickBack(_ sender: Any) {
-        self.presentStartScreen()
+        self.presentScoreScreen()
+    }
+    
+    
+    func presentScoreScreen() {
+        self.timer.invalidate()
+        
+        if let g = self.myGame {
+            g.stopBoard()
+        }
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ScoreBoardController") as! ScoreBoardController
+        vc.done = self.presentStartScreen
+        vc.score = "" + String(self.wins)
+        
+        self.present(vc, animated: true)
     }
     func setupTimer() {
         if self.useNoTime {
@@ -171,7 +184,7 @@ class GameScreen: UIViewController {
         }
         self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {_ in
             if self.time <= 0 {
-                self.presentStartScreen()
+                self.presentScoreScreen()
             } else {
                 self.time += -1
                 self.updateTimeLable()
@@ -190,12 +203,12 @@ class GameScreen: UIViewController {
     }
     func presentStartScreen() {
         
-        self.time = 0
+        
         if !self.useNoTime {
             self.timer.invalidate()
         }
         self.timer = nil
-        self.updateTimeLable()
+        
         if let g = self.myGame {
             g.stopBoard()
         }
@@ -314,6 +327,10 @@ extension GameScreen {
     }
 
 }
+
+
+
+
 
 class GradientView: UIView {
     override open class var layerClass: AnyClass {

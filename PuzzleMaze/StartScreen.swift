@@ -25,7 +25,7 @@ class StartScreen: UIViewController {
     
     
     @IBOutlet weak var bgGif: UIImageView!
-    var settings: [[String]] = [["Map", "3x3", "4x4","5x5", "6x6", "7x7","8x8","9x9","10x10","11x11"],["Timer","Yes", "No"], ["Seed", "Crap", "Diamond", "Viktor", "Random"]]
+    var settings: [[String]] = [["Easy","3x3", "4x4","5x5", "6x6", "7x7","8x8","9x9","10x10","11x11"],["Yes", "No"], ["Random", "Diamond", "Viktor", "Crap"]]
     
     var selectedMap = 0
     var useTimer = 0
@@ -74,6 +74,8 @@ class StartScreen: UIViewController {
     @IBAction func startGame(_ sender: Any) {
         self.startButton.titleLabel?.text = "Constructing..."
          let vc = self.storyboard?.instantiateViewController(withIdentifier: "GameScreen") as! GameScreen
+       
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
            
             
@@ -81,18 +83,17 @@ class StartScreen: UIViewController {
             vc.useNoTime = { () -> Bool in
                 switch self.picker.selectedRow(inComponent: 1){
                 case 0: return false
-                case 1: return false
-                case 2: return true
+                case 1: return true
                 default: return false
                 }
             }()
             vc.customSeed = { () -> Double in
                 switch self.picker.selectedRow(inComponent: 2){
-                case 0: return 0
-                case 1: return 204
+                case 0: return Double.random(in: 7000..<9000)
+                case 1: return 200
                 case 2: return 340
                 case 3: return 545
-                case 4: return Double.random(in: 7000..<9000)
+                case 4: return 700
                 default: return 0
                 }
             }()
@@ -102,15 +103,13 @@ class StartScreen: UIViewController {
        
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func testScore(_ sender: Any) {
+        
+         let vc = self.storyboard?.instantiateViewController(withIdentifier: "ScoreBoardController") as! ScoreBoardController
+        
+        self.present(vc, animated: true)
     }
-    */
+
 
 }
 

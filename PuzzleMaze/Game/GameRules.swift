@@ -132,4 +132,8 @@ extension GameRules {
         }
         return false
     }
+    
+//    func isPreviousBlock() -> Bool {
+//        
+//    }
 }

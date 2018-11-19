@@ -134,6 +134,23 @@ class Piece {
             return .allowAnimatedContent
         }
     }
+    func hold(p: @escaping () -> ()) {
+        aniflux(dur: 1,delay: 0,a: {
+//            self.label.layer.frame = self.mutateShape(val: self.mutatingSizeValue + 5, with: .large)
+            self.label.transform = CGAffineTransform(rotationAngle: 45 * CGFloat.pi / 180)
+        }, b: {
+            p()
+        })
+        
+    }
+    func release(p: @escaping () -> ()) {
+        aniflux(dur: 0.2,delay: 0.2,a: {
+            self.label.transform = CGAffineTransform.identity
+        }, b: {
+            
+        })
+        p()
+    }
     private func setSpin(animations: @escaping () -> ()) {
         
         UIView.animate(withDuration: 20, delay: 0, usingSpringWithDamping: 50, initialSpringVelocity: 50, options: [self.checkSpinVal(), .allowUserInteraction], animations: {animations()}) {(_) in}
@@ -142,7 +159,7 @@ class Piece {
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 50, initialSpringVelocity: 300, options: .allowAnimatedContent, animations: {animations()}) {(_) in}
     }
     private func animateWith(_ time: Double, animations: @escaping () -> ()) {
-        UIView.animate(withDuration: time, delay: 0, usingSpringWithDamping: 300, initialSpringVelocity: 30, options: .allowAnimatedContent, animations: {animations()}) {(_) in}
+        UIView.animate(withDuration: time, delay: 0, usingSpringWithDamping: 300, initialSpringVelocity: 30, options: .allowUserInteraction, animations: {animations()}) {(_) in}
     }
     private func mutateShape(val: CGFloat, with shape: Shape) -> CGRect {
         switch shape {
@@ -155,9 +172,13 @@ class Piece {
     private func animated(animations: @escaping () -> ()) {
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 300, initialSpringVelocity: 20, options: .allowUserInteraction, animations: {animations()}) {(_) in}
     }
+    private func aniflux(dur: Double, delay: Double ,a: @escaping () -> (), b: @escaping () -> ()) {
+        UIView.animate(withDuration: dur, delay: delay, usingSpringWithDamping: 200, initialSpringVelocity: 30, options: .allowUserInteraction, animations: {a()}) {(_) in b()}
+    }
     func dimBlock() {
         isLit = false
         self.spining = false
+        self.connectedWith = nil
         if !block.isStartBlock(type: self.block.type) {
             animated {
             self.label.transform = CGAffineTransform.identity

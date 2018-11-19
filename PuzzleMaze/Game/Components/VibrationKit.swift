@@ -21,6 +21,9 @@ class Sounds {
     var moveSound = AVAudioPlayer()
     var test: SystemSoundID = 0
     var winSound: SystemSoundID = 0
+    
+    var bubbleMissSound: SystemSoundID = 0
+     var bubbleHighSound: SystemSoundID = 0
     init() {
         loadSounds()
     }
@@ -34,6 +37,12 @@ class Sounds {
     func win() {
         AudioServicesPlaySystemSound(winSound)
     }
+    func missBubble() {
+        AudioServicesPlaySystemSound(bubbleMissSound)
+    }
+    func bubbleHigh() {
+        AudioServicesPlaySystemSound(bubbleHighSound)
+    }
     func loadSounds() {
         do {
             if let sURL = Bundle.main.url(forResource: "bubbleMoveSound", withExtension: "wav") {
@@ -45,6 +54,13 @@ class Sounds {
             }
             if let sURL = Bundle.main.url(forResource: "test", withExtension: "wav") {
                 AudioServicesCreateSystemSoundID(sURL as CFURL, &winSound)
+            }
+            if let sURL = Bundle.main.url(forResource: "bubbleMissSound", withExtension: "wav") {
+                AudioServicesCreateSystemSoundID(sURL as CFURL, &bubbleMissSound)
+            }
+            
+            if let sURL = Bundle.main.url(forResource: "bubbleHighSound", withExtension: "wav") {
+                AudioServicesCreateSystemSoundID(sURL as CFURL, &bubbleHighSound)
             }
             
             

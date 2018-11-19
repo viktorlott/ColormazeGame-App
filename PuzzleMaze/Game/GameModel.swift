@@ -26,7 +26,8 @@ struct PieceSize {
 
 
 class GameBoard<T: Piece>: GameRules {
-    
+    var t = false
+    var mySound = Sounds()
     private var gameArea: UIView!
     var mapShape: MapShape!
     var boardSize: BoardSize!
@@ -90,10 +91,25 @@ class GameBoard<T: Piece>: GameRules {
         
     }
     func onTouch(_ x: CGFloat, _ y: CGFloat) {
-        if canMove == false { return}
+//        if canMove == false { return}
+        canMove = true
         if let piece = getPieceFromCoord(x: x, y: y) {
-            if isColoredBlock(piece.block.type) {
+            if isColoredBlock(piece.block.type){
                 selectedPiece = piece as! T
+                if piece.isLit {
+                    canMove = false
+                    piece.hold() {
+                        
+                    }
+                    mySound.missBubble()
+                    selectedPiece.release() {
+                        self.clearColoredPath()
+                    }
+                    
+
+                    return
+
+                }
                 selectedPiece.isLit = true
                 selectedPiece.litBlock()
 //                sound.selectSound.play()
@@ -104,35 +120,134 @@ class GameBoard<T: Piece>: GameRules {
             }
         }
     }
+    func checkIfPieceMatchPath(p: Piece, pos: Int?) -> Bool {
+        
+        if let mpos = pos {
+            if gamePieces[mpos].connectedWith == p.id {
+                return true
+            }
+            return checkIfPieceMatchPath(p: p, pos: gamePieces[mpos].connectedWith)
+        }
+        return false
+
+    }
+    func resetPiecesPath(p: Piece, pos: Int?) {
+        if let mpos = pos {
+            
+            if gamePieces[mpos].connectedWith == p.id {
+                gamePieces[mpos].dimBlock()
+                if !isColoredBlock(gamePieces[mpos].block.type) {
+                    gamePieces[mpos].updatePiece(block: Block.empty)
+                    gameRenderMap[mpos] = 1
+                    Vibration.sound(1397).vibrate()
+                }
+                if selectedPieceEnd != nil {
+                    selectedPieceEnd.dimBlock()
+                    Vibration.sound(1130).vibrate()
+                }
+                
+                self.position = p.id
+                return
+            }
+
+            resetPiecesPath(p: p, pos: gamePieces[mpos].connectedWith)
+            gamePieces[mpos].dimBlock()
+            if !isColoredBlock(gamePieces[mpos].block.type) {
+                gamePieces[mpos].updatePiece(block: Block.empty)
+                gameRenderMap[mpos] = 1
+                Vibration.sound(1397).vibrate()
+            }
+            
+            
+            return
+        }
+        return
+    }
     func onTouchMove(_ x: CGFloat, _ y: CGFloat) {
         if noPieceSelected() {return}
         if let piece = getPieceFromCoord(x: x, y: y) {
+            
+            if let selectEnd = selectedPieceEnd {
+                if selectEnd.id != piece.id {
+                    selectedPieceEnd.dimBlock()
+                    selectedPieceEnd = nil
+                }
+            }
+            if t {
+                            if checkIfPieceMatchPath(p: piece, pos: position) {
+                                print("match")
+                                resetPiecesPath(p: piece, pos: position)
+                                if let sp = selectedPieceEnd {
+                                    selectedPieceEnd.dimBlock()
+                                }
+                                
+                                selectedPieceEnd = nil
+                                t = false
+                            }
+            }
             if !canMove {
-                
+ 
+//                else if gamePieces[self.position].connectedWith == piece.id {
+//                    print("cant move - ", piece.id)
+//                    gamePieces[self.position].dimBlock()
+//                    gamePieces[self.position].updatePiece(block: Block.empty)
+//                    gameRenderMap[position] = 1
+//                    self.position = piece.id
+//                    print("previous")
+//                    Vibration.sound(1397).vibrate()
+//                    selectedPieceEnd.dimBlock()
+////
+//                    selectedPieceEnd = nil
+//                    canMove = true
+//                }
                 return
                 
             }
 
+            
             if piece.block.type == selectedPiece.block.type {
                 if piece.id == position {canMove = true}
                 if piece.id != selectedPiece.id && !cannotMoveToPiece(piece.id) || (isPieceConnected(piece) && isColoredBlock(piece.block.type)){
 //                    sound.play()
-                    Vibration.sound(1130).vibrate()
+
+                    if selectedPieceEnd == nil {
+                        Vibration.sound(1130).vibrate()
+                    }
+                    
                     piece.litBlock()
                     selectedPieceEnd = piece
-                    canMove = false
+                    selectedPieceEnd.connectedWith = position
+                    
                     return
                 }
             }
-            if cannotMoveToPiece(piece.id) || isWall(piece.block.type) || isNotEmpty(piece.block.type){return}
+            if cannotMoveToPiece(piece.id) || isWall(piece.block.type) || isNotEmpty(piece.block.type){
+                if checkIfPieceMatchPath(p: piece, pos: position) {
+                    resetPiecesPath(p: piece, pos: position)
+                }
+//                if gamePieces[self.position].connectedWith == piece.id {
+//                    gamePieces[self.position].dimBlock()
+//                    gamePieces[self.position].updatePiece(block: Block.empty)
+//                    gameRenderMap[position] = 1
+//                    self.position = piece.id
+//                    print("previous")
+//                    Vibration.sound(1397).vibrate()
+//                }
+                return
+                
+            }
             if canMove  {
 //                sound.play()
+                
+              
+                piece.connectedWith = position
                 Vibration.sound(1397).vibrate()
                 position = piece.id
                 piece.updatePiece(block: selectedPiece.block.upp())
                 gameRenderMap[position] = selectedPiece.block.upp().type
                 piece.litBlock()
-                print("Moving ","Selected Piece:",selectedPiece.id, "Position:",position)
+                print("Moving ","Selected Piece:",selectedPiece.id, "Position:",piece.id, "- connectedWith:", piece.connectedWith)
+                
                 
             }
             
@@ -140,6 +255,7 @@ class GameBoard<T: Piece>: GameRules {
     }
     func onTouchEnd(_ x: CGFloat, _ y: CGFloat, _ win: () -> (), _ lose: () -> ()) {
         if noPieceSelected() {return}
+
         if let piece = getPieceFromCoord(x: x, y: y) {
             guard selectedPieceEnd != nil else {
                 clearColoredPath()
@@ -147,6 +263,7 @@ class GameBoard<T: Piece>: GameRules {
                 selectedPieceEnd = nil
                 return
             }
+            
             if piece.block.type == selectedPiece.block.type || isNearSelectedBlock(x, y, selectedPieceEnd) && selectedPieceEnd.block.type == selectedPiece.block.type {
                 print("End ","Selected Piece:",selectedPiece.id, "Position:",position, "End Piece:", selectedPieceEnd.id)
                 if (piece.id != selectedPiece.id || isNearSelectedBlock(x, y, selectedPieceEnd)) && (isNeighborSameColor(p: piece.id) || isNeighborSameColor(p: selectedPieceEnd.id)) && (piece.isConnected == false || selectedPieceEnd.isConnected == false) {
