@@ -50,7 +50,13 @@ class GameScreen: UIViewController {
     var myMapGenerator: MapGenerator!
     var useNoTime = false
     var timer: Timer!
-    var selectedMap = "3x3"
+    
+    
+    var selectedMap = 0
+    var mapDimensions = ["3x3","4x4","5x5","6x6","7x7","8x8"]
+    var currentDimension = 0
+    var intervalForDimension = 5
+    
     var time = 50
     var customSeed: Double = 0
     
@@ -78,21 +84,21 @@ class GameScreen: UIViewController {
             self.timeCounterLbl.isHidden = true
             self.staticTimeLabel.isHidden = true
         } else {
-            switch self.selectedMap {
-            case "Map": do {
-                self.winValue = 3
-                self.loseValue = -5
-                }
-            case "3x3": do {
-                self.winValue = 1
-                self.loseValue = -10
-                }
-            default: do {
-                self.winValue = 1
-                self.loseValue = -5
-                }
-                
-            }
+//            switch self.selectedMap {
+//            case "Map": do {
+//                self.winValue = 3
+//                self.loseValue = -5
+//                }
+//            case "3x3": do {
+//                self.winValue = 1
+//                self.loseValue = -10
+//                }
+//            default: do {
+//                self.winValue = 1
+//                self.loseValue = -5
+//                }
+//
+//            }
         }
         
         
@@ -107,21 +113,23 @@ class GameScreen: UIViewController {
  
     }
     func startGameWithTypeMap(){
-        if self.selectedMap == "Easy" {
-            self.myGame?.createNewGame(map: (self.mapDefault?.generate())! )
-        } else {
+//        if self.selectedMap == "Easy" {
+//            self.myGame?.createNewGame(map: (self.mapDefault?.generate())! )
+//        } else {
+
             self.myGame?.createNewGame(map: self.myMapGenerator.generate(tries: 2000) )
-        }
+//        }
     }
     override func viewDidAppear(_ animated: Bool) {
-        if self.selectedMap == "Easy" {
-            self.mapDefault = progMap()
-            self.myGame = GameBoard(board: gameArea, map: (self.mapDefault?.generate())!)
-            
-        } else {
-            self.myMapGenerator = self.getMapGeneratorBy(self.selectedMap)
+//        if self.selectedMap == "Easy" {
+//            self.mapDefault = progMap()
+//            self.myGame = GameBoard(board: gameArea, map: (self.mapDefault?.generate())!)
+//
+//        } else {
+        self.currentDimension = self.selectedMap
+            self.myMapGenerator = self.getMapGeneratorBy(self.mapDimensions[self.currentDimension])
             self.myGame = GameBoard(board: gameArea, map: self.myMapGenerator.generate(tries: 2000))
-        }
+//        }
         
         
         self.LoadingTitle.isHidden = true
@@ -136,19 +144,20 @@ class GameScreen: UIViewController {
 
     func getMapGeneratorBy(_ type: String) -> MapGenerator {
         print("awdawdaw----awdawdawd---awdawdaw", self.customSeed)
+        let isHard = selectedMap == 2 ? 4 : 1
         switch type {
         case "3x3":
             return MapGenerator(dimensions: 3, seed: 54 + self.customSeed, limit: Limit(min: 0, max: 2, unique: 1))
         case "4x4":
             return MapGenerator(dimensions: 4, seed: 150 + self.customSeed, limit: Limit(min: 0, max: 3, unique: 1))
         case "5x5":
-            return MapGenerator(dimensions: 5, seed: 706 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
+            return MapGenerator(dimensions: 5, seed: 706 + self.customSeed, limit: Limit(min: 0, max: 4, unique: isHard))
         case "6x6":
-            return MapGenerator(dimensions: 6, seed: 1233 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
+            return MapGenerator(dimensions: 6, seed: 1233 + self.customSeed, limit: Limit(min: 0, max: 5, unique: isHard))
         case "7x7":
-            return MapGenerator(dimensions: 7, seed: 2443 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
+            return MapGenerator(dimensions: 7, seed: 2443 + self.customSeed, limit: Limit(min: 0, max: 6, unique: isHard))
         case "8x8":
-            return MapGenerator(dimensions: 8, seed: 4003 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
+            return MapGenerator(dimensions: 8, seed: 4003 + self.customSeed, limit: Limit(min: 0, max: 7, unique: isHard))
         case "9x9":
             return MapGenerator(dimensions: 9, seed: 5032 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
         case "10x10":
@@ -165,7 +174,9 @@ class GameScreen: UIViewController {
     
     
     func presentScoreScreen() {
-        self.timer.invalidate()
+        if self.timer != nil {
+            self.timer.invalidate()
+        }
         
         if let g = self.myGame {
             g.stopBoard()
@@ -273,7 +284,15 @@ class GameScreen: UIViewController {
         }
         self.updateTimeLable()
         //        self.playSound()
-        
+        if ((self.wins % self.intervalForDimension) == 0) {
+            if self.currentDimension < self.mapDimensions.count - 1{
+                self.currentDimension += 1
+                self.myMapGenerator = self.getMapGeneratorBy(self.mapDimensions[self.currentDimension])
+            }
+         
+            
+        }
+        print(self.currentDimension, self.mapDimensions.count)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.startGameWithTypeMap()
             self.setupTimer()

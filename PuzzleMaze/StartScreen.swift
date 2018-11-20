@@ -25,7 +25,7 @@ class StartScreen: UIViewController {
     
     
     @IBOutlet weak var bgGif: UIImageView!
-    var settings: [[String]] = [["Easy","3x3", "4x4","5x5", "6x6", "7x7","8x8","9x9","10x10","11x11"],["Yes", "No"], ["Random", "Diamond", "Viktor", "Crap"]]
+    var settings: [[String]] = [["Easy", "Normal", "Hard"],["Yes", "No"], ["Random", "Diamond", "Viktor", "Crap"]]
     
     var selectedMap = 0
     var useTimer = 0
@@ -79,7 +79,7 @@ class StartScreen: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
            
             
-            vc.selectedMap = self.settings[0][self.picker.selectedRow(inComponent: 0)]
+            vc.selectedMap = self.picker.selectedRow(inComponent: 0)
             vc.useNoTime = { () -> Bool in
                 switch self.picker.selectedRow(inComponent: 1){
                 case 0: return false

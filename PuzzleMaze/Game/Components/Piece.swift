@@ -33,6 +33,8 @@ class Piece {
     var connectedWith: Int?
     var isConnected: Bool = false
     var mutatingSizeValue: CGFloat = 1
+    var start: Piece?
+    var end: Piece?
     var spining = false
     private enum Shape {
         case large, grow, shrink, normal
@@ -115,7 +117,7 @@ class Piece {
 
 
         } else {
-            animateWith(1.3) {
+            animateWith(1.1) {
                 self.label.layer.backgroundColor = self.block.color
                 self.label.layer.frame = self.mutateShape(val: self.mutatingSizeValue + 5, with: .shrink)
                 self.label.layer.cornerRadius = (self.label.layer.frame.height)
@@ -182,6 +184,10 @@ class Piece {
         if !block.isStartBlock(type: self.block.type) {
             animated {
             self.label.transform = CGAffineTransform.identity
+            }
+        } else {
+            if self.isConnected == true {
+                self.isConnected = false
             }
         }
         animated {

@@ -23,7 +23,7 @@ class ScoreBoardController: UIViewController {
  
     var rank = "#1"
     var score = "99"
-    var name = "YOU"
+    var name = "You"
     
     var done: (() -> ())?
     
@@ -45,7 +45,7 @@ class ScoreBoardController: UIViewController {
 
     @IBAction func closePopup(_ sender: Any) {
         
-        self.dismiss(animated: true) {
+        self.dismiss(animated: false) {
             if let d = self.done {
                 d()
             }
