@@ -25,7 +25,7 @@ class StartScreen: UIViewController {
     
     
     @IBOutlet weak var bgGif: UIImageView!
-    var settings: [[String]] = [["Easy", "Normal", "Hard"],["Yes", "No"], ["Random", "Diamond", "Viktor", "Crap"]]
+    var settings: [[String]] = [["Easy", "Normal", "Hard", "Extreme"],["Yes", "No"], ["Random", "Diamond", "Viktor", "Crap"]]
     
     var selectedMap = 0
     var useTimer = 0

@@ -53,7 +53,7 @@ class GameScreen: UIViewController {
     
     
     var selectedMap = 0
-    var mapDimensions = ["3x3","4x4","5x5","6x6","7x7","8x8"]
+    var mapDimensions = ["3x3","4x4","5x5","6x6","7x7","8x8", "9x9", "10x10", "11x11"]
     var currentDimension = 0
     var intervalForDimension = 5
     
@@ -126,7 +126,8 @@ class GameScreen: UIViewController {
 //            self.myGame = GameBoard(board: gameArea, map: (self.mapDefault?.generate())!)
 //
 //        } else {
-        self.currentDimension = self.selectedMap
+        
+        self.currentDimension = self.selectedMap == 3 ? 6 : self.selectedMap
             self.myMapGenerator = self.getMapGeneratorBy(self.mapDimensions[self.currentDimension])
             self.myGame = GameBoard(board: gameArea, map: self.myMapGenerator.generate(tries: 2000))
 //        }
@@ -144,7 +145,7 @@ class GameScreen: UIViewController {
 
     func getMapGeneratorBy(_ type: String) -> MapGenerator {
         print("awdawdaw----awdawdawd---awdawdaw", self.customSeed)
-        let isHard = selectedMap == 2 ? 4 : 1
+        let isHard = selectedMap >= 2 ? 4 : 1
         switch type {
         case "3x3":
             return MapGenerator(dimensions: 3, seed: 54 + self.customSeed, limit: Limit(min: 0, max: 2, unique: 1))
@@ -159,13 +160,13 @@ class GameScreen: UIViewController {
         case "8x8":
             return MapGenerator(dimensions: 8, seed: 4003 + self.customSeed, limit: Limit(min: 0, max: 7, unique: isHard))
         case "9x9":
-            return MapGenerator(dimensions: 9, seed: 5032 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
+            return MapGenerator(dimensions: 9, seed: 5032 + self.customSeed, limit: Limit(min: 0, max: 4, unique: isHard))
         case "10x10":
-            return MapGenerator(dimensions: 10, seed: 6443 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
+            return MapGenerator(dimensions: 10, seed: 6443 + self.customSeed, limit: Limit(min: 0, max: 4, unique: isHard))
         case "11x11":
-            return MapGenerator(dimensions: 11, seed: 7443 + self.customSeed, limit: Limit(min: 0, max: 4, unique: 1))
+            return MapGenerator(dimensions: 11, seed: 7443 + self.customSeed, limit: Limit(min: 0, max: 4, unique: isHard))
         default:
-            return MapGenerator(dimensions: 3, seed: 54 + self.customSeed, limit: Limit(min: 0, max: 1, unique: 1))
+            return MapGenerator(dimensions: 3, seed: 54 + self.customSeed, limit: Limit(min: 0, max: 1, unique: isHard))
         }
     }
     @IBAction func onClickBack(_ sender: Any) {

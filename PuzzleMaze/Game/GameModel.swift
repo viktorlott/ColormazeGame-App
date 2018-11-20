@@ -238,7 +238,7 @@ class GameBoard<T: Piece>: GameRules {
 //                    sound.play()
 
                     if selectedPieceEnd == nil {
-//                        Vibration.sound(1130).vibrate()
+                        Vibration.sound(1130).vibrate()
                     }
                     
                     piece.litBlock()
