@@ -19,9 +19,18 @@ import UIKit
 //    }
 //}
 
+class mop {
+    var m = "112"
+    init() {
+        var p = m.self
+        print(p, m.self)
+    }
+}
+class cata: mop {
+    
+}
+
 class StartScreen: UIViewController {
-    
-    
     
     
     @IBOutlet weak var bgGif: UIImageView!
@@ -52,7 +61,11 @@ class StartScreen: UIViewController {
         
         self.fetchGif()
         startButton.titleLabel?.text = "Start Game"
+        var Mop = mop()
         
+        var sub1: mop.Type = cata.self
+        
+        print(cata.self)
         
     }
     

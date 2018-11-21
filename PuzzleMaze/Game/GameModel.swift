@@ -133,6 +133,11 @@ class GameBoard<T: Piece>: GameRules {
                         
 //                        self.clearColoredPath()
                     }
+                    selectedPiece = piece as! T
+                    selectedPiece.isLit = true
+                    selectedPiece.litBlock()
+                    position = piece.id
+                    canMove = true
                     return
 
                 }
@@ -280,16 +285,24 @@ class GameBoard<T: Piece>: GameRules {
             
         }
     }
+    var missText = ["HAH!","MISS", "STUPID", "U MISSED"]
     func onTouchEnd(_ x: CGFloat, _ y: CGFloat, _ win: () -> (), _ lose: () -> ()) {
         if noPieceSelected() {return}
 
         if let piece = getPieceFromCoord(x: x, y: y) {
             guard selectedPieceEnd != nil else {
 //                clearColoredPath()
+                showMissLabelAt(gamePieces[self.position].x, gamePieces[self.position].y, txt: missText[Int.random(in: 0..<missText.count)])
                 self.resetPiecesPaths(p: piece, pos: self.position)
                 lose()
                 selectedPieceEnd = nil
-                showMissLabelAt(piece.x, piece.y, txt: "Miss")
+                
+                
+                self.position = nil
+                
+                selectedPiece = nil
+                selectedPieceEnd = nil
+                print(gameRenderMap)
                 return
             }
             
@@ -345,7 +358,7 @@ class GameBoard<T: Piece>: GameRules {
     }
     
     func showMissLabelAt(_ x: CGFloat, _ y: CGFloat, txt: String) {
-        
+        mySound.play()
         let missLbl = createMissLabel()
         gameArea.addSubview(missLbl)
         var dir = [(20 * CGFloat.pi / 180),(-20 * CGFloat.pi / 180), 0]
@@ -392,6 +405,7 @@ class GameBoard<T: Piece>: GameRules {
         return label
         
     }
+    
     private func clearColoredPath() {
         if noPieceSelected() {return}
         for piece in gamePieces {
@@ -524,6 +538,10 @@ extension GameBoard {
                 
                 self.position = p.id
                 p.dimBlock()
+//                position = nil
+//
+//                selectedPiece = nil
+//                selectedPieceEnd = nil
                 return
             }
             

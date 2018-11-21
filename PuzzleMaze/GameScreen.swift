@@ -73,7 +73,7 @@ class GameScreen: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.modalTransitionStyle = .crossDissolve
+        self.modalTransitionStyle = .coverVertical
         let im = UIImage.gif(name: "bg", ext: "gif")
         self.backgroundImage.image = im
         self.timeCounterLbl.text = String(self.time) + "s"

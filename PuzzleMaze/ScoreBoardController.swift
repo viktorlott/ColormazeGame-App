@@ -45,7 +45,7 @@ class ScoreBoardController: UIViewController {
 
     @IBAction func closePopup(_ sender: Any) {
         
-        self.dismiss(animated: false) {
+        self.dismiss(animated: true) {
             if let d = self.done {
                 d()
             }
