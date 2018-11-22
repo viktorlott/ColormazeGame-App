@@ -19,7 +19,7 @@ class ScoreBoardController: UIViewController {
     
     @IBOutlet weak var blurView: UIVisualEffectView!
     @IBOutlet weak var nameLbl: UILabel!
-    
+    var updateScore: (() -> ())!
  
     var rank = "#1"
     var score = "99"
@@ -41,6 +41,17 @@ class ScoreBoardController: UIViewController {
         self.scoreLbl.text = self.score
         
         self.nameLbl.text = self.name
+        
+        
+        
+        if let oldscore = UserDefaults.standard.object(forKey: "Easy") as? String {
+            UserDefaults.standard.set(self.score, forKey: "Easy")
+            
+        } else {
+            UserDefaults.standard.set(self.score, forKey: "Easy")
+            
+        }
+        
     }
 
     @IBAction func closePopup(_ sender: Any) {
@@ -48,6 +59,7 @@ class ScoreBoardController: UIViewController {
         self.dismiss(animated: true) {
             if let d = self.done {
                 d()
+                self.updateScore()
             }
         }
         

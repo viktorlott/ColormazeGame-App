@@ -323,7 +323,7 @@ class GameBoard<T: Piece>: GameRules {
                     selectedPiece.start = selectedPiece
                     selectedPieceEnd.start = selectedPiece
                     
-                    print(selectedPiece.connectedWith, selectedPieceEnd.connectedWith)
+//                    print(selectedPiece.connectedWith, selectedPieceEnd.connectedWith)
                     selectedPiece = nil
                     selectedPieceEnd = nil
                     

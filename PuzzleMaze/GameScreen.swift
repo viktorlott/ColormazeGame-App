@@ -29,6 +29,7 @@ protocol GameDelegate {
 
 class GameScreen: UIViewController {
     @IBOutlet var myView: UIView!
+    var updateScore: (() -> ())!
     @IBOutlet weak var staticTimeLabel: UILabel!
     @IBOutlet weak var backgroundFIlter: UIView!
     @IBOutlet weak var backgroundImage: UIImageView!
@@ -185,7 +186,7 @@ class GameScreen: UIViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "ScoreBoardController") as! ScoreBoardController
         vc.done = self.presentStartScreen
         vc.score = "" + String(self.wins)
-        
+        vc.updateScore = self.updateScore
         self.present(vc, animated: true)
     }
     func setupTimer() {

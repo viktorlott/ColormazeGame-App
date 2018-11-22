@@ -19,22 +19,14 @@ import UIKit
 //    }
 //}
 
-class mop {
-    var m = "112"
-    init() {
-        var p = m.self
-        print(p, m.self)
-    }
-}
-class cata: mop {
-    
-}
+
 
 class StartScreen: UIViewController {
     
     
+    @IBOutlet weak var highscorelbl: UILabel!
     @IBOutlet weak var bgGif: UIImageView!
-    var settings: [[String]] = [["Easy", "Normal", "Hard", "Extreme"],["Yes", "No"], ["Random", "Diamond", "Viktor", "Crap"]]
+    var settings: [[String]] = [["Easy", "Normal", "Hard", "Extreme"],["Timed mode", "Free mode", "Life mode"], ["Random", "Bronze", "Crap", "Diamond","Viktor"]]
     
     var selectedMap = 0
     var useTimer = 0
@@ -42,8 +34,20 @@ class StartScreen: UIViewController {
     @IBOutlet weak var picker: UIPickerView!
     @IBOutlet weak var startButton: UIButton!
     
+    @IBOutlet weak var highscore: UILabel!
     var useNoTimer = false
+    override func viewDidAppear(_ animated: Bool) {
+        print("StartScreen appeared")
+        
+        self.setAllAnimations()
+    }
     override func viewDidLoad() {
+        
+        
+
+        
+        
+        
         if let name = UserDefaults.standard.object(forKey: "UserName") as? String {
             print("Device name:", name)
             
@@ -52,6 +56,12 @@ class StartScreen: UIViewController {
             print("set device name")
         }
        
+        if let score = UserDefaults.standard.object(forKey: "Easy") as? String {
+            highscore.text = score
+            
+        }
+        
+        
         super.viewDidLoad()
         setupView()
         startButton.layer.cornerRadius = startButton.layer.bounds.height / 3
@@ -61,19 +71,39 @@ class StartScreen: UIViewController {
         
         self.fetchGif()
         startButton.titleLabel?.text = "Start Game"
-        var Mop = mop()
-        
-        var sub1: mop.Type = cata.self
-        
-        print(cata.self)
+
         
     }
-    
+    func updateScore() {
+        if let score = UserDefaults.standard.object(forKey: "Easy") as? String {
+            self.highscore.text = score
+            
+        }
+    }
+    func setAllAnimations() {
+        self.animateReapetBounce({
+            self.highscorelbl.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+        }, {
+            self.highscorelbl.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }, 0)
+        
+        
+        self.animateReapetBounce({
+            self.highscore.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        }, {
+            self.highscore.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }, 0)
+        
+        self.animateReapetBounce({
+            self.startButton.transform = CGAffineTransform(scaleX: 1.01, y: 1.01)
+        }, {
+            self.startButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }, 0.2)
+    }
     func fetchGif() {
         
         
         let im = UIImage.gif(name: "Dear")
-//        self.bgGif.transform = self.bgGif.transform.rotated(by: 90 * CGFloat.pi / 180)
         self.bgGif.image = im
     }
     func setupView() {
@@ -86,6 +116,8 @@ class StartScreen: UIViewController {
     
     @IBAction func startGame(_ sender: Any) {
         self.startButton.titleLabel?.text = "Constructing..."
+        
+       
          let vc = self.storyboard?.instantiateViewController(withIdentifier: "GameScreen") as! GameScreen
        
         
@@ -110,7 +142,7 @@ class StartScreen: UIViewController {
                 default: return 0
                 }
             }()
-            
+            vc.updateScore = self.updateScore
             self.present(vc, animated: true, completion: nil)
         }
        
@@ -122,8 +154,20 @@ class StartScreen: UIViewController {
         
         self.present(vc, animated: true)
     }
+    
+    func animateReapetBounce(_ begin: @escaping () -> (), _ end: @escaping () -> (), _ delay: Double) {
+        UIView.animateKeyframes(withDuration: 1.0, delay: delay, options: [.autoreverse, .repeat, .allowUserInteraction], animations: {
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.5, animations: {
+                begin()
+            })
+            
 
-
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5, animations: {
+                end()
+            })
+        }, completion: nil)
+    }
 }
 
 extension StartScreen: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -137,7 +181,11 @@ extension StartScreen: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let titleData = self.settings[component][row]
-        return NSAttributedString(string: titleData, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        
+        let ns = NSAttributedString(string: titleData, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        
+        
+        return ns
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
@@ -152,6 +200,7 @@ extension StartScreen: UIPickerViewDelegate, UIPickerViewDataSource {
         
     }
     
+
 }
 
 
