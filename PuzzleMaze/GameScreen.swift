@@ -187,7 +187,31 @@ class GameScreen: UIViewController {
         vc.done = self.presentStartScreen
         vc.score = "" + String(self.wins)
         vc.updateScore = self.updateScore
+        
+        if !self.useNoTime {
+            saveScore(difficulty: self.selectedMap)
+        }
+        
         self.present(vc, animated: true)
+    }
+    
+    func saveScore(difficulty: Int) {
+        switch difficulty {
+        case 0: do {
+            UserDefaults.standard.set(String(self.wins), forKey: "Easy")
+            }
+        case 1: do {
+            UserDefaults.standard.set(String(self.wins), forKey: "Normal")
+            }
+        case 2: do {
+            UserDefaults.standard.set(String(self.wins), forKey: "Hard")
+            }
+        case 3: do {
+            UserDefaults.standard.set(String(self.wins), forKey: "Extreme")
+            }
+        default:
+            break
+        }
     }
     func setupTimer() {
         if self.useNoTime {

@@ -23,7 +23,7 @@ import UIKit
 
 class StartScreen: UIViewController {
     
-    
+    var selectedDifficulty = 0
     @IBOutlet weak var highscorelbl: UILabel!
     @IBOutlet weak var bgGif: UIImageView!
     var settings: [[String]] = [["Easy", "Normal", "Hard", "Extreme"],["Timed mode", "Free mode", "Life mode"], ["Random", "Bronze", "Crap", "Diamond","Viktor"]]
@@ -36,18 +36,15 @@ class StartScreen: UIViewController {
     
     @IBOutlet weak var highscore: UILabel!
     var useNoTimer = false
-    override func viewDidAppear(_ animated: Bool) {
-        print("StartScreen appeared")
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
         
         self.setAllAnimations()
+        self.updateScores()
     }
-    override func viewDidLoad() {
-        
-        
 
-        
-        
-        
+    override func viewDidLoad() {
         if let name = UserDefaults.standard.object(forKey: "UserName") as? String {
             print("Device name:", name)
             
@@ -114,9 +111,30 @@ class StartScreen: UIViewController {
         return UIColor(red: CGFloat(r/255), green: CGFloat(g/255), blue: CGFloat(b/255), alpha: CGFloat(a))
     }
     
+    @IBAction func StartGame_onPressDown(_ sender: Any) {
+        self.startButton.layer.removeAllAnimations()
+        
+        UIView.animateKeyframes(withDuration: 0.2, delay: 0, options: .allowUserInteraction, animations: {
+            self.startButton.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+        }, completion: nil)
+        
+    }
+    @IBAction func startGame_onPressOutside(_ sender: Any) {
+        UIView.animateKeyframes(withDuration: 0.2, delay: 0, options: .allowUserInteraction, animations: {
+            self.startButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }, completion: nil)
+    }
+    
+    @IBAction func startGame_onPressInside(_ sender: Any) {
+        UIView.animateKeyframes(withDuration: 0.2, delay: 0, options: .allowUserInteraction, animations: {
+            self.startButton.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+        }, completion: nil)
+    }
     @IBAction func startGame(_ sender: Any) {
         self.startButton.titleLabel?.text = "Constructing..."
-        
+        UIView.animateKeyframes(withDuration: 0.2, delay: 0, options: .allowUserInteraction, animations: {
+            self.startButton.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }, completion: nil)
        
          let vc = self.storyboard?.instantiateViewController(withIdentifier: "GameScreen") as! GameScreen
        
@@ -171,6 +189,15 @@ class StartScreen: UIViewController {
 }
 
 extension StartScreen: UIPickerViewDelegate, UIPickerViewDataSource {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print(self.selectedDifficulty, self.picker.selectedRow(inComponent: 0))
+        if self.selectedDifficulty != self.picker.selectedRow(inComponent: 0) {
+            self.selectedDifficulty = self.picker.selectedRow(inComponent: 0)
+            print(self.selectedDifficulty)
+        }
+        
+    }
+    
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 3
@@ -195,9 +222,67 @@ extension StartScreen: UIPickerViewDelegate, UIPickerViewDataSource {
         if component == 1 {
             print(row)
             self.useTimer = row
+            
+            if row == 0 {
+                highscorelbl.text = "HIGH SCORE"
+                highscore.isHidden = false
+            }
+            if row == 1 {
+                highscorelbl.text = "FREE MODE"
+                highscore.isHidden = true
+            }
+            if row == 2 {
+                highscorelbl.text = "LIFE MODE"
+                highscore.isHidden = true
+            }
         }
         
+        self.updateScores()
+//        print(self.selectedDifficulty, self.picker.selectedRow(inComponent: 0))
+//        if self.selectedDifficulty != self.picker.selectedRow(inComponent: 0) {
+//            self.selectedDifficulty = self.picker.selectedRow(inComponent: 0)
+//            print(self.selectedDifficulty)
+//        }
         
+        
+    }
+    func updateScores() {
+        switch self.picker.selectedRow(inComponent: 0) {
+        case 0: do {
+            if let score = UserDefaults.standard.object(forKey: "Easy") as? String {
+                highscore.text = score
+            } else {
+                self.highscore.text = "0"
+            }
+            }
+        case 1:  do {
+            if let score = UserDefaults.standard.object(forKey: "Normal") as? String {
+                highscore.text = score
+                
+            } else {
+                self.highscore.text = "0"
+            }
+            }
+            
+        case 2: do {
+            if let score = UserDefaults.standard.object(forKey: "Hard") as? String {
+                highscore.text = score
+                
+            } else {
+                self.highscore.text = "0"
+            }
+            }
+        case 3: do {
+            if let score = UserDefaults.standard.object(forKey: "Extreme") as? String {
+                highscore.text = score
+                
+            } else {
+                self.highscore.text = "0"
+            }
+            }
+        default: break
+            
+        }
     }
     
 

@@ -23,7 +23,7 @@ class ScoreBoardController: UIViewController {
  
     var rank = "#1"
     var score = "99"
-    var name = "You"
+    var name = "YOU"
     
     var done: (() -> ())?
     
@@ -44,13 +44,7 @@ class ScoreBoardController: UIViewController {
         
         
         
-        if let oldscore = UserDefaults.standard.object(forKey: "Easy") as? String {
-            UserDefaults.standard.set(self.score, forKey: "Easy")
-            
-        } else {
-            UserDefaults.standard.set(self.score, forKey: "Easy")
-            
-        }
+
         
     }
 

@@ -512,7 +512,7 @@ class GameBoard<T: Piece>: GameRules {
     private func getPieceSize(with map: MapShape, and board: BoardSize) -> PieceSize {
         let biggest = (map.column > map.row ? map.column : map.row)
         let pS = Float(board.width) / Float(biggest)
-        let space = Float(pS - (Float(Int(pS / 10) * 10)))
+//        let space = Float(pS - (Float(Int(pS / 10) * 10)))
         let spacing = self.defaultSpacing
 //            (space < self.defaultSpacing ? self.defaultSpacing : space)
         return PieceSize(width: pS - spacing, height: pS - spacing, spacing: spacing)

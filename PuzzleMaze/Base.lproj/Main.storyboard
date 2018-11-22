@@ -67,7 +67,10 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
+                                    <action selector="StartGame_onPressDown:" destination="D33-uh-uwt" eventType="touchDown" id="3xJ-A2-FYI"/>
                                     <action selector="startGame:" destination="D33-uh-uwt" eventType="touchUpInside" id="ut7-aE-fdH"/>
+                                    <action selector="startGame_onPressInside:" destination="D33-uh-uwt" eventType="touchDragInside" id="1b6-wF-5Lv"/>
+                                    <action selector="startGame_onPressOutside:" destination="D33-uh-uwt" eventType="touchDragOutside" id="jkX-af-8M4"/>
                                 </connections>
                             </button>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fHp-Ww-N3W">
@@ -207,24 +210,19 @@
                                     <constraint firstItem="U7v-wR-DgS" firstAttribute="top" secondItem="tIJ-xC-hXX" secondAttribute="bottom" constant="5" id="tw8-Jl-bKM"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ntu-8a-VDB">
-                                <rect key="frame" x="154.5" y="614" width="66" height="33"/>
-                                <color key="backgroundColor" red="0.92871403694152832" green="0.22344949841499329" blue="0.25750282406806946" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                            <button opaque="NO" alpha="0.80000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXy-W8-EsK">
+                                <rect key="frame" x="146" y="609" width="83" height="38"/>
+                                <color key="backgroundColor" red="0.92871403689999998" green="0.2234494984" blue="0.25750282410000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="33" id="gfP-LO-16j"/>
-                                    <constraint firstAttribute="width" constant="66" id="iOd-fd-7sG"/>
+                                    <constraint firstAttribute="height" constant="38" id="gdb-8c-YA0"/>
+                                    <constraint firstAttribute="width" constant="83" id="zxF-X9-TlN"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
-                                <state key="normal" title="Back">
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                                <state key="normal" title="BACK">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.zPosition">
-                                        <integer key="value" value="3"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="onClickBack:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pPg-0V-rRH"/>
+                                    <action selector="onClickBack:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qLg-xv-YPW"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -233,13 +231,13 @@
                             <constraint firstItem="bmg-FU-N3O" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1qg-vD-OvJ"/>
                             <constraint firstAttribute="bottom" secondItem="bmg-FU-N3O" secondAttribute="bottom" id="2ve-b0-5ib"/>
                             <constraint firstItem="Hvl-6S-UbH" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="5Rx-5D-Xhi"/>
-                            <constraint firstItem="ntu-8a-VDB" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="6Sv-BY-xu1"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ntu-8a-VDB" secondAttribute="bottom" constant="20" id="9eo-QI-q8k"/>
+                            <constraint firstItem="aXy-W8-EsK" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="8dR-9D-EU7"/>
                             <constraint firstItem="xFy-h1-HE7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="BPw-C6-yks"/>
                             <constraint firstItem="2lE-M4-nxc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DLt-4q-9dk"/>
                             <constraint firstItem="xFy-h1-HE7" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="80" id="FBL-jn-6No"/>
                             <constraint firstItem="2lE-M4-nxc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="FKc-OA-nqK"/>
                             <constraint firstItem="bmg-FU-N3O" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Iq4-nv-U8j"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="aXy-W8-EsK" secondAttribute="bottom" constant="20" id="Ln3-jb-hZ2"/>
                             <constraint firstItem="Hvl-6S-UbH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Szt-0h-Ic3"/>
                             <constraint firstItem="2lE-M4-nxc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="X4P-VT-d8h"/>
                             <constraint firstItem="dDX-9o-CLo" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="fpT-6t-NgL"/>
@@ -257,7 +255,7 @@
                     </view>
                     <connections>
                         <outlet property="LoadingTitle" destination="dDX-9o-CLo" id="CJz-kp-zNb"/>
-                        <outlet property="backButton" destination="ntu-8a-VDB" id="zkd-N1-iVj"/>
+                        <outlet property="backButton" destination="aXy-W8-EsK" id="tsG-lH-gPP"/>
                         <outlet property="backgroundFIlter" destination="bmg-FU-N3O" id="8Mt-G3-GJi"/>
                         <outlet property="backgroundImage" destination="Hvl-6S-UbH" id="xgX-yW-h7h"/>
                         <outlet property="failVal" destination="HkP-xq-h7U" id="O5e-Pi-RxX"/>
