@@ -18,19 +18,39 @@ import UIKit
 //        
 //    }
 //}
-
-
+func generateAlphabet() -> [String] {
+    var temp = [String]()
+    let startingValue = Int(("A" as UnicodeScalar).value) // 65
+    for i in 0 ..< 26 {
+        if let m = UnicodeScalar(i + startingValue) {
+            temp.append(String(Character(m)))
+        }
+    }
+    return temp
+}
 
 class StartScreen: UIViewController {
     
+    @IBOutlet weak var seedInput: UITextField!
     var selectedDifficulty = 0
     @IBOutlet weak var highscorelbl: UILabel!
     @IBOutlet weak var bgGif: UIImageView!
-    var settings: [[String]] = [["Easy", "Normal", "Hard", "Extreme"],["Timed mode", "Free mode", "Life mode"], ["Random", "Bronze", "Crap", "Diamond","Viktor"]]
+    var settings: [[String]] = [["Easy", "Normal", "Hard", "BIG"],["Timed", "Free", "Life"], ["Random", "Bronze", "Crap", "Diamond","Viktor"]]
     
     var selectedMap = 0
     var useTimer = 0
-  
+    var alphabet: [String] = {() -> [String] in
+        var temp = [String]()
+        let startingValue = Int(("A" as UnicodeScalar).value)
+        for i in 0 ..< 26 {
+            if let m = UnicodeScalar(i + startingValue) {
+                temp.append(String(Character(m)))
+            }
+        }
+        return temp
+    }()
+    var seedSize = 4
+    var rnS: String!
     @IBOutlet weak var picker: UIPickerView!
     @IBOutlet weak var startButton: UIButton!
     
@@ -38,13 +58,31 @@ class StartScreen: UIViewController {
     var useNoTimer = false
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        
+       
         self.setAllAnimations()
         self.updateScores()
     }
+    func generateRandomSeed(size: Int) -> String {
+        var myS = ""
+        for _ in 0..<size {
+            myS.append(self.alphabet[Int.random(in: 0..<self.alphabet.count)])
+        }
+        return myS
+    }
+    func generateAlphabet() -> [String] {
+        var temp = [String]()
+        let startingValue = Int(("A" as UnicodeScalar).value)
+        for i in 0 ..< 26 {
+            if let m = UnicodeScalar(i + startingValue) {
+                temp.append(String(Character(m)))
+            }
+        }
+        return temp
+    }
 
     override func viewDidLoad() {
+        self.rnS = self.generateRandomSeed(size: self.seedSize)
+        self.seedInput.text = self.rnS
         if let name = UserDefaults.standard.object(forKey: "UserName") as? String {
             print("Device name:", name)
             
@@ -71,6 +109,21 @@ class StartScreen: UIViewController {
 
         
     }
+    @IBAction func testSV(_ sender: Any) {
+        self.rnS = self.generateRandomSeed(size: self.seedSize)
+        self.seedInput.text = self.rnS
+//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "SettingsScreen") as! SettingsScreen
+//
+//        vc.type = "difficulty"
+//
+//
+//        vc.settingsDelegate = self
+//
+//        self.present(vc, animated: true, completion: nil)
+        
+        
+        
+    }
     func updateScore() {
         if let score = UserDefaults.standard.object(forKey: "Easy") as? String {
             self.highscore.text = score
@@ -92,7 +145,7 @@ class StartScreen: UIViewController {
         }, 0)
         
         self.animateReapetBounce({
-            self.startButton.transform = CGAffineTransform(scaleX: 1.01, y: 1.01)
+            self.startButton.transform = CGAffineTransform(scaleX: 1.05, y: 1)
         }, {
             self.startButton.transform = CGAffineTransform(scaleX: 1, y: 1)
         }, 0.2)
@@ -150,15 +203,36 @@ class StartScreen: UIViewController {
                 default: return false
                 }
             }()
+            let rn = self.rnS!
+            
+            if self.seedInput.text != "" {
+                vc.originalSeed = self.seedInput.text!
+                
+            } else {
+            vc.originalSeed = rn
+            }
             vc.customSeed = { () -> Double in
-                switch self.picker.selectedRow(inComponent: 2){
-                case 0: return Double.random(in: 7000..<9000)
-                case 1: return 200
-                case 2: return 340
-                case 3: return 545
-                case 4: return 700
-                default: return 0
+                if self.seedInput.text != "" {
+                    
+                    print("SeedInput")
+                    print(self.seedInput.text!, getSeedFromString(self.seedInput.text!))
+                    return getSeedFromString(self.seedInput.text!)
+                } else {
+                    return getSeedFromString(self.generateRandomSeed(size: self.seedSize))
                 }
+                if self.picker.selectedRow(inComponent: 2) == 0 {
+                    return getSeedFromString(rn)
+//                    return Double(Int.random(in: 7000..<9000))
+                }
+                return getSeedFromString(self.settings[2][self.picker.selectedRow(inComponent: 2)])
+//                switch self.picker.selectedRow(inComponent: 2){
+//                case 0: return Double.random(in: 7000..<9000)
+//                case 1: return 200
+//                case 2: return 340
+//                case 3: return 545
+//                case 4: return getSeedFromString("Viktor")
+//                default: return 0
+//                }
             }()
             vc.updateScore = self.updateScore
             self.present(vc, animated: true, completion: nil)
@@ -168,7 +242,7 @@ class StartScreen: UIViewController {
     
     @IBAction func testScore(_ sender: Any) {
         
-         let vc = self.storyboard?.instantiateViewController(withIdentifier: "ScoreBoardController") as! ScoreBoardController
+         let vc = self.storyboard?.instantiateViewController(withIdentifier: "ScoreScreen") as! ScoreScreen
         
         self.present(vc, animated: true)
     }
@@ -188,6 +262,28 @@ class StartScreen: UIViewController {
     }
 }
 
+extension StartScreen: SetSettingsDelegate {
+    func setDifficulty() {
+        
+    }
+    
+    func setGameMode() {
+        
+    }
+    
+    func setSeed() {
+        
+    }
+    
+    
+}
+
+extension StartScreen {
+    
+}
+
+
+
 extension StartScreen: UIPickerViewDelegate, UIPickerViewDataSource {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         print(self.selectedDifficulty, self.picker.selectedRow(inComponent: 0))
@@ -200,7 +296,7 @@ extension StartScreen: UIPickerViewDelegate, UIPickerViewDataSource {
     
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 3
+        return 2
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {

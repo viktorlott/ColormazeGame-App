@@ -45,7 +45,7 @@ class Sounds {
     }
     func loadSounds() {
         do {
-            if let sURL = Bundle.main.url(forResource: "bubbleMoveSound", withExtension: "wav") {
+            if let sURL = Bundle.main.url(forResource: "bubbleMove", withExtension: "wav") {
                 AudioServicesCreateSystemSoundID(sURL as CFURL, &test)
             }
             

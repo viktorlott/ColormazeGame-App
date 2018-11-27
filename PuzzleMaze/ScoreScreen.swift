@@ -1,5 +1,5 @@
 //
-//  ScoreBoardController.swift
+//  ScoreScreen.swift
 //  PuzzleMaze
 //
 //  Created by Viktor Lott on 11/18/18.
@@ -8,7 +8,18 @@
 
 import UIKit
 
-class ScoreBoardController: UIViewController {
+func getSeedFromString(_ text: String) -> Double {
+    var sum: Double = 0
+    
+    for (_, char) in text.enumerated() {
+        let s = String(char).unicodeScalars
+        let val = Double(s[s.startIndex].value)
+        sum += val
+    }
+    return sum
+}
+
+class ScoreScreen: UIViewController {
 
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var scoreView: UIView!
@@ -41,11 +52,7 @@ class ScoreBoardController: UIViewController {
         self.scoreLbl.text = self.score
         
         self.nameLbl.text = self.name
-        
-        
-        
-
-        
+          
     }
 
     @IBAction func closePopup(_ sender: Any) {

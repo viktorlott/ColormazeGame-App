@@ -30,6 +30,9 @@ protocol GameDelegate {
 class GameScreen: UIViewController {
     @IBOutlet var myView: UIView!
     var updateScore: (() -> ())!
+    
+    
+    @IBOutlet weak var seedLabel: UILabel!
     @IBOutlet weak var staticTimeLabel: UILabel!
     @IBOutlet weak var backgroundFIlter: UIView!
     @IBOutlet weak var backgroundImage: UIImageView!
@@ -54,12 +57,13 @@ class GameScreen: UIViewController {
     
     
     var selectedMap = 0
-    var mapDimensions = ["3x3","4x4","5x5","6x6","7x7","8x8", "9x9", "10x10", "11x11"]
+    var mapDimensions = ["3x3","4x4","5x5","6x6","7x7","8x8", "9x9", "10x10", "11x11","20x20"]
     var currentDimension = 0
     var intervalForDimension = 5
     
     var time = 50
     var customSeed: Double = 0
+    var originalSeed: String = ""
     
     var loseValue = -1
     var winValue = 2
@@ -73,13 +77,16 @@ class GameScreen: UIViewController {
         
     }
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         self.modalTransitionStyle = .coverVertical
         let im = UIImage.gif(name: "bg", ext: "gif")
         self.backgroundImage.image = im
         self.timeCounterLbl.text = String(self.time) + "s"
-        
-        
+        self.seedLabel.text = self.originalSeed
+        print("customSeed",String(Int(self.customSeed)))
+        print("customSeed", self.originalSeed)
         if self.useNoTime {
             self.failVal.isHidden = true
             self.timeCounterLbl.isHidden = true
@@ -128,7 +135,15 @@ class GameScreen: UIViewController {
 //
 //        } else {
         
-        self.currentDimension = self.selectedMap == 3 ? 6 : self.selectedMap
+        if self.selectedMap == 2 {
+            self.currentDimension = 6
+        }
+        if self.selectedMap == 3 {
+            self.currentDimension = 9
+        } else {
+            self.currentDimension = self.selectedMap
+        }
+        
             self.myMapGenerator = self.getMapGeneratorBy(self.mapDimensions[self.currentDimension])
             self.myGame = GameBoard(board: gameArea, map: self.myMapGenerator.generate(tries: 2000))
 //        }
@@ -145,7 +160,7 @@ class GameScreen: UIViewController {
     }
 
     func getMapGeneratorBy(_ type: String) -> MapGenerator {
-        print("awdawdaw----awdawdawd---awdawdaw", self.customSeed)
+    
         let isHard = selectedMap >= 2 ? 4 : 1
         switch type {
         case "3x3":
@@ -166,6 +181,8 @@ class GameScreen: UIViewController {
             return MapGenerator(dimensions: 10, seed: 6443 + self.customSeed, limit: Limit(min: 0, max: 4, unique: isHard))
         case "11x11":
             return MapGenerator(dimensions: 11, seed: 7443 + self.customSeed, limit: Limit(min: 0, max: 4, unique: isHard))
+        case "20x20":
+            return MapGenerator(dimensions: 20, seed: 1200 + self.customSeed, limit: Limit(min: 0, max: 10, unique: 12))
         default:
             return MapGenerator(dimensions: 3, seed: 54 + self.customSeed, limit: Limit(min: 0, max: 1, unique: isHard))
         }
@@ -183,7 +200,7 @@ class GameScreen: UIViewController {
         if let g = self.myGame {
             g.stopBoard()
         }
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ScoreBoardController") as! ScoreBoardController
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ScoreScreen") as! ScoreScreen
         vc.done = self.presentStartScreen
         vc.score = "" + String(self.wins)
         vc.updateScore = self.updateScore

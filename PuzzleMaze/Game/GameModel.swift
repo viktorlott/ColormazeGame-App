@@ -205,18 +205,18 @@ class GameBoard<T: Piece>: GameRules {
                     selectedPieceEnd = nil
                 }
             }
-            if t {
-                            if checkIfPieceMatchPath(p: piece, pos: position) {
-                                print("match")
-                                resetPiecesPath(p: piece, pos: position)
-                                if let sp = selectedPieceEnd {
-                                    selectedPieceEnd.dimBlock()
-                                }
-                                
-                                selectedPieceEnd = nil
-                                t = false
-                            }
-            }
+//            if t {
+//                            if checkIfPieceMatchPath(p: piece, pos: position) {
+//                                print("match")
+//                                resetPiecesPath(p: piece, pos: position)
+//                                if let sp = selectedPieceEnd {
+//                                    selectedPieceEnd.dimBlock()
+//                                }
+//
+//                                selectedPieceEnd = nil
+//                                t = false
+//                            }
+//            }
             if !canMove {
  
 //                else if gamePieces[self.position].connectedWith == piece.id {
@@ -240,7 +240,7 @@ class GameBoard<T: Piece>: GameRules {
             if piece.block.type == selectedPiece.block.type {
                 if piece.id == position {canMove = true}
                 if piece.isConnected == false && piece.id != selectedPiece.id && !cannotMoveToPiece(piece.id) || (isPieceConnected(piece) && isColoredBlock(piece.block.type)){
-//                    sound.play()
+
 
                     if selectedPieceEnd == nil {
                         Vibration.sound(1130).vibrate()
@@ -273,7 +273,8 @@ class GameBoard<T: Piece>: GameRules {
                 
               
                 piece.connectedWith = position
-                Vibration.sound(1397).vibrate()
+//                Vibration.sound(1397).vibrate()
+                mySound.play()
                 position = piece.id
                 piece.updatePiece(block: selectedPiece.block.upp())
                 gameRenderMap[position] = selectedPiece.block.upp().type
@@ -285,13 +286,13 @@ class GameBoard<T: Piece>: GameRules {
             
         }
     }
-    var missText = ["HAH!","MISS", "STUPID", "U MISSED"]
+    var missText = ["HAH!", "MISS", "STUPID", "U MISSED", "LOL"]
     func onTouchEnd(_ x: CGFloat, _ y: CGFloat, _ win: () -> (), _ lose: () -> ()) {
         if noPieceSelected() {return}
 
         if let piece = getPieceFromCoord(x: x, y: y) {
             guard selectedPieceEnd != nil else {
-//                clearColoredPath()
+
                 showMissLabelAt(gamePieces[self.position].x, gamePieces[self.position].y, txt: missText[Int.random(in: 0..<missText.count)])
                 self.resetPiecesPaths(p: piece, pos: self.position)
                 lose()
