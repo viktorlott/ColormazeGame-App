@@ -38,3 +38,7 @@
 
 #### Link to App Store 
 [Color My Maze](https://apps.apple.com/us/app/color-my-maze/id1445010936#?platform=ipad)
+
+
+#### Link to my CV
+[My CV](http://viktorlott.surge.sh)
