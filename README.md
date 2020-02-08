@@ -1,7 +1,7 @@
 # iOS Game - Color My Maze
 
 
-## <img src="https://is5-ssl.mzstatic.com/image/thumb/Purple118/v4/5d/c9/f3/5dc9f30b-be5b-0f5e-b54f-a81a070408dd/AppIcon-0-1x_U007emarketing-0-0-GLES2_U002c0-512MB-sRGB-0-0-0-85-220-0-0-0-7.png/690x0w.png" alt="maze" width="120px"> App Store
+## <img src="https://is5-ssl.mzstatic.com/image/thumb/Purple118/v4/5d/c9/f3/5dc9f30b-be5b-0f5e-b54f-a81a070408dd/AppIcon-0-1x_U007emarketing-0-0-GLES2_U002c0-512MB-sRGB-0-0-0-85-220-0-0-0-7.png/690x0w.png" alt="maze" width="120px">
 
 
 Connect colored blocks to fill the board
@@ -13,12 +13,13 @@ Connect colored blocks to fill the board
 
 
 
-
-
-
 ### Information
 
 Connect the colored nodes to a node with the same color by pressing down on a node and dragging over the empty block until you find the right node.
 
 
 End goal is to fill all the empty blocks on the board with colors.
+
+
+#### Link to App Store 
+[Color My Maze](https://apps.apple.com/us/app/color-my-maze/id1445010936#?platform=ipad)
