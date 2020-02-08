@@ -3,8 +3,20 @@
 
 ## <img src="https://is5-ssl.mzstatic.com/image/thumb/Purple118/v4/5d/c9/f3/5dc9f30b-be5b-0f5e-b54f-a81a070408dd/AppIcon-0-1x_U007emarketing-0-0-GLES2_U002c0-512MB-sRGB-0-0-0-85-220-0-0-0-7.png/690x0w.png" alt="maze" width="120px">
 
+> This was my school project for iOS development. It's NOT created with Apples GameKit, instead i only used a blank xcode project and created everything with label elements. Every animations uses the default animationLib from labels.
 
-> Connect colored blocks to fill the board
+### Game includes
+ - Random Map Generator
+ - Seed Map Generator
+ - Different Map sizes (eg. 3x3 up to 20x20)
+    - AKA, easy, medium and hard difficulty
+ - Highscore counter
+ - 2 Different modes (Timed /w score and Unlimited time)
+ - Sound Effects
+ 
+#### Goal
+> Connect blocks with the same color until you filled the empty gray blocks.
+
 
 
 ### Screenshot
