@@ -28,6 +28,7 @@
 ### Information
 
 > Connect all the color nodes to each respective twin node, by doing this you will fill the board with color. Beware, when you connect blocks together you cant go through colored paths. To connect nodes you first need to hold your finger on a node - then start dragging over the empty block until you find the right node.
+
 > As stated above, the end goal is to fill the entire board with colors, by doing this you will be greeted with a *unlock* sound and a new map to solve. If your in time mode, you will have to finish as far as you can.
 
 
