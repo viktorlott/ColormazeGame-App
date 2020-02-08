@@ -9,7 +9,7 @@ Connect colored blocks to fill the board
 
 ### Screenshot
 
-<img src="https://is1-ssl.mzstatic.com/image/thumb/Purple128/v4/9e/f1/1b/9ef11ba0-4602-0804-5ca9-48a65dd9f345/pr_source.png/230x0w.png" alt="maze" width="150px"> <img src="https://is2-ssl.mzstatic.com/image/thumb/Purple118/v4/a1/1f/2f/a11f2f58-ee71-90d7-beb5-c09d35b6dd3d/pr_source.png/690x0w.png" alt="maze" width="150px"> <img src="https://is4-ssl.mzstatic.com/image/thumb/Purple128/v4/59/65/9e/59659e60-8abc-61c1-2144-9b1f55559911/pr_source.png/939x0w.png" alt="maze" width="150px">
+<img src="https://is1-ssl.mzstatic.com/image/thumb/Purple128/v4/9e/f1/1b/9ef11ba0-4602-0804-5ca9-48a65dd9f345/pr_source.png/230x0w.png" alt="maze" width="150px"> <img src="https://is2-ssl.mzstatic.com/image/thumb/Purple118/v4/a1/1f/2f/a11f2f58-ee71-90d7-beb5-c09d35b6dd3d/pr_source.png/690x0w.png" alt="maze" width="150px"> <img src="https://is4-ssl.mzstatic.com/image/thumb/Purple128/v4/59/65/9e/59659e60-8abc-61c1-2144-9b1f55559911/pr_source.png/939x0w.png" alt="maze" width="200px">
 
 
 
