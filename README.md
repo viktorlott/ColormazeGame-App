@@ -3,19 +3,21 @@
 
 ## <img src="https://github.com/nexriz/colormazegame-app/blob/master/690x0w.png" alt="maze" width="120px">
 
-> This was my school project for iOS development. It's NOT created with Apples GameKit, instead i only used a blank xcode project and created everything with label elements. Every animations uses the default animationLib from labels.
+> This was my school project for a iOS development course. It's NOT created with Apples GameKit, instead i only used a blank xcode project and created everything with label elements. Every animations uses the default animationLib from labels. Game logic is selfmade and i wrote a custom collision engine. For the seed generator i used the LCG algorithm.
 
 ### Game includes
- - Random Map Generator
- - Seed Map Generator
+ - Infinite Map Generator
+    - Seed based
  - Different Map sizes (eg. 3x3 up to 20x20)
     - AKA, easy, medium and hard difficulty
  - Highscore counter
  - 2 Different modes (Timed /w score and Unlimited time)
  - Sound Effects
  
-#### Goal
-> Connect blocks with the same color until you filled the entire board.
+#### Goals
+- Connect blocks with the same color until you filled the entire board.
+- Battle friends or enemies by sharing the map seed.
+- Get the highest score for a seed.
 
 
 
@@ -30,6 +32,8 @@
 > Connect all the color nodes to each respective twin node, by doing this you will fill the board with color. Beware, when you connect blocks together you cant go through colored paths. To connect nodes you first need to hold your finger on a node - then start dragging over the empty block until you find the right node.
 
 > As stated above, the end goal is to fill the entire board with colors, by doing this you will be greeted with a *unlock* sound and a new map to solve. If your in time mode, you will have to finish as far as you can.
+
+> Each map is randomly generated from a Seed. You can share the seed with a friend and battle them for the highscore for that seed.
 
 
 #### Link to App Store 
